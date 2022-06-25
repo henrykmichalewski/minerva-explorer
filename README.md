@@ -3,7 +3,7 @@
 ## Environment setup
 ```
 brew install node
-npm install -g pnpm
+sudo npm install -g pnpm
 ```
 
 ##  Project setup
