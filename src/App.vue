@@ -128,7 +128,7 @@ export default {
         "difficulty": "Level 1",
         "original_difficulty": " ",
         "question": "Prove that for every $a, b$, $b \\neq a$, holds\n$\n\\frac{a^{2}+b^{2}}{2}>\\left(\\frac{a+b}{2}\\right)^{2}.\n$",
-        "target": " ",
+        "target": "(Solution unavailable)",
         "output": "We have\n\\begin{align*}\n\\frac{a^2+b^2}{2} &> \\left(\\frac{a+b}{2}\\right)^2\\\\\n\\frac{a^2+b^2}{2} &> \\frac{a^2+2ab+b^2}{4}\\\\\n2a^2+2b^2 &> a^2+2ab+b^2\\\\\na^2-2ab+b^2 &> 0\\\\\n(a-b)^2 &> 0,\n\\end{align*}\nwhich is true for all $a$ and $b$.",
         "model": "64b",
         "type": "True Positive",
