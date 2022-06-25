@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="latex">
-			<h1>Minerva</h1>
-			<h2>sample explorer</h2>
+      <h1>Minerva</h1>
+      <h2>sample explorer</h2>
       <div class="categories">
         <ul>
           <li v-for="(item, index) in Object.keys(combineData)" :key="index" @click="setActiveCategory(item)"
@@ -26,14 +26,14 @@
               <div class="content-info" v-if="slideIndex === index1">
                 <div class="content-item question-info">
                   <span class="label">Question</span>
-		              <!--<vue-mathjax :formula="item.question"></vue-mathjax>-->
+                  <!--<vue-mathjax :formula="item.question"></vue-mathjax>-->
                   <!--<div v-html="convert_with_codecogs(item.question)"></div>-->
                   <!--<div v-html="to_mathjax(item.question)"></div>-->
                   <div :key="slideIndex">{{sanitize_question(item1.question)}}</div>
                 </div>
                 <div class="content-item question-info">
                   <span class="label">Model Answer</span>
-	                <!--<vue-mathjax :formula="item.target"></vue-mathjax>-->
+                  <!--<vue-mathjax :formula="item.target"></vue-mathjax>-->
                   <!--<div v-html="convert_with_codecogs(item.target)"></div>-->
                   <div :key="slideIndex">{{sanitize_output(item1.output)}}</div>
                 </div>
@@ -80,7 +80,7 @@ export default {
   // },
   data() {
     return {
-		  app: [
+      app: [
     {
         "source": "MATH",
         "category": "Algebra",
@@ -4784,7 +4784,7 @@ export default {
   },
   created() {
     this.combineCategories();
-		this.rerender();
+    this.rerender();
   },
   computed: {
     maxCount() {
@@ -4813,14 +4813,14 @@ export default {
     },
 
     setActiveCategory(name) {
-		  this.slideIndex = 0;
+      this.slideIndex = 0;
       const tempElement = this.combineData[name]
       this.activeElement = tempElement.reduce((acc, post) => {
         let {difficulty} = post;
 
         return {...acc, [difficulty]: [...(acc[difficulty] || []), post]};
       }, []);
-			console.log(this.activeElement, "<< active Element");
+      console.log(this.activeElement, "<< active Element");
       this.setActiveDifficulty("Level 1", this.activeElement["Level 1"])
 
       this.activeCategory = name
@@ -4843,33 +4843,33 @@ export default {
       if (type === 'prev' && this.slideIndex !== 0) this.slideIndex -= 1
     },
     rerender() {
-			console.log('rendering mathjax...');
-			window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub], () => console.log('done'));
+      console.log('rendering mathjax...');
+      window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub], () => console.log('done'));
     },
-		// Unused function
+    // Unused function
     to_mathjax(inputs) {
-			var myRegexp = new RegExp("\\$(.*?)\\$", "g");
+      var myRegexp = new RegExp("\\$(.*?)\\$", "g");
 
-			var match = myRegexp.exec(inputs);
+      var match = myRegexp.exec(inputs);
 
-			var match_list = [];
+      var match_list = [];
 
-			while (match != null) {
-				match_list.push(match[0]);
-				match = myRegexp.exec(inputs);
-			}
+      while (match != null) {
+        match_list.push(match[0]);
+        match = myRegexp.exec(inputs);
+      }
 
-			var replaced = [];
+      var replaced = [];
 
-			for (let i = 0; i < match_list.length; i++) {
-				//inputs = inputs.replace(match_list[i], match_list[i].slice(1, -1))
-				replaced.push("\\(" + match_list[i].slice(1, -1) + "\\)")
-			}
+      for (let i = 0; i < match_list.length; i++) {
+        //inputs = inputs.replace(match_list[i], match_list[i].slice(1, -1))
+        replaced.push("\\(" + match_list[i].slice(1, -1) + "\\)")
+      }
 
-			for (let i = 0; i < replaced.length; i++) {
-				inputs = inputs.replace(match_list[i], replaced[i]);
-			}
-			return inputs.replace(/\\\\/, "\\");
+      for (let i = 0; i < replaced.length; i++) {
+        inputs = inputs.replace(match_list[i], replaced[i]);
+      }
+      return inputs.replace(/\\\\/, "\\");
     },
     convert_with_codecogs(text) {
       const equations = text.match(/\$(.*?)\$/ug);
@@ -4891,10 +4891,10 @@ export default {
       return text
     },
     sanitize_question(text) {
-			return text.replace("Solution:", "");
+      return text.replace("Solution:", "");
     },
     sanitize_output(text) {
-		  return text.split("Final Answer:")[0];
+      return text.split("Final Answer:")[0];
     }
   },
 }
