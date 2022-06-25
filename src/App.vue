@@ -23,7 +23,7 @@
         <div class="right-side" v-if="activeDifficultyItems">
           <ul>
             <li v-for="(item1,index1) in activeDifficultyItems" :key="index1">
-              <div class="content-info" v-if="slideIndex === index1">
+              <div class="content-info" v-if="slideIndex === index1" :class="{ incorrect : item1.type != 'True Positive' }">
                 <div class="content-item question-info">
                   <span class="label">Question</span>
                   <!--<vue-mathjax :formula="item.question"></vue-mathjax>-->
@@ -32,15 +32,27 @@
                   <div :key="slideIndex">{{sanitize_question(item1.question)}}</div>
                 </div>
                 <div class="content-item question-info">
-                  <span class="label">Model Answer</span>
+                  <span class="label">Model answer</span>
                   <!--<vue-mathjax :formula="item.target"></vue-mathjax>-->
                   <!--<div v-html="convert_with_codecogs(item.target)"></div>-->
                   <div :key="slideIndex">{{sanitize_output(item1.output)}}</div>
                 </div>
-                <div class="content-item">
+                <div class="content-item question-info">
+                  <span class="label">Correct answer</span>
+                  <div :key="slideIndex">{{item1.target}}</div>
+                </div>
+                <div class="content-item question-info">
                   <span class="label">Problem source</span>
                   <div :key="slideIndex">{{item1.source}} {{item1.original_category}} {{item1.original_difficulty}}</div>
                 </div>
+                <div class="content-item question-info">
+                  <span class="label">Evaluation result</span>
+                  <div :key="slideIndex">{{item1.type}}</div>
+                </div>
+                <!--<div class="content-item question-info">
+                  <span class="label">Model</span>
+                  <div :key="slideIndex">{{item1.model}}</div>
+                </div>-->
               </div>
             </li>
           </ul>
@@ -62,8 +74,9 @@
             </button>
             <button class="next" type="button" @click="slide('next')" :disabled="maxCount"
                     :class="{disabled: maxCount}">Next
-            </button>
+            </button><br />
           </div>
+	  <div class="counter">{{slideIndex}} / {{activeDifficultyItems.length - 1}}</div>
 
         </div>
       </div>
@@ -4835,6 +4848,7 @@ export default {
       this.activeDifficultyName = name
       this.activeDifficultyItems = list
       this.slideIndex = 0;
+      this.rerender();
       this.check = list[0].type;
     },
 
