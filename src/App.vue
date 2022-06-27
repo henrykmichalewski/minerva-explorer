@@ -38,12 +38,12 @@
                   <div :key="slideIndex">{{sanitize_output(item1.output, item1.source)}}</div>
                 </div>
                 <div class="content-item question-info">
-                  <span class="label">Correct answer</span>
+                  <span class="label">Reference answer</span>
                   <div :key="slideIndex">{{item1.target}}</div>
                 </div>
                 <div class="content-item question-info">
                   <span class="label">Problem source</span>
-                  <div :key="slideIndex">{{item1.source}} {{item1.original_category}} {{item1.original_difficulty}}</div>
+                  <div :key="slideIndex">{{item1.source}} {{sanitize_category(item1.original_category)}} {{item1.original_difficulty}}</div>
                 </div>
                 <div class="content-item question-info">
                   <span class="label">Evaluation result</span>
@@ -4913,6 +4913,9 @@ export default {
       if (source == "MMLU") {
       }
       return text;
+    },
+    sanitize_category(category) {
+      return category.split('_').join(' ');
     }
   },
 }
