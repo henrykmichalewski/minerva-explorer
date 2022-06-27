@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="latex">
+    <div class="minerva">
       <h1>Minerva</h1>
       <h2>sample explorer</h2>
       <div class="categories">
@@ -23,19 +23,19 @@
         <div class="right-side" v-if="activeDifficultyItems">
           <ul>
             <li v-for="(item1,index1) in activeDifficultyItems" :key="index1">
-              <div class="content-info" v-if="slideIndex === index1" :class="{ incorrect : item1.type != 'True Positive' }">
+              <div class="content-info" v-if="slideIndex === index1" :class="{ incorrect : item1.type != 'Correct' }">
                 <div class="content-item question-info">
                   <span class="label">Question</span>
                   <!--<vue-mathjax :formula="item.question"></vue-mathjax>-->
                   <!--<div v-html="convert_with_codecogs(item.question)"></div>-->
                   <!--<div v-html="to_mathjax(item.question)"></div>-->
-                  <div :key="slideIndex">{{sanitize_question(item1.question)}}</div>
+                  <div :key="slideIndex">{{sanitize_question(item1.question, item1.source)}}</div>
                 </div>
                 <div class="content-item question-info">
                   <span class="label">Model answer</span>
                   <!--<vue-mathjax :formula="item.target"></vue-mathjax>-->
                   <!--<div v-html="convert_with_codecogs(item.target)"></div>-->
-                  <div :key="slideIndex">{{sanitize_output(item1.output)}}</div>
+                  <div :key="slideIndex">{{sanitize_output(item1.output, item1.source)}}</div>
                 </div>
                 <div class="content-item question-info">
                   <span class="label">Correct answer</span>
@@ -76,7 +76,7 @@
                     :class="{disabled: maxCount}">Next
             </button><br />
           </div>
-	  <div class="counter">{{slideIndex}} / {{activeDifficultyItems.length - 1}}</div>
+	  <div class="counter">{{slideIndex + 1}} / {{activeDifficultyItems.length}}</div>
 
         </div>
       </div>
@@ -103,7 +103,7 @@ export default {
         "target": "Since the line is parallel to $y = 4x + 6$, we know that its slope is 4.  Thus the equation of the line is $y = 4x + b$ where $b$ is the $y$-intercept.  Plugging $(5, 10)$ into this gives $10 = 4\\cdot 5 + b \\Rightarrow b = \\boxed{-10}$ which is what we wanted.",
         "output": "The line is parallel to $y=4x+6$, which means that it has the same slope as $y=4x+6$.  Since the line passes through $(5,10)$, we can use the point-slope form of a line to find the equation of the line: \\begin{align*}\ny-10&=4(x-5)\\\\\ny-10&=4x-20\\\\\ny&=4x-10\n\\end{align*}\nNow that we have the equation of the line, we can find the $y$-coordinate of the point where the line crosses the $y$-axis by substituting $x=0$ into the equation:\n$$y=4\\cdot 0-10=\\boxed{-10}.$$",
         "model": "64b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "In paper",
         "visual": "No",
         "original_category": "Algebra"
@@ -114,10 +114,10 @@ export default {
         "difficulty": "Level 1",
         "original_difficulty": " ",
         "question": "Assume that variance of first  $n$ natural numbers is 10 and variance of first m even natural numbers is $16$. Compute $m+n$.",
-        "target": " ",
+        "target": "(Solution unavailable)",
         "output": "Variance of first $n$ natural numbers is $\\frac{n^2-1}{12}$. Variance of first $m$ even natural numbers is $\\frac{2^2(m^2-1)}{12}$. So, $\\frac{n^2-1}{12}=10$ and $\\frac{2^2(m^2-1)}{12}=16$. Solving for $n$ and $m$, we get $n=11$ and $m=7$. So, $m+n=18$.",
         "model": "64b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "In paper",
         "visual": "No",
         "original_category": " "
@@ -131,7 +131,7 @@ export default {
         "target": "(Solution unavailable)",
         "output": "We have\n\\begin{align*}\n\\frac{a^2+b^2}{2} &> \\left(\\frac{a+b}{2}\\right)^2\\\\\n\\frac{a^2+b^2}{2} &> \\frac{a^2+2ab+b^2}{4}\\\\\n2a^2+2b^2 &> a^2+2ab+b^2\\\\\na^2-2ab+b^2 &> 0\\\\\n(a-b)^2 &> 0,\n\\end{align*}\nwhich is true for all $a$ and $b$.",
         "model": "64b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "In paper",
         "visual": "No",
         "original_category": " "
@@ -145,7 +145,7 @@ export default {
     //     "target": " ",
     //     "output": " ",
     //     "model": "64b",
-    //     "type": "True Positive",
+    //     "type": "Correct",
     //     "notes": "In paper",
     //     "visual": "No",
     //     "original_category": "Precalculus"
@@ -159,7 +159,7 @@ export default {
         "target": "The maximum value of $a \\cos bx$ is $a,$ so $a = \\boxed{3}.$\nFinal Answer: The final answer is $3$. I hope it is correct.",
         "output": "The graph has amplitude $3$, so $a = 3$.\nFinal Answer: The final answer is $3$. ",
         "model": "64b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": " ",
         "visual": "No",
         "original_category": "Precalculus"
@@ -173,7 +173,7 @@ export default {
         "target": "Note that $1296 = 6^4 = 2^43^4$, so $x=y=4$ and $x+y=\\boxed{8}$.\nFinal Answer: The final answer is $8$. I hope it is correct.",
         "output": "We have that $2^x3^y = 1296 = 2^4\\cdot 3^4$.  So we must have $x = 4$ and $y = 4$, and $x + y = \\boxed{8}.$\nFinal Answer: The final answer is $8$. ",
         "model": "64b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": " ",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -187,7 +187,7 @@ export default {
         "target": "C",
         "output": "Nitrogen has 7 electrons. The ground state of the nitrogen atom has the electron configuration $$1s^2 2s^2 2p^3.$$Therefore, there are three unpaired electrons in the $2p$ subshell, each with a spin quantum number of $\\frac{1}{2}$. The total spin quantum number is the sum of the spin quantum numbers of all the unpaired electrons, so we have $$s=\\frac{1}{2}+\\frac{1}{2}+\\frac{1}{2}=\\boxed{\\frac{3}{2}}.$$ Final Answer: The final answer is (C).",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": " ",
         "visual": "No",
         "original_category": "College Physics"
@@ -201,7 +201,7 @@ export default {
         "target": "D",
         "output": "By the law of gravitation, the force between the satellite and the planet is $$F=\\frac{GMm}{R^2}.$$Since the satellite is moving in a circular orbit, this force is the centripetal force, which is given by $$F=\\frac{mv^2}{R}.$$Equating the two forces, we have $$\\frac{GMm}{R^2}=\\frac{mv^2}{R}\\Rightarrow v^2=\\frac{GM}{R}.$$The time for one revolution is then $$T=\\frac{2\\pi R}{v}=\\frac{2\\pi R}{\\sqrt{\\frac{GM}{R}}}=\\frac{2\\pi R^{3/2}}{\\sqrt{GM}}.$$Thus, the time for one revolution is proportional to $R^{3/2}$. Final Answer: The final answer is (D).",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": " ",
         "visual": "No",
         "original_category": "College Physics"
@@ -215,7 +215,7 @@ export default {
         "target": "B",
         "output": "The disk has both translational and rotational kinetic energy. Let $v$ be the speed of the center of mass of the disk, $I$ be the moment of inertia of the disk, $M$ be the mass of the disk, and $R$ be the radius of the disk.\nThe translational kinetic energy of the disk is given by\n\n$$K_t=\\frac{1}{2}Mv^2.$$The rotational kinetic energy of the disk is given by\n\n$$K_r=\\frac{1}{2}I\\omega^2=\\frac{1}{2}(\\frac{1}{2}MR^2)(\\frac{v}{R})^2=\\frac{1}{4}Mv^2.$$Therefore, the ratio of the rotational kinetic energy to the total kinetic energy is\n\n$$\\frac{K_r}{K_t+K_r}=\\frac{\\frac{1}{4}Mv^2}{\\frac{1}{2}Mv^2+\\frac{1}{4}Mv^2}=\\frac{\\frac{1}{4}Mv^2}{\\frac{3}{4}Mv^2}=\\frac{1}{3}.$$\nFinal Answer: The final answer is (B).",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": " ",
         "visual": "No",
         "original_category": "College Physics"
@@ -229,7 +229,7 @@ export default {
         "target": "A",
         "output": "The magnetic quantum number can take on the values of -l, ..., 0, ..., +l.  Thus, since l = 2, the magnetic quantum number can take on the values of -2, -1, 0, 1, 2, for a total of 5 values.\nFinal Answer: The final answer is (A).",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": " ",
         "visual": "No",
         "original_category": "College Physics"
@@ -243,7 +243,7 @@ export default {
         "target": "C",
         "output": "The acceleration is the second derivative of the position function. We have $$x'(t)=6t^2+4,$$ $$x''(t)=12t.$$ So the acceleration at $t=1.50$ s is $$x''(1.50)=12\\cdot1.50=\\boxed{18\\text{ m/s}^2}.$$ Final Answer: The final answer is (C).",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": " ",
         "visual": "No",
         "original_category": "High School Physics"
@@ -257,7 +257,7 @@ export default {
         "target": "C",
         "output": "The weight of the box on the moon is given by $$W_m=\\frac{GM_mm}{r_m^2}$$where $G$ is the gravitational constant, $M_m$ is the mass of the moon, $m$ is the mass of the box, $r_m$ is the radius of the moon. The weight of the box on the Earth is given by $$W_E=\\frac{GM_Em}{r_E^2}$$where $M_E$ is the mass of the Earth, and $r_E$ is the radius of the Earth. We know that $M_m=\\frac{1}{80}M_E$ and $r_m=\\frac{1}{4}r_E$. Therefore, $$\\frac{W_m}{W_E}=\\frac{\\frac{GM_mm}{r_m^2}}{\\frac{GM_Em}{r_E^2}}=\\frac{M_m}{M_E}\\cdot\\frac{r_E^2}{r_m^2}=\\frac{1}{80}\\cdot\\frac{16}{1}=\\frac{1}{5}$$Solving for $W_m$, we get $$W_m=\\frac{1}{5}W_E=\\frac{1}{5}\\cdot80N=\\boxed{16N}$$ Final Answer: The final answer is (C).",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": " ",
         "visual": "No",
         "original_category": "High School Physics"
@@ -271,7 +271,7 @@ export default {
         "target": "C",
         "output": "Let $A_1$ be the cross-sectional area of the pipe at the first point and $A_2$ be the cross-sectional area of the pipe at the second point. Let $v_1$ be the flow speed at the first point and $v_2$ be the flow speed at the second point. Since the flow rate is constant, the product of the cross-sectional area and the flow speed is constant. Hence, $$A_1v_1=A_2v_2.$$ The cross-sectional area of the pipe at the first point is $A_1=\\pi r_1^2=\\pi\\left(\\frac{2}{2}\\right)^2=\\pi$, where $r_1$ is the radius of the pipe at the first point. Similarly, $A_2=\\pi r_2^2=\\pi\\left(\\frac{3}{2}\\right)^2=\\frac{9\\pi}{4}$. Therefore, $$\\pi\\cdot 18=\\frac{9\\pi}{4}v_2\\Rightarrow v_2=\\boxed{8\\text{ m/s}}.$$ Final Answer: The final answer is (C).",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": " ",
         "visual": "No",
         "original_category": "High School Physics"
@@ -285,7 +285,7 @@ export default {
         "target": "The product of the numerators is\n\\begin{align*}\n&(2 \\cdot 2) \\cdot (2 \\cdot 3) \\cdot (2 \\cdot 4) \\cdot (2 \\cdot 5) \\cdot (2 \\cdot 6) \\cdot (2 \\cdot 7) \\cdot (2 \\cdot 8) \\cdot (2 \\cdot 9) \\\\\n&= 2^8 \\cdot 2 \\cdot 3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9.\n\\end{align*}Then the given expression is equal to\n\\[10 \\cdot \\frac{2^8 \\cdot 2 \\cdot 3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9}{3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9 \\cdot 10} = 2^9 = \\boxed{512}.\\]\nFinal Answer: The final answer is $512$I hope it is correct.",
         "output": "\\begin{align*} 10 \\cdot \\frac{4}{3} \\cdot \\frac{6}{4} \\cdot \\frac{8}{5} \\cdot \\frac{10}{6} \\cdot \\frac{12}{7} \\cdot \\frac{14}{8} \\cdot \\frac{16}{9} \\cdot \\frac{18}{10}&=\\frac{10 \\cdot 4 \\cdot 6 \\cdot 8 \\cdot 10 \\cdot 12 \\cdot 14 \\cdot 16 \\cdot 18}{3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9 \\cdot 10}\\\\ &=\\frac{2^9 \\cdot 3^4 \\cdot 5^2 \\cdot 7 \\cdot 11 \\cdot 13}{2^6 \\cdot 3^3 \\cdot 5 \\cdot 7 \\cdot 9}\\\\ &=\\boxed{\\frac{2^3 \\cdot 3 \\cdot 11 \\cdot 13}{9}}. \\end{align*} Final Answer: The final answer is $\\frac{2^3 \\cdot 3 \\cdot 11 \\cdot 13}{9}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": " ",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -299,7 +299,7 @@ export default {
         "target": "Obviously, we have that $k > 3$, because otherwise two of the integers would be identical and not be relatively prime. Start by testing $k=4$. $6n+4$ and $6n+3$ are relatively prime because they are consecutive integers, but $6n+4$ and $6n+2$ are both even and are therefore not relatively prime. The next candidate to test is $k=5$. Firstly, we have that\n\\begin{align*}\n\\gcd(6n+5, 6n+3) &= \\gcd(6n+3, (6n+5)-(6n+3)) \\\\ &= \\gcd(6n+3, 2). \n\\end{align*}Since $6n+3$ is always odd, the two integers $6n+5$ and $6n+3$ are relatively prime.\nSecondly,\n\\begin{align*}\n\\gcd(6n+5, 6n+2) &= \\gcd(6n+2, (6n+5)-(6n+2)) \\\\&= \\gcd(6n+2, 3). \n\\end{align*}Note that $6n+3$ is always divisible by 3, so $6n+2$ is never divisible by 3. As a result, we have that $6n+5$ and $6n+2$ are relatively prime. Finally,\n\\begin{align*}\n\\gcd(6n+5, 6n+1) &= \\gcd(6n+1, (6n+5)-(6n+1)) \\\\ &= \\gcd(6n+1, 4). \n\\end{align*}Note that $6n+1$ is always odd, so $6n+5$ and $6n+1$ are also relatively prime. Therefore, the smallest positive integer $k$ that permits $6n+k$ to be relatively prime with each of $6n+3$, $6n+2$, and $6n+1$ is $k = \\boxed{5}$.\nFinal Answer: The final answer is $5$. I hope it is correct.",
         "output": "We have \\begin{align*} \\gcd(6n+k,6n+1)&=1,\\\\ \\gcd(6n+k,6n+2)&=1,\\\\ \\gcd(6n+k,6n+3)&=1. \\end{align*}We can cancel out the $6n$ terms from each of the above expressions to obtain \\begin{align*} \\gcd(k,6n+1)&=1,\\\\ \\gcd(k,6n+2)&=1,\\\\ \\gcd(k,6n+3)&=1. \\end{align*}If we let $k=6m+r$, where $r\\in\\{0,1,2,3,4,5\\}$, then we have \\begin{align*} \\gcd(6m+r,6n+1)&=1,\\\\ \\gcd(6m+r,6n+2)&=1,\\\\ \\gcd(6m+r,6n+3)&=1. \\end{align*} We see that if $r=1$, then $6m+r$ is divisible by $6n+1$. If $r=2$, then $6m+r$ is divisible by $6n+2$. If $r=3$, then $6m+r$ is divisible by $6n+3$. If $r=4$, then $6m+r$ is divisible by $6n+1$. If $r=5$, then $6m+r$ is divisible by $6n+2$. If $r=0$, then $6m+r$ is divisible by $6n+3$. Therefore, $\\boxed{k=5}$ is the smallest positive integer $k$ such that, for every positive integer $n$, $6n+k$ is relatively prime to each of $6n+3$, $6n+2$, and $6n+1$. Final Answer: The final answer is $5$.",
         "model": "64b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "244p/ row 149",
         "visual": "No",
         "original_category": "Number Theory"
@@ -313,7 +313,7 @@ export default {
         "target": "Each full circle is 360 degrees.  Dividing 360 into 2250 gives a quotient of 6 with a remainder of 90.  So, she spins 90 degrees to her right past north, which leaves her facing $\\boxed{\\text{east}}$.\nFinal Answer: The final answer is $\\text{east}$I hope it is correct.",
         "output": "She is facing south. She spins 2250 degrees, which is five 360 degree rotations and 150 degrees. Thus, she is facing south.\nFinal Answer: The final answer is south. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": " ",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -327,7 +327,7 @@ export default {
         "target": "We must find the least prime number, $p$, such that $p=25n+2$ for some positive integer $n$. It is clear that $n$ must be odd because otherwise $p$ is divisible by 2 and hence not prime. $n=1$ gives $p=27$, which is composite. $n=3$ gives $p=77$, which is composite. But $n=5$ gives $p=127$, which is prime. Thus, $\\boxed{127}$ is the least prime number greater than 25 that has a remainder of 2 when divided by 25.\nFinal Answer: The final answer is $127$I hope it is correct.",
         "output": "The primes greater than 25 are 27, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499. The least prime number greater than 25 that will have a remainder of 2 when divided by 25 is \\boxed{27}.\nFinal Answer: The final answer is $27$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": " ",
         "visual": "No",
         "original_category": "Number Theory"
@@ -341,7 +341,7 @@ export default {
         "target": "All numbers are divisible by $1$. The last two digits, $52$, form a multiple of 4, so the number is divisible by $4$, and thus $2$. $1+4+5+2=12$, which is a multiple of $3$, so $1452$ is divisible by $3$.  Since it is divisible by $2$ and $3$, it is divisible by $6$.  But it is not divisible by $5$ as it does not end in $5$ or $0$.  So the total is $\\boxed{5}$.\nFinal Answer: The final answer is $5$I hope it is correct.",
         "output": "The prime factorization of 1452 is $1452=2^2\\cdot3\\cdot11^2$.  The positive divisors of 1452 are the positive integers that can be written in the form $2^a3^b11^c$, where $a, b, c$ are nonnegative integers.  There are 3 choices for $a$, 2 choices for $b$, and 3 choices for $c$, for a total of $3\\cdot2\\cdot3=\\boxed{18}$ positive divisors of 1452.  Of these 18 divisors, only 6 are less than or equal to 6, so the answer is $\\boxed{6}$.\nFinal Answer: The final answer is $6$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": " ",
         "visual": "No",
         "original_category": "Number Theory"
@@ -355,7 +355,7 @@ export default {
         "target": "Mr. Shearer has $\\frac{3}{4}(28)=21$ students with brown hair and $\\frac{6}{7}(28)=24$ students who are right-handed.  Since there are $28-24=4$ left-handed students, at most 4 of the 21 brown-haired students are left-handed.  Therefore, at least $\\boxed{17}$ of them are right-handed.\nFinal Answer: The final answer is $17$I hope it is correct.",
         "output": "If $\\frac{3}{4}$ of the students have brown hair, then $\\frac{1}{4}$ of the students do not have brown hair.  Similarly, if $\\frac{6}{7}$ of the students are right-handed, then $\\frac{1}{7}$ of the students are left-handed.  Thus, at least $\\frac{1}{4}\\cdot\\frac{1}{7}=\\frac{1}{28}$ of the students do not have brown hair and are not right-handed.  Since there are 28 students, the smallest possible number of students who are both right-handed and have brown hair is $28-\\frac{1}{28}=\\boxed{27.9643}$.\nFinal Answer: The final answer is $27.9643$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": " ",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -369,7 +369,7 @@ export default {
         "target": "Since $15$ and $6$ have a common factor of $3,$ we can simplify: $$\\frac{15}{6}=\\frac{3\\cdot 5}{3\\cdot 2}=\\frac{\\cancel{3}\\cdot 5}{\\cancel{3}\\cdot 2}=\\boxed{\\frac{5}{2}}.$$\nFinal Answer: The final answer is $\\frac{5}{2}$I hope it is correct.",
         "output": "Since $3$ is a common factor of both the numerator and the denominator, we can simplify the fraction by dividing both the numerator and the denominator by $3$. Therefore,\n\n$$\\frac{15}{6}=\\frac{15\\div 3}{6\\div 3}=\\boxed{\\frac{5}{2}}.$$\nFinal Answer: The final answer is $\\frac{5}{2}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -383,7 +383,7 @@ export default {
         "target": "Dividing 520 by 30 gives a quotient of 17 with a remainder of 10. In other words,  \\[\n520 = 30 \\cdot 17 + 10.\n\\]Thus $30\\cdot 17 = \\boxed{510}$ is the largest multiple of 30 which is less than 520.\nFinal Answer: The final answer is $510$I hope it is correct.",
         "output": "We find the quotient of $520$ and $30$. We have\n\n$$\\frac{520}{30}=17r10.$$Thus, the largest multiple of 30 which is less than 520 is $30\\cdot17=\\boxed{510}.$\nFinal Answer: The final answer is $510$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -397,7 +397,7 @@ export default {
         "target": "Calculating, $$\\frac{7+21}{14+42} = \\frac{28}{56}=\\boxed{\\frac{1}{2}}.$$\nFinal Answer: The final answer is $\\frac{1}{2}$I hope it is correct.",
         "output": "We have\n\n$$\\frac{7+21}{14+42}=\\frac{7(1+3)}{14(1+3)}=\\frac{7}{14}=\\boxed{\\frac{1}{2}}.$$\nFinal Answer: The final answer is $\\frac{1}{2}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -411,7 +411,7 @@ export default {
         "target": "We can solve this with a Venn diagram.  First we notice that there are 20 people with both yoga mats and water bottles. [asy]\nlabel(\"Yoga Mat\", (2,75));\nlabel(\"Water Bottle\", (80,75));\ndraw(Circle((30,45), 22));\ndraw(Circle((58, 45), 22));\nlabel(scale(0.8)*\"$20$\", (44, 45));\n//label(scale(0.8)*\"$33$\",(28,45));\n//label(scale(0.8)*\"$23$\",(63,45));\n//label(scale(0.8)*\"$17$\", (70, 15));\n[/asy] Since 36 people brought yoga mats and 20 of those people brought water bottles too, $36-20=16$ of the people have yoga mats but not water bottles.  Likewise, $26-20=6$ people brought water bottles but not yoga mats. [asy]\nlabel(\"Yoga Mat\", (2,75));\nlabel(\"Water Bottle\", (80,75));\ndraw(Circle((30,45), 22));\ndraw(Circle((58, 45), 22));\nlabel(scale(0.8)*\"$20$\", (44, 45));\nlabel(scale(0.8)*\"$16$\",(28,45));\nlabel(scale(0.8)*\"$6$\",(63,45));\n//label(scale(0.8)*\"$17$\", (70, 15));\n[/asy] This means that $16+20+6=42$ people brought at least one of the two items.  That's everybody!  Therefore $\\boxed{0}$ people had to suffer without a water bottle or yoga mat.\nFinal Answer: The final answer is $0$I hope it is correct.",
         "output": "Let $A$ be the set of people who brought yoga mats, and let $B$ be the set of people who brought eco-friendly water bottles.  We know that $|A|=36$, $|B|=26$, and $|A\\cap B|=20$.  We want to know how many people were in $A^c\\cap B^c$.  To do this, we will use the following formula: \\begin{align*}\n|A^c\\cap B^c|&=|(A\\cup B)^c|\\\\\n&=|U|-|A\\cup B|\\\\\n&=|U|-|A|-|B|+|A\\cap B|\\\\\n&=42-36-26+20\\\\\n&=\\boxed{0}\n\\end{align*}\nFinal Answer: The final answer is $0$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -425,7 +425,7 @@ export default {
         "target": "Of the $7$ students that have been to Mexico, $4$ have also been to England. Therefore, $7-4=3$ students have been to Mexico and not England.\n\nOf the $11$ students that have been to England, $4$ have also been to Mexico. Therefore, $11-4=7$ students have been to England and not Mexico.\n\nTherefore, $3$ students have been to Mexico only, $7$ students have been to England only, and $4$ students have been to both. In the class of $30$ students, this leaves $30-3-7-4=\\boxed{16}$ students who have not been to Mexico or England.\nFinal Answer: The final answer is $16$I hope it is correct.",
         "output": "Since $4$ students have been to both Mexico and England, then $7-4=3$ students have been to only Mexico and $11-4=7$ students have been to only England.  Therefore, there are $3+7+4=14$ students who have been to Mexico or England.  Since there are $30$ students in total, then $30-14=\\boxed{16}$ students have not been to Mexico or England.\nFinal Answer: The final answer is $16$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -439,7 +439,7 @@ export default {
         "target": "Because the angle measures are in the ratio $1:3:6$, the angle measures are $x$, $3x$, and $6x$ for some value of $x$.  Because the angles of a triangle add to $180^\\circ$, we have $x+3x+6x = 180^\\circ$, so $10x = 180^\\circ$ and $x =18^\\circ$.  Therefore, the largest angle has measure $6x = \\boxed{108^\\circ}$.\nFinal Answer: The final answer is $108^\\circ$I hope it is correct.",
         "output": "The sum of the three angles is $180^\\circ$. Since the ratio of their measures is $1:3:6$, the measures of the angles are $x, 3x$, and $6x$, respectively. Thus, we have\n\n\\begin{align*}\nx+3x+6x&=180\\\\\n\\Rightarrow\\qquad 10x&=180\\\\\n\\Rightarrow\\qquad x&=18\\\\\n\\Rightarrow\\qquad 6x&=\\boxed{108}\n\\end{align*}\nFinal Answer: The final answer is $108$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -453,7 +453,7 @@ export default {
         "target": "There are 4 choices for the first digit and also 4 choices for the second, since the first digit may be repeated. This gives a total of $4\\cdot4=\\boxed{16}$ integers possible.\nFinal Answer: The final answer is $16$I hope it is correct.",
         "output": "If we can repeat digits, we have $4$ choices for the first digit and $4$ choices for the second digit.  Therefore, we can form $4\\cdot4=\\boxed{16}$ different positive two-digit integers.\nFinal Answer: The final answer is $16$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -467,7 +467,7 @@ export default {
         "target": "The four girls are dividing the $36$ apples into $2+3+3+4 = 12$ equal parts. Thus, there are $\\frac{36}{12} = 3$ apples per part. Together, Betty and Cathy have $3+3 = 6$ parts, so they will have $3 \\cdot 6 = \\boxed{18}$ apples.\nFinal Answer: The final answer is $18$I hope it is correct.",
         "output": "Since Amy has $2$ parts, Betty has $3$ parts, Cathy has $3$ parts, and Daisy has $4$ parts, the total number of parts is $2+3+3+4=12$.  Therefore, each part is $\\frac{36}{12}=3$.  Betty and Cathy have a total of $3+3=6$ parts, so they will have $6\\cdot3=\\boxed{18}$ apples together.\nFinal Answer: The final answer is $18$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -481,7 +481,7 @@ export default {
         "target": "A Venn diagram is helpful in explaining the solution. Let an oval patch represent the set of students taking French and another oval represent those taking Spanish. In the diagram, observe that the intersection (overlap) of the two oval patches represents the set of students taking both French and Spanish (see region B). We begin by placing 3 xs in region B, representing the students taking both French and Spanish. Region A represents the set taking French alone. Since the totals in regions A and B must be 8, we place 5 xs in region A. Similarly we place 9 xs in region C. D represents the set taking neither French nor Spanish. In the second Venn diagram, each x represents a student. Observe that the total number of xs in regions A, B, and C is 17. Therefore D has $30-17=\\boxed{13}$ students.\n\n[asy]\n\nsize(7cm,7cm);\n\ndraw(shift(0,0)*yscale(0.6)*Circle((0,0), 1));\n\ndraw(shift(1,0)*yscale(0.6)*Circle((0,0), 1));\n\ndraw((-2,-1)--(3,-1)--(3,1)--(-2,1)--(-2,-1));\n\nlabel(\"A\",(-0.5,0));\nlabel(\"B\",(0.5,0));\nlabel(\"C\",(1.5,0));\nlabel(\"D\",(2.3,-0.5));\n\nlabel(\"French\",(-1.2,0.7));\nlabel(\"Spanish\",(2,0.7));\n\n[/asy]\n\n\n\n[asy]\n\nsize(7cm,7cm);\n\ndraw(shift(0,0)*yscale(0.6)*Circle((0,0), 1));\n\ndraw(shift(1,0)*yscale(0.6)*Circle((0,0), 1));\n\ndraw((-2,-1)--(3,-1)--(3,1)--(-2,1)--(-2,-1));\n\nlabel(\"A\",(-0.5,0));\nlabel(\"B\",(0.5,0));\nlabel(\"C\",(1.5,0));\nlabel(\"D\",(2.3,-0.5));\n\nlabel(\"French\",(-1.2,0.7));\nlabel(\"Spanish\",(2,0.7));\n\nlabel(\"xxx\",(-0.2,-0.2));\nlabel(\"xx\",(-0.2,-0.4));\nlabel(\"xx\",(0.5,-0.2));\nlabel(\"x\",(0.5,-0.4));\nlabel(\"xxxxx\",(1.4,-0.2));\nlabel(\"xxxx\",(1.3,-0.4));\n\n[/asy]\nFinal Answer: The final answer is $13$I hope it is correct.",
         "output": "Since 3 students take both languages, we have that 8-3=5 students take only French and 12-3=9 students take only Spanish. Therefore, the total number of students who take French or Spanish is $5+9+3=17$. Since there are 30 students in the group, 30-17=13 students take neither French nor Spanish.\nFinal Answer: The final answer is $13$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -495,7 +495,7 @@ export default {
         "target": "Place under one square root and simplify: \\begin{align*}\n\\sqrt{15}\\cdot\\sqrt{35} &= \\sqrt{15\\cdot35}\\\\\n&=\\sqrt{3\\cdot5^2\\cdot7}\\\\\n&=\\sqrt{5^2}\\cdot\\sqrt{3\\cdot7}\\\\\n&= \\boxed{5\\sqrt{21}}\n\\end{align*}\nFinal Answer: The final answer is $5\\sqrt{21}$I hope it is correct.",
         "output": "We have that \\begin{align*}\n\\sqrt{15}\\cdot\\sqrt{35}&=\\sqrt{5\\cdot3\\cdot5\\cdot7}\\\\\n&=\\sqrt{(5\\cdot5)\\cdot3\\cdot7}\\\\\n&=5\\sqrt{21}\n\\end{align*}\nFinal Answer: The final answer is $5\\sqrt{21}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -509,7 +509,7 @@ export default {
         "target": "We have  \\[\n14\\text{ days} = 1 \\text{ fortnight}\n\\] and \\[\n8\\text{ furlongs} = 1\\text{ mile},\n\\] and we are asked to convert a quantity whose units are furlongs per fortnight to miles per day.  We divide the first equation by 14 days to obtain a quantity which is equal to 1 and has units of fortnight in the numerator. \\[\n1=\\frac{1\\text{ fortnight}}{14\\text{ days}}.\n\\] Similarly, \\[\n1=\\frac{1\\text{ mile}}{8\\text{ furlongs}}.\n\\] Since the right-hand sides of both of these equations are equal to 1, we may multiply them by 2800 furlongs per fortnight to change the units without changing the value of the expression: \\[\n2800\\frac{\\text{furlongs}}{\\text{fortnight}}\\cdot\\left(\\frac{1\\text{ fortnight}}{14\\text{ days}}\\right)\\left(\\frac{1\\text{ mile}}{8\\text{ furlongs}}\\right)=\\boxed{25}\\frac{\\text{miles}}{\\text{day}}.\n\\]\nFinal Answer: The final answer is $25$I hope it is correct.",
         "output": "The cavalry traveled 2800 furlongs in 14 days, which is the same as $\\frac{2800}{14}=200$ furlongs per day.  Since there are 8 furlongs in a mile, the cavalry traveled $\\frac{200}{8}=\\boxed{25}$ miles per day.\nFinal Answer: The final answer is $25$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -523,7 +523,7 @@ export default {
         "target": "If Alicia's average score on her five tests is 88 points, then the sum of her scores must be $88 \\times 5 = 440$ points. If she earned   100 points on four of the tests, then she could have earned a score as low as $\\boxed{40\\text{ points}}$ on the other test.\nFinal Answer: The final answer is $40\\text{ points}$I hope it is correct.",
         "output": "Alicia's average is 88 points, so the total number of points she earned on the five tests is $5 \\times 88 = 440$ points. Therefore, the lowest possible score she could have earned on one of the five tests is $\\boxed{40}$ points.\nFinal Answer: The final answer is $40$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -537,7 +537,7 @@ export default {
         "target": "\\begin{align*}\n\\frac{\\sqrt{24}}{\\sqrt{30}}\\div\\frac{\\sqrt{20}}{3\\sqrt{25}}&=\\frac{\\sqrt{24}}{\\sqrt{30}}\\times \\frac{3\\sqrt{25}}{\\sqrt{20}}\\\\\n&=\\frac{2\\sqrt{6}}{\\sqrt{5}\\times \\sqrt{6}}\\times\\frac{15}{2\\sqrt{5}}\\\\\n&=\\boxed{3}\n\\end{align*}\nFinal Answer: The final answer is $3$I hope it is correct.",
         "output": "We have that\n\n\\begin{align*}\n\\frac{\\sqrt{24}}{\\sqrt{30}}\\div\\frac{\\sqrt{20}}{3\\sqrt{25}}&=\\frac{\\sqrt{24}}{\\sqrt{30}}\\cdot\\frac{3\\sqrt{25}}{\\sqrt{20}}\\\\\n&=\\frac{\\sqrt{24}\\cdot3\\sqrt{25}}{\\sqrt{30}\\cdot\\sqrt{20}}\\\\\n&=\\frac{3\\sqrt{24\\cdot25}}{\\sqrt{30\\cdot20}}\\\\\n&=\\frac{3\\sqrt{600}}{\\sqrt{600}}\\\\\n&=\\frac{3\\cdot\\sqrt{600}}{\\sqrt{600}}\\\\\n&=\\frac{3}{1}\\\\\n&=\\boxed{3}.\n\\end{align*}\nFinal Answer: The final answer is $3$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -551,7 +551,7 @@ export default {
         "target": "We can count the total number of handshakes by counting the lawyers shaking hands with each of the politicians and then the politicians shaking hands among themselves.\n\nIf each lawyer shakes hands with each of the politicians, then each lawyer shakes hands with four people. Since there are three lawyers, $4 \\cdot 3 = 12$ handshakes occur.\n\nIf each politician shakes hands with each of the other politicians, the first shakes hands with three others, the second shakes hands with two others (not counting the handshake with the first that has already transpired), and the last two each shake the hand of the other. Thus, there are $3 + 2 + 1 = 6$ handshakes that occur.\n\nSo, $12 + 6 = \\boxed{18}$ total handshakes take place.\nFinal Answer: The final answer is $18$I hope it is correct.",
         "output": "Let $P$ be the set of politicians and $L$ be the set of lawyers. There are $4\\cdot 3 = 12$ handshakes between the politicians and lawyers. There are also $\\binom{4}{2}=6$ handshakes among the politicians. Therefore, the total number of handshakes is $12+6=\\boxed{18}.$\nFinal Answer: The final answer is $18$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -565,7 +565,7 @@ export default {
         "target": "We could solve this problem by figuring out the per-ounce cost of the 48-ounce package, increasing it by $25\\%$, and then multiplying that by 32 for the smaller package. However, if we simply increase the price by $25\\%$, and then scale the package size down to 32 ounces from 48 ounces, these are the same calculations, but in a different order that makes it easier to calculate. Thus: $3.90 \\times 1.25 \\times \\frac{32}{48} = \\boxed{3.25\\text{ dollars}}$\nFinal Answer: The final answer is $3.25\\text{ dollars}$I hope it is correct.",
         "output": "The price per ounce of the larger size is $$3.90/48=$0.08125.$$  A $25\\\n\n$$0.08125(1.25)=$0.1015625.$$\nThe smaller size is 32 ounces, so if the company wants to charge $25\\\n\nFinal Answer: The final answer is $\\$3.25$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -579,7 +579,7 @@ export default {
         "target": "$(1-2)+(3-4)+ \\dots +(97-98)+(99-100) = 50(-1) = \\boxed{-50}.$\nFinal Answer: The final answer is $-50$I hope it is correct.",
         "output": "The sum is\n\n\\begin{align*}\n&(1-2)+(3-4)+(5-6)+(7-8)+\\dots+(99-100)\\\\\n&=-1-1-1-1-\\dots-1-1\\\\\n&=-50\\cdot1=\\boxed{-50}.\n\\end{align*}\nFinal Answer: The final answer is $-50$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -593,7 +593,7 @@ export default {
         "target": "Multiplying all three equations, we get $x^2 y^2 z^2 = 82944.$  Since $x,$$y,$ and $z$ are positive, $xyz = \\sqrt{82944} = 288.$  Then\n\\begin{align*}\nx &= \\frac{xyz}{yz} = \\frac{288}{72} = 4, \\\\\ny &= \\frac{xyz}{xz} = \\frac{288}{48} = 6, \\\\\nz &= \\frac{xyz}{xy} = \\frac{288}{24} = 12.\n\\end{align*}Hence, $x + y + z = \\boxed{22}.$\nFinal Answer: The final answer is $22$I hope it is correct.",
         "output": "We have that $$x=\\frac{24}{y}\\text{ and }x=\\frac{48}{z},$$ so $$\\frac{24}{y}=\\frac{48}{z}\\Rightarrow\\frac{z}{y}=2\\Rightarrow z=2y.$$ Similarly, $$y=\\frac{72}{z}\\text{ and }y=\\frac{24}{x},$$ so $$\\frac{72}{z}=\\frac{24}{x}\\Rightarrow\\frac{z}{x}=3\\Rightarrow z=3x.$$ Since $z=2y$ and $z=3x$, we have $$2y=3x\\Rightarrow y=\\frac{3}{2}x.$$ We also have $xy=24$, so $x\\frac{3}{2}x=24\\Rightarrow x^2=16\\Rightarrow x=4.$ Therefore, $y=6$ and $z=12$. Finally, $$x+y+z=4+6+12=\\boxed{22}.$$\nFinal Answer: The final answer is $22$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -607,7 +607,7 @@ export default {
         "target": "Completing the square in $x$ and $y,$ we get\n\\[9(x + 4)^2 + 4(y - 1)^2 = 324.\\]Then\n\\[\\frac{(x + 4)^2}{36} + \\frac{(y - 1)^2}{81} = 1.\\]Thus, the center of the ellipse is $\\boxed{(-4,1)}.$\nFinal Answer: The final answer is $(-4,1)$I hope it is correct.",
         "output": "We have\n\n\\begin{align*}\n9x^2 + 72x + 4y^2 - 8y - 176 &= 0\\\\\n\\Rightarrow 9(x^2 + 8x) + 4(y^2 - 2y) &= 176\\\\\n\\Rightarrow 9(x^2 + 8x + 16 - 16) + 4(y^2 - 2y + 1 - 1) &= 176\\\\\n\\Rightarrow 9(x^2 + 8x + 16) - 9\\cdot 16 + 4(y^2 - 2y + 1) - 4\\cdot1 &= 176\\\\\n\\Rightarrow 9(x + 4)^2 + 4(y - 1)^2 - 144 - 4 &= 176\\\\\n\\Rightarrow 9(x + 4)^2 + 4(y - 1)^2 &= 176 + 144 + 4\\\\\n\\Rightarrow 9(x + 4)^2 + 4(y - 1)^2 &= 324\\\\\n\\Rightarrow \\frac{(x + 4)^2}{36} + \\frac{(y - 1)^2}{81} &= 1.\n\\end{align*}\nThe center of the ellipse is $(-4, 1)$. Final Answer: The final answer is $(-4,1)$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -621,7 +621,7 @@ export default {
         "target": "We know that magnitudes of complex numbers are multiplicative: the magnitude of $|ab|$ is the product $|a|\\cdot |b|$. Thus, \\[\\left|\\left(1-i\\right)^8\\right|=\\left|1-i\\right|^8\\]The magnitude of $1-i$ is $\\sqrt{1^2+(-1)^2}=\\sqrt{2}$; thus our answer is $\\left(\\sqrt{2}\\right) ^8=\\boxed{16}$. Ringo didn't give much of a reprieve.\nFinal Answer: The final answer is $16$I hope it is correct.",
         "output": "We have that \\[|(1-i)^8|=|(1-i)^4|^2=|(1-2i-1)^2|^2=|4i^2|^2=\\boxed{16}.\\]\nFinal Answer: The final answer is $16$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -635,7 +635,7 @@ export default {
         "target": "Dividing by $36$ gives the standard form of the equation of this ellipse, \\[\\frac{x^2}{4} + \\frac{y^2}{36} = 1.\\]Then, the semimajor and semiminor axes have lengths $\\sqrt{36} = 6$ and $\\sqrt{4} = 2,$ respectively. By the area formula for an ellipse, the area of the ellipse is $6 \\cdot 2 \\cdot \\pi = \\boxed{12\\pi}.$\nFinal Answer: The final answer is $12\\pi$I hope it is correct.",
         "output": "The ellipse is given by the equation $9x^2 + y^2 = 36$, which can be rewritten as $\\frac{x^2}{4} + \\frac{y^2}{36} = 1$. By comparing the equation with $\\frac{x^2}{a^2} + \\frac{y^2}{b^2} = 1$, we obtain $a = 2$ and $b = 6$.\n\nThe area of the ellipse is $\\pi ab = \\pi \\cdot 2 \\cdot 6 = \\boxed{12\\pi}$.\nFinal Answer: The final answer is $12\\pi$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -649,7 +649,7 @@ export default {
         "target": "Move every term to the left-hand side and factor to find \\begin{align*}\nx^3(x^2-x-72)&=0 \\\\\nx^3(x-9)(x+8)&=0 \\\\\nx^3(x-9)(x+8)&=0.\n\\end{align*}Setting $x^3=0$, $x-9=0$ and $x+8=0$, we find that there are $\\boxed{3}$ solutions: $x=0$, $x-9$ and $x=-8$.\nFinal Answer: The final answer is $3$I hope it is correct.",
         "output": "We have $x^5 = x^4 + 72x^3$. Subtracting $x^4 + 72x^3$ from both sides of the equation, we obtain $x^5 - x^4 - 72x^3 = 0$. Factoring out $x^3$ from both sides of the equation, we obtain $x^3(x^2 - x - 72) = 0$. We know that if $a\\cdot b=0$, then $a=0$ or $b=0$. Therefore, $x^3=0$ or $x^2 - x - 72=0$. If $x^3=0$, then $x=0$. If $x^2 - x - 72=0$, then $x=\\frac{1\\pm\\sqrt{1+288}}{2}$. Simplifying the expression, we obtain $x=\\frac{1\\pm 17}{2}$. Therefore, the solutions are $x=0$, $x=8$, and $x=-8$. Therefore, there are 3 different values of $x$.\n\nFinal Answer: The final answer is $3$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -663,7 +663,7 @@ export default {
         "target": "Note that\n\\[n^2 - 10n + 29 = (n - 5)^2 + 4 > (n - 5)^2.\\]We also claim that $n^2 - 10n + 29 < (n - 4)^2.$  Expanding, we get\n\\[n^2 - 10n + 29 < n^2 - 8n + 16,\\]which is equivalent to $2n > 13.$  This certainly holds for $n = 19941994.$\n\nHence,\n\\[(n - 5)^2 < n^2 - 10n + 29 < (n - 4)^2,\\]so $n - 5 < \\sqrt{n^2 - 10n + 29} < n - 4,$ which means that\n\\[\\lfloor \\sqrt{n^2 - 10n + 29} \\rfloor = n - 5 = \\boxed{19941989}.\\]\nFinal Answer: The final answer is $19941989$I hope it is correct.",
         "output": "We have that\n\n$$n^2 - 10n + 29 = (n-5)^2 + 4 = (n-5)^2 + 2^2.$$\nTherefore, $$\\lfloor \\sqrt{n^2 - 10n + 29} \\rfloor = \\lfloor \\sqrt{(n-5)^2 + 2^2} \\rfloor = n-5 = \\boxed{19941989}.$$\nFinal Answer: The final answer is $19941989$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -677,7 +677,7 @@ export default {
         "target": "Since the root $5-4i$ is nonreal but the coefficients of the quadratic are real, the roots must form a conjugate pair. Therefore, the other root is $\\overline{5-4i} = 5+4i.$\n\nTo find the quadratic, we can note that the sum of the roots is $5-4i+5+4i=10$ and the product is $(5-4i)(5+4i) = 25+16=41.$ Then by Vieta's formulas, we know that the quadratic $\\boxed{x^2-10x+41}$ has $5-4i$ as a root.\nFinal Answer: The final answer is $x^2-10x+41$I hope it is correct.",
         "output": "If $5-4i$ is a root, then so is $5+4i$.  The sum of the roots is $5-4i+5+4i=10$, and the product of the roots is $(5-4i)(5+4i)=25+16=41$.  The quadratic is\n\n$$x^2-10x+41.$$\nFinal Answer: The final answer is $x^2-10x+41$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -691,7 +691,7 @@ export default {
         "target": "We can write the given equation as\n\\[\\log_{10} 2^a + \\log_{10} 3^b + \\log_{10} 5^c + \\log_{10} 7^d = 2005.\\]Then\n\\[\\log_{10} (2^a \\cdot 3^b \\cdot 5^c \\cdot 7^d) = 2005,\\]so $2^a \\cdot 3^b \\cdot 5^c \\cdot 7^d = 10^{2005}.$\n\nSince $a,$ $b,$ $c,$ $d$ are all rational, there exists some positive integer $M$ so that $aM,$ $bM,$ $cM,$ $dM$ are all integers.  Then\n\\[2^{aM} \\cdot 3^{bM} \\cdot 5^{cM} \\cdot 7^{dM} = 10^{2005M} = 2^{2005M} \\cdot 5^{2005M}.\\]From unique factorization, we must have $aM = 2005M,$ $bM = 0,$ $cM = 2005M,$ and $dM = 0.$  Then $a = 2005,$ $b = 0,$ $c = 2005,$ and $d = 0.$  Thus, there is only $\\boxed{1}$ quadruple, namely $(a,b,c,d) = (2005,0,2005,0).$\nFinal Answer: The final answer is $1$I hope it is correct.",
         "output": "We have that $\\log_{10}2, \\log_{10}3, \\log_{10}5, \\log_{10}7$ are linearly independent over the rational numbers.  Therefore, we can write \\[\\log_{10}2005 = a \\log_{10}2 + b \\log_{10}3 + c \\log_{10}5 + d \\log_{10}7\\] for some rational numbers $a, b, c, d$.  Since $\\log_{10}2005$ is fixed, there is only one solution.  Therefore, the answer is \\boxed{1}.\nFinal Answer: The final answer is $1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -705,7 +705,7 @@ export default {
         "target": "Let $a = \\sqrt{t - 3}.$  Then $a^2 = t - 3,$ so $t = a^2 + 3.$  Then\n\\[\\frac{t}{\\sqrt{t - 3}} = \\frac{a^2 + 3}{a} = a + \\frac{3}{a}.\\]By AM-GM,\n\\[a + \\frac{3}{a} \\ge 2 \\sqrt{3}.\\]Equality occurs when $a = \\sqrt{3},$ or $t = 6,$ so the minimum value is $\\boxed{2 \\sqrt{3}}.$\nFinal Answer: The final answer is $2 \\sqrt{3}$I hope it is correct.",
         "output": "Let $f(t)=\\frac{t}{\\sqrt{t-3}}$.\n\n\\begin{align*}\nf'(t)&=\\frac{1}{\\sqrt{t-3}}-\\frac{t}{2(t-3)^{3/2}}\\\\\n&=\\frac{2(t-3)-t}{2(t-3)^{3/2}}\\\\\n&=\\frac{t-6}{2(t-3)^{3/2}}.\n\\end{align*}\n\nWe see that $f'(t)<0$ for $t<6$ and $f'(t)>0$ for $t>6$.  Therefore, $f$ has a global minimum at $t=6$, with a minimum value of $f(6)=\\frac{6}{\\sqrt{6-3}}=\\boxed{2\\sqrt{3}}$.\n\nFinal Answer: The final answer is $2\\sqrt{3}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -719,7 +719,7 @@ export default {
         "target": "By the Remainder Theorem, $p(1) = 3,$ and $p(3) = 5.$\n\nLet $q(x)$ and $ax + b$ be the quotient and remainder, respectively, when the polynomial $p(x)$ is divided by $(x - 1)(x - 3),$ so\n\\[p(x) = (x - 1)(x - 3) q(x) + ax + b.\\]Setting $x = 1,$ we get $p(1) = a + b,$ so $a + b = 3.$  Setting $x = 3,$ we get $p(3) = 3a + b,$ so $3a + b = 5.$  Solving, we find $a = 1$ and $b = 2.$\n\nTherefore, the remainder is $\\boxed{x + 2}.$\nFinal Answer: The final answer is $x + 2$I hope it is correct.",
         "output": "By the remainder theorem, we have that $p(1)=3$ and $p(3)=5$.  If $p(x)$ is divided by $(x-1)(x-3),$ then the remainder is a polynomial of degree 1, say $ax+b$.  So we have $$p(x)=(x-1)(x-3)q(x)+ax+b$$ for some polynomial $q(x)$.  Substituting $x=1$ and $x=3$ into this equation yields the system \\begin{align*}\np(1)&=a\\cdot 1+b=3\\\\\np(3)&=a\\cdot 3+b=5\n\\end{align*}\nwhich can be solved for $a$ and $b$ by subtracting the equations to obtain $2a=2$, so $a=1$, and then substituting this back into the first equation to obtain $b=2$.  Thus the remainder is $ax+b=x+2$.\nFinal Answer: The final answer is $x+2$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -733,7 +733,7 @@ export default {
         "target": "Note that $0=(x+y+z)^2=x^2+y^2+z^2+2xy+2yz+2zx$. Rearranging, we get that $xy+yz+zx=-\\frac{1}{2}(x^2+y^2+z^2)$, so that in fact the quantity is always equal to $\\boxed{-\\frac{1}{2}}$.\nFinal Answer: The final answer is $-\\frac{1}{2}$I hope it is correct.",
         "output": "The expression $\\frac{xy+yz+zx}{x^2+y^2+z^2}$ is equivalent to\n\n$$\\frac{xy+yz+zx}{x^2+y^2+z^2}=\\frac{y(x+z)}{x^2+y^2+z^2}+\\frac{zx}{x^2+y^2+z^2}=\\frac{y(-y)}{x^2+y^2+z^2}+\\frac{zx}{x^2+y^2+z^2}=\\frac{-y^2+zx}{x^2+y^2+z^2}.$$\n\nIf we let $x=-1$, $y=1$, and $z=0$, we obtain\n\n$$\\frac{xy+yz+zx}{x^2+y^2+z^2}=\\frac{-y^2+zx}{x^2+y^2+z^2}=\\frac{-1+0}{1+1+0}=\\frac{-1}{2}=-\\frac{1}{2}.$$\n\nWe will now prove that this is the maximum possible value. Suppose for the sake of contradiction that $\\frac{xy+yz+zx}{x^2+y^2+z^2}<-\\frac{1}{2}$. Then $-y^2+zx<-\\frac{1}{2}(x^2+y^2+z^2)$, so $y^2>\\frac{1}{2}(x^2+y^2+z^2)$. Then $y^2>y^2$, which is a contradiction. Therefore, the maximum possible value is $\\boxed{-\\frac{1}{2}}.$\nFinal Answer: The final answer is $-\\frac{1}{2}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -747,7 +747,7 @@ export default {
         "target": "Since $x = a$ is a root of $x^2 + ax + b = 0,$\n\\[a^2 + a^2 + b = 0,\\]or $2a^2 + b = 0,$ so $b = -2a^2.$\n\nSince $x = b$ is a root of $x^2 + ax + b = 0,$\n\\[b^2 + ab + b = 0.\\]This factors as $b(b + a + 1) = 0,$ so $b = 0$ or $a + b + 1 = 0.$\n\nIf $b = 0,$ then $-2a^2 = 0,$ so $a = 0.$\n\nIf $a + b + 1 = 0,$ then $-2a^2 + a + 1 = 0.$  This equation factors as $-(a - 1)(2a + 1) = 0,$ so $a = 1$ or $a = -\\frac{1}{2}.$  If $a = 1,$ then $b = -2.$  If $a = -\\frac{1}{2},$ then $b = -\\frac{1}{2}.$\n\nTherefore, there are $\\boxed{3}$ ordered pairs $(a,b),$ namely $(0,0),$ $(1,-2),$ and $\\left( -\\frac{1}{2}, -\\frac{1}{2} \\right).$\nFinal Answer: The final answer is $3$I hope it is correct.",
         "output": "Since $a$ is a root of $x^2 + ax + b = 0,$ we know that\n\n$$a^2 + a^2 + b = 0\\Rightarrow 2a^2 + b = 0\\Rightarrow b = -2a^2.$$Similarly, since $b$ is a root of $x^2 + ax + b = 0,$ we know that\n\n$$b^2 + ab + b = 0\\Rightarrow b(b+a+1)=0\\Rightarrow b=0\\text{ or }b+a+1=0.$$If $b=0$, then $-2a^2=0\\Rightarrow a=0$.  If $b+a+1=0$, then $-2a^2+a+1=0\\Rightarrow 2a^2-a-1=0\\Rightarrow (2a+1)(a-1)=0$.  So, $a=-\\frac{1}{2}$ or $a=1$.  If $a=-\\frac{1}{2}$, then $b=-2(-\\frac{1}{2})^2=-\\frac{1}{2}$.  If $a=1$, then $b=-2(1)^2=-2$.  So, the ordered pairs are $(0,0), (1,-2),$ and $(-\\frac{1}{2},-\\frac{1}{2})$.  There are 3 ordered pairs.\n\nFinal Answer: The final answer is $3$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -761,7 +761,7 @@ export default {
         "target": "Consider the polynomial\n\\begin{align*}\np(x) &= \\frac{a^3 (x - b)(x - c)(x - d)(x - e)}{(a - b)(a - c)(a - d)(a - e)} + \\frac{b^3 (x - a)(x - c)(x - d)(x - e)}{(b - a)(b - c)(b - d)(b - e)} \\\\\n&\\quad + \\frac{c^3 (x - a)(x - b)(x - d)(x - e)}{(c - a)(c - b)(c - d)(c - e)} + \\frac{d^3 (x - a)(x - b)(x - c)(x - e)}{(d - a)(d - b)(d - c)(d - e)} \\\\\n&\\quad + \\frac{e^3 (x - a)(x - b)(x - c)(x - d)}{(e - a)(e - b)(e - c)(e - d)}.\n\\end{align*}Note that $p(x)$ is a polynomial of degree at most 4.  Also, $p(a) = a^3,$ $p(b) = b^3,$ $p(c) = c^3,$ $p(d) = d^3,$ and $p(e) = e^3.$  Since the polynomial $p(x)$ and $x^3$ agree at five different values, by the Identity Theorem, they are the same polynomial.\n\nThe expression given in the problem is the coefficient of $x^4$ in $p(x),$ which is then $\\boxed{0}.$\nFinal Answer: The final answer is $0$I hope it is correct.",
         "output": "We have that\n\\begin{align*}\n&\\frac{a^3}{(a - b)(a - c)(a - d)(a - e)} + \\frac{b^3}{(b - a)(b - c)(b - d)(b - e)} \\\\\n&\\quad + \\frac{c^3}{(c - a)(c - b)(c - d)(c - e)} + \\frac{d^3}{(d - a)(d - b)(d - c)(d - e)} \\\\\n&\\quad + \\frac{e^3}{(e - a)(e - b)(e - c)(e - d)} \\\\\n&= \\frac{a^3 + b^3 + c^3 + d^3 + e^3}{(a - b)(a - c)(a - d)(a - e)(b - c)(b - d)(b - e)(c - d)(c - e)(d - e)}.\n\\end{align*}\nNow, if we multiply the equation $x^5 + 7x^4 - 2 = 0$ by $x^3$, we obtain\n$$x^8 + 7x^7 - 2x^3 = 0.$$\nBy Vieta's formulas, we have that\n$$a^3 + b^3 + c^3 + d^3 + e^3 = 0.$$\nHence,\n\\begin{align*}\n\\frac{a^3 + b^3 + c^3 + d^3 + e^3}{(a - b)(a - c)(a - d)(a - e)(b - c)(b - d)(b - e)(c - d)(c - e)(d - e)} &= \\boxed{0}.\n\\end{align*}\nFinal Answer: The final answer is $0$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -775,7 +775,7 @@ export default {
         "target": "The condition for line $m$ is that each of the three points lies at an equal distance from the line as from some fixed point; in other words, the line is the directrix of a parabola containing the three points, and the fixed point is the focus.\n\n[asy]\nunitsize (1 cm);\n\nreal func (real x) {\n  return(x^2/4);\n}\n\nreal a, b, c;\npair A, B, C, F;\n\na = -2; b = 1.5; c = 3;\nA = (a,func(a));\nB = (b,func(b));\nC = (c,func(c));\nF = (0,1);\n\ndraw(graph(func,-4,5),red);\ndraw(Circle(A,abs(A - F)));\ndraw(Circle(B,abs(B - F)));\ndraw(Circle(C,abs(C - F)));\ndraw((-4,-1)--(6,-1));\ndraw(A--F,dashed);\ndraw(B--F,dashed);\ndraw(C--F,dashed);\ndraw(A--(a,-1),dashed);\ndraw(B--(b,-1),dashed);\ndraw(C--(c,-1),dashed);\ndraw((-3,-2)--(-3,5.5));\n\nlabel(\"$m$\", (6,-1), E);\nlabel(\"$\\ell$\", (-3,5.5), N);\n\ndot(A);\ndot(B);\ndot(C);\n[/asy]\n\nThree noncollinear points in the coordinate plane determine a quadratic polynomial in $x$ unless two of the points have the same $x$-coordinate. Therefore, given the direction of the directrix, three noncollinear points determine a parabola, unless two of the points lie on a line perpendicular to the directrix. This case is ruled out by the given condition, so the answer is $\\boxed{1}$.\nFinal Answer: The final answer is $1$I hope it is correct.",
         "output": "The only possible value for $n$ is $\\boxed{1}.$\nFinal Answer: The final answer is $1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -789,7 +789,7 @@ export default {
         "target": "We note that this is a difference of squares, so $513^2 - 487^2 = (513+487)(513-487) = (1000)(26) = \\boxed{26000}$.\nFinal Answer: The final answer is $26000$I hope it is correct.",
         "output": "We have\n$$513^2 - 487^2 = (513-487)(513+487) = (26)(1000) = \\boxed{26000}.$$\nFinal Answer: The final answer is $26000$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -803,7 +803,7 @@ export default {
         "target": "We can evaluate directly or we can use the difference of squares factorization: $(x+y)(x-y) = x^2-y^2 = 13^2-5^2 = 169-25 =\\boxed{144}$.\nFinal Answer: The final answer is $144$I hope it is correct.",
         "output": "We have that $(x+y)(x-y) = x^2 - y^2$, so we can substitute $x=13$ and $y = 5$ to get $13^2 - 5^2 = 169 - 25 = \\boxed{144}.$\nFinal Answer: The final answer is $144$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -817,7 +817,7 @@ export default {
         "target": "We need 8 fish per cubic meter.  We have 600 fish, so we have $600/8 = 75$ groups of 8 fish, which means we need $\\boxed{75}$ cubic meters of water.\nFinal Answer: The final answer is $75$I hope it is correct.",
         "output": "If there are 8 fish per cubic meter, then the number of fish is 8 times the number of cubic meters. If we let $n$ be the number of cubic meters, then we have $8n=600$, so $n=\\frac{600}{8}=\\boxed{75}$.\nFinal Answer: The final answer is $75$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -831,7 +831,7 @@ export default {
         "target": "Cross-multiplication gives  \\[9-4x=7x+42.\\]Simplifying this expression tells us $-11x=33$ or  \\[x=\\boxed{-3}.\\]\nFinal Answer: The final answer is $-3$I hope it is correct.",
         "output": "We have\n\\begin{align*}\n\\frac{9-4x}{x+6}&=7\\\\\n\\Rightarrow\\qquad9-4x&=7x+42\\\\\n\\Rightarrow\\qquad-11x&=33\\\\\n\\Rightarrow\\qquad x&=\\boxed{-3}\n\\end{align*}\nFinal Answer: The final answer is $-3$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -845,7 +845,7 @@ export default {
         "target": "$(9-4i)- (-3-4i) = 9-4i +3 +4i = (9+3) + (-4i+4i) = \\boxed{12}$.\nFinal Answer: The final answer is $12$I hope it is correct.",
         "output": "We have that $$(9-4i)-(-3-4i)=9-4i+3+4i=\\boxed{12}.$$\nFinal Answer: The final answer is $12$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -859,7 +859,7 @@ export default {
         "target": "We are asked to apply the function $f$ to the number $g(2)$.  First, we need to find $g(2)$.  We substitute $x=2$ into the expression given for $g$ to find that $g(2)=2^2+3=7$.  Then we substitute $x=7$ into the expression for $f$ to find $f(7)=7+1=\\boxed{8}$.\nFinal Answer: The final answer is $8$I hope it is correct.",
         "output": "We have that $g(2) = 2^2 + 3 = 7$.  Since $f(x) = x + 1$, we have that $f(g(2)) = f(7) = 7 + 1 = \\boxed{8}$.\nFinal Answer: The final answer is $8$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -873,7 +873,7 @@ export default {
         "target": "If we substitute $f^{-1}(x)$ into our expression for $f$ we get  \\[f(f^{-1}(x))=4(f^{-1}(x))^3+1.\\]This reduces to  \\[x=4(f^{-1}(x))^3+1.\\]If we solve for $f^{-1}(x)$, we find that $f^{-1}(x)=\\sqrt[3]{\\frac{x-1}{4}}$. Therefore, $f^{-1}(33)=\\sqrt[3]{\\frac{33-1}{4}}=\\sqrt[3]8=\\boxed{2}$.\nFinal Answer: The final answer is $2$I hope it is correct.",
         "output": "If $f(x)=4x^3+1$, then $f^{-1}(x)=\\sqrt[3]{\\frac{x-1}{4}}$.  Hence, $f^{-1}(33)=\\sqrt[3]{\\frac{33-1}{4}}=\\sqrt[3]{8}=\\boxed{2}.$\nFinal Answer: The final answer is $2$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -887,7 +887,7 @@ export default {
         "target": "We could solve the equation by noting that we must have $x+3 = 6$ or $x+3 = -6$, so $x=3$ or $x=-9$.  Or, we could be a little crafty and write the equation as $|x-(-3)| = 6$, which tells us that $x$ is 6 away from $-3$ on the number line.  This means that $x$ is $-9$ or 3.  Either way, the positive difference between the solutions is $3-(-9) = \\boxed{12}$.\nFinal Answer: The final answer is $12$I hope it is correct.",
         "output": "We have $x+3=6$ or $x+3=-6$.  The first equation gives $x=3$, and the second gives $x=-9$.  Therefore, the positive difference is $3-(-9)=\\boxed{12}$.\nFinal Answer: The final answer is $12$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -901,7 +901,7 @@ export default {
         "target": "$-3(1+4i)+i(-2-i) = -3-12i -2i - i^2 = -3 -12i-2i +1 = -2-14i = \\boxed{-2-14i}$.\nFinal Answer: The final answer is $-2-14i$I hope it is correct.",
         "output": "We have that\n\\begin{align*}\n-3(1+4i)+i(-2-i)&=-3\\cdot1-3\\cdot4i-2i-i^2\\\\\n&=-3-12i-2i+1\\\\\n&=-2-14i.\n\\end{align*}\n\nFinal Answer: The final answer is $-2-14i$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -915,7 +915,7 @@ export default {
         "target": "Using the distributive property, we have \\begin{align*}\n&(2x^5 + 3x^2)(x^4 - 4x^2 + 3x - 8) \\\\\n&\\qquad= 2x^5(x^4 - 4x^2 + 3x - 8) + 3x^2(x^4 - 4x^2 + 3x - 8) \\\\\n&\\qquad= 2x^9 - 8x^7 + 6x^6 - 16x^5 + 3x^6 - 12x^4 + 9x^3 - 24x^2 \\\\\n&\\qquad= \\boxed{2x^9 - 8x^7 + 9x^6 - 16x^5 - 12x^4 + 9x^3 - 24x^2}.\n\\end{align*}\nFinal Answer: The final answer is $2x^9 - 8x^7 + 9x^6 - 16x^5 - 12x^4 + 9x^3 - 24x^2$I hope it is correct.",
         "output": "We have that \\begin{align*}\n(2x^5 + 3x^2)(x^4 - 4x^2 + 3x - 8) &= 2x^5(x^4 - 4x^2 + 3x - 8) + 3x^2(x^4 - 4x^2 + 3x - 8)\\\\\n&= 2x^9 - 8x^7 + 6x^6 - 16x^5 + 3x^6 - 12x^4 + 9x^3 - 24x^2\\\\\n&= \\boxed{2x^9 - 8x^7 + 9x^6 - 16x^5 - 12x^4 + 9x^3 - 24x^2}\n\\end{align*}\nFinal Answer: The final answer is $2x^9 - 8x^7 + 9x^6 - 16x^5 - 12x^4 + 9x^3 - 24x^2$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -929,7 +929,7 @@ export default {
         "target": "Let the larger square be $x^2$, and the smaller one be $(x-2)^2$.  Their difference is\n\n$$x^2-(x-2)^2=(x-(x-2))(x+(x-2))=2(2x-2)=4(x-1)$$Thus, $4(x-1)=268\\Rightarrow x-1=67$.\n\nSo $x=68$ and the answer is $68^2=\\boxed{4624}$.\nFinal Answer: The final answer is $4624$I hope it is correct.",
         "output": "Let $x$ and $x+2$ be the two consecutive even perfect squares. We have that $x^2 - (x+2)^2 = 268$, which simplifies to $-4x - 4 = 268$. Solving for $x$, we get $x = -68$. The larger of the two squares is then $(x+2)^2 = (-68 + 2)^2 = \\boxed{4624}.$\nFinal Answer: The final answer is $4624$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -943,7 +943,7 @@ export default {
         "target": "The median of a set of consecutive positive integers is equal to the mean of the set of integers.  Therefore, we can find the median by dividing the sum by the number of integers: $3^7/3^3=3^4=\\boxed{81}$.\nFinal Answer: The final answer is $81$I hope it is correct.",
         "output": "Let $x$ be the first integer. Then, the 27 consecutive positive integers are $x, x+1, x+2, ..., x+26$. We are given that their sum is $3^7$. Therefore, we have:\n\n\\begin{align*}\nx+x+1+x+2+...+x+26&=3^7\\\\\n\\Rightarrow\\qquad 27x+351&=2187\\\\\n\\Rightarrow\\qquad 27x&=2187-351=\\boxed{1836}\\\\\n\\Rightarrow\\qquad x&=1836/27=\\boxed{68}\n\\end{align*}\nThe median is the 14th term of the arithmetic sequence, which is $x+13=68+13=\\boxed{81}$.\nFinal Answer: The final answer is $81$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -957,7 +957,7 @@ export default {
         "target": "We have $x$ in the domain of $f(x)$ as long as the denominator, $(3x-9)(3x+6)$, is nonzero. This is true for all $x$ except the solutions to the equations $3x-9=0$ and $3x+6=0$. These solutions are $x=3$ and $x=-2$, respectively.\n\nTherefore, the domain of $f(x)$ is all real numbers except $3$ and $-2$. Expressed as a union of intervals, the domain is $\\boxed{(-\\infty,-2)\\cup (-2,3)\\cup (3,\\infty)}$.\nFinal Answer: The final answer is $(-\\infty,-2)\\cup (-2,3)\\cup (3,\\infty)$I hope it is correct.",
         "output": "The domain is all real numbers except for those that make the denominator zero. We have\n\n$$(3x-9)(3x+6)=0\\Rightarrow x=-2,3.$$Therefore, the domain is all real numbers except for $x=-2,3$. In interval notation, this is written as\n\n$$\\boxed{(-\\infty,-2)\\cup(-2,3)\\cup(3,\\infty)}.$$\nFinal Answer: The final answer is $(-\\infty,-2)\\cup(-2,3)\\cup(3,\\infty)$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -971,7 +971,7 @@ export default {
         "target": "We complete the square.  First, we factor 3 out of the terms $3x^2 + x$ to get $3 \\left( x^2 + \\frac{x}{3} \\right)$.  We can square $x + \\frac{1}{6}$ to get $x^2 + \\frac{x}{3} + \\frac{1}{36}$, so \\begin{align*}\n3 \\left( x^2 + \\frac{x}{3} \\right) &= 3 \\left[ \\left( x + \\frac{1}{6} \\right)^2 - \\frac{1}{36} \\right]\\\\\n&= 3 \\left( x + \\frac{1}{6} \\right)^2 - \\frac{3}{36}\\\\\n& = 3 \\left( x + \\frac{1}{6} \\right)^2 - \\frac{1}{12},\\end{align*}and \\begin{align*}3 \\left( x^2 + \\frac{x}{3} \\right) - 4 &= 3 \\left( x + \\frac{1}{6} \\right)^2 - \\frac{1}{12} - 4\\\\\n& = 3 \\left( x + \\frac{1}{6} \\right)^2 - \\frac{49}{12}.\\end{align*}We see that $k = \\boxed{-\\frac{49}{12}}$.\nFinal Answer: The final answer is $-\\frac{49}{12}$I hope it is correct.",
         "output": "We will need to complete the square on the given expression. We have\n\n\\begin{align*}\n3x^2 + x - 4 &= 3(x^2 + \\frac{1}{3}x) - 4\\\\\n&= 3(x^2 + \\frac{1}{3}x + \\frac{1}{36}) - 4 - \\frac{1}{12}\\\\\n&= 3(x + \\frac{1}{6})^2 - \\frac{49}{12}\\\\\n&= 3(x - (-\\frac{1}{6}))^2 + (-\\frac{49}{12})\n\\end{align*}\nTherefore, $k=-\\frac{49}{12}$.\nFinal Answer: The final answer is $-\\frac{49}{12}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -985,7 +985,7 @@ export default {
         "target": "The store's revenue is given by: number of books sold $\\times$ price of each book, or\n\\[p(120-3p)=120p-3p^2.\\]We want to maximize this expression by completing the square. We can factor out a $-3$ to get $-3(p^2-40p)$.\n\nTo complete the square, we add $(40/2)^2=400$ inside the parenthesis and subtract $-3\\cdot400=-1200$ outside. We are left with the expression\n\\[-3(p^2-40p+400)+1200=-3(p-20)^2+1200.\\]Note that the $-3(p-20)^2$ term will always be nonpositive since the perfect square is always nonnegative. Thus, the revenue is maximized when $-3(p-20)^2$ equals 0, which is when $p=20$. Thus, the store should charge $\\boxed{20}$ dollars for the book.\nFinal Answer: The final answer is $20$I hope it is correct.",
         "output": "The store's revenue is equal to the price of the book multiplied by the number of books sold. Thus, the store's revenue is $p(120-3p)=120p-3p^2$. This is a quadratic function, and the leading coefficient is negative, so the parabola opens downward. This means that the maximum revenue occurs at the vertex. To find the vertex, we use the formula $x=\\frac{-b}{2a}$, where $a=-3$ and $b=120$. Thus, the $x$-coordinate of the vertex is $\\frac{-120}{2(-3)}=20$. Since $p$ is the price of the book, it must be positive, so the price of the book should be $\\boxed{\\$20}$. Final Answer: The final answer is $\\$20$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -999,7 +999,7 @@ export default {
         "target": "Rotating the point $(1,0)$ about the origin by $90^\\circ$ counterclockwise gives us the point $(0,1)$, so $\\sin 90^\\circ = \\boxed{1}$.\nFinal Answer: The final answer is $1$I hope it is correct.",
         "output": "We know that $\\sin 90^\\circ = \\frac{\\text{opposite}}{\\text{hypotenuse}}$.  Looking at the unit circle, we see that $\\sin 90^\\circ = 1$.\nFinal Answer: The final answer is $1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -1013,7 +1013,7 @@ export default {
         "target": "Converting to degrees,\n\\[\\frac{3 \\pi}{2} = \\frac{180^\\circ}{\\pi} \\cdot \\frac{3 \\pi}{2} = 270^\\circ.\\]Since the cotangent function has period $180^\\circ,$ $\\cot 270^\\circ = \\cot (270^\\circ - 180^\\circ) = \\cot 90^\\circ = \\frac{\\cos 90^\\circ}{\\sin 90^\\circ} = \\boxed{0}.$\nFinal Answer: The final answer is $0$I hope it is correct.",
         "output": "We know that $\\cot \\frac{3 \\pi}{2} = \\frac{\\cos \\frac{3 \\pi}{2}}{\\sin \\frac{3 \\pi}{2}}.$ We also know that $\\cos \\frac{3 \\pi}{2} = 0$ and $\\sin \\frac{3 \\pi}{2} = -1$. Therefore, $\\cot \\frac{3 \\pi}{2} = \\boxed{\\frac{0}{-1} = 0}.$\nFinal Answer: The final answer is $0$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -1027,7 +1027,7 @@ export default {
         "target": "We know that $|a|\\cdot|b|=|ab|$, so  \\begin{align*}\n|4+2i|\\cdot|6-3i|&=|(4+2i)(6-3i)|\\\\\n&=|2\\cdot3(2+i)(2-i)|\\\\\n&=|2\\cdot3\\cdot5|\\\\\n&=30.\n\\end{align*}Therefore our answer is $\\boxed{30}$.\nFinal Answer: The final answer is $30$I hope it is correct.",
         "output": "We have that $|4+2i|=\\sqrt{4^2+2^2}=\\sqrt{20}=2\\sqrt{5}$ and $|6-3i|=\\sqrt{6^2+3^2}=\\sqrt{45}=3\\sqrt{5}$. Therefore, $|(4+2i)|\\cdot|(6-3i)|=(2\\sqrt{5})(3\\sqrt{5})=6\\cdot5=\\boxed{30}.$\nFinal Answer: The final answer is $30$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -1041,7 +1041,7 @@ export default {
         "target": "Since $\\tan \\frac{\\pi}{4} = 1,$ we know that $\\arctan 1 = \\frac{\\pi}{4}.$\n\nNow, consider the triangle in the $2 \\times 3$ grid below.\n\n[asy]\nunitsize(2 cm);\n\nfilldraw(arc((3,1),0.5,180 - aTan(1/3),180)--(3,1)--cycle,paleblue,white);\nfilldraw(arc((3,1),0.5,180,180 + aTan(1/2))--(3,1)--cycle,palered,white);\ndraw((0,0)--(3,0));\ndraw((0,1)--(3,1));\ndraw((0,2)--(3,2));\ndraw((0,0)--(0,2));\ndraw((1,0)--(1,2));\ndraw((2,0)--(2,2));\ndraw((3,0)--(3,2));\ndraw((0,2)--(1,0)--(3,1)--cycle);\n[/asy]\n\nThe red angle is equal to $\\arctan \\frac{1}{2},$ and the blue angle is equal to $\\arctan \\frac{1}{3}.$  Furthermore, the sides of the triangle are $\\sqrt{5},$ $\\sqrt{5},$ and $\\sqrt{10},$ so the triangle is a $45^\\circ$-$45^\\circ$-$90^\\circ$ triangle.  Therefore,\n\\[\\arctan 1 + \\arctan \\frac{1}{2} + \\arctan \\frac{1}{3} = \\frac{\\pi}{4} + \\frac{\\pi}{4} = \\boxed{\\frac{\\pi}{2}}.\\]\nFinal Answer: The final answer is $\\frac{\\pi}{2}$I hope it is correct.",
         "output": "We have that $\\arctan 1 = \\frac{\\pi}{4}$ and $\\arctan \\frac{1}{2} + \\arctan \\frac{1}{3} = \\arctan \\frac{\\frac{1}{2} + \\frac{1}{3}}{1 - \\frac{1}{6}} = \\arctan 1 = \\frac{\\pi}{4}.$  Therefore, $\\arctan 1 + \\arctan \\frac{1}{2} + \\arctan \\frac{1}{3} = \\boxed{\\frac{\\pi}{2}}.$\nFinal Answer: The final answer is $\\frac{\\pi}{2}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -1055,7 +1055,7 @@ export default {
         "target": "Taking the tangent of both sides, we get $\\tan (\\tan^{-1} x + \\tan^{-1} y) = \\tan \\frac{\\pi}{4} = 1.$  Then from the tangent addition formula,\n\\[\\frac{x + y}{1 - xy} = 1.\\]Then $x + y = 1 - xy,$ so $xy + x + y = \\boxed{1}.$\nFinal Answer: The final answer is $1$I hope it is correct.",
         "output": "We have\n\n$$\\tan^{-1} x + \\tan^{-1} y = \\frac{\\pi}{4}\\Rightarrow\\tan^{-1}\\left(\\frac{x+y}{1-xy}\\right)=\\frac{\\pi}{4}\\Rightarrow\\frac{x+y}{1-xy}=\\tan\\frac{\\pi}{4}\\Rightarrow\\frac{x+y}{1-xy}=1\\Rightarrow x+y=1-xy\\Rightarrow x+y+xy=1.$$\n\nTherefore,\n\n$$xy + x + y = 1.$$\n\nFinal Answer: The final answer is $1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -1069,7 +1069,7 @@ export default {
         "target": "From $\\sin^2 \\theta + \\sin \\theta = 1,$ $\\sin \\theta = 1 - \\sin^2 \\theta = \\cos^2 \\theta.$  Then $\\cos^4 \\theta = \\sin^2 \\theta,$ so\n\\[\\cos^4 \\theta + \\cos^2 \\theta = \\sin^2 \\theta + \\cos^2 \\theta = \\boxed{1}.\\]\nFinal Answer: The final answer is $1$I hope it is correct.",
         "output": "We have that $\\sin^2 \\theta + \\sin \\theta = 1.$  Subtracting $\\sin^2 \\theta$ from both sides and rearranging gives $\\sin \\theta = 1 - \\sin^2 \\theta = \\cos^2 \\theta.$  Then $\\cos^4 \\theta + \\cos^2 \\theta = \\cos^2 \\theta (\\cos^2 \\theta + 1) = \\sin \\theta (\\sin \\theta + 1) = \\sin^2 \\theta + \\sin \\theta = \\boxed{1}.$\nFinal Answer: The final answer is $1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -1083,7 +1083,7 @@ export default {
         "target": "Let\n\\[t = \\frac{x - 2}{3} = \\frac{y + 1}{4} = \\frac{z - 2}{12}.\\]Then $x = 3t + 2,$ $y = 4t - 1,$ and $z = 12t + 2.$  Substituting into $x - y + z = 5$ gives us\n\\[(3t + 2) - (4t - 1) + (12t + 2) = 5.\\]Solving, we find $t = 0.$  Thus, $(x,y,z) = \\boxed{(2,-1,2)}.$\nFinal Answer: The final answer is $(2,-1,2)$I hope it is correct.",
         "output": "The point of intersection of the line and the plane is the point that satisfies the equation of the line and the equation of the plane. Therefore, we need to find the point $(x,y,z)$ such that\n\\begin{align*}\n\\frac{x - 2}{3} &= \\frac{y + 1}{4} = \\frac{z - 2}{12} = r\\\\\nx - y + z &= 5\n\\end{align*}for some $r \\in \\mathbb{R}$.\n\nWe have that\n\\begin{align*}\n\\frac{x - 2}{3} &= \\frac{y + 1}{4} = \\frac{z - 2}{12} = r & \\Rightarrow\\qquad x &= 3r + 2,\\\\\n& & \\Rightarrow\\qquad y &= 4r - 1,\\\\\n& & \\Rightarrow\\qquad z &= 12r + 2.\n\\end{align*}\n\nSubstituting $x, y,$ and $z$ into the equation of the plane, we have\n\\begin{align*}\nx - y + z &= 5\\\\\n\\Rightarrow\\qquad 3r + 2 - (4r - 1) + (12r + 2) &= 5\\\\\n\\Rightarrow\\qquad 11r + 5 &= 5\\\\\n\\Rightarrow\\qquad 11r &= 0\\\\\n\\Rightarrow\\qquad r &= 0.\n\\end{align*}\n\nTherefore, the point of intersection is $(2, -1, 2).$\n\nFinal Answer: The final answer is $(2, -1, 2).$ I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -1097,7 +1097,7 @@ export default {
         "target": "From $\\bold v \\cdot \\bold v = \\bold v \\cdot \\binom20,$\n\\[\\mathbf{v} \\cdot \\mathbf{v} - \\mathbf{v} \\cdot \\begin{pmatrix} 2 \\\\ 0 \\end{pmatrix} = 0.\\]Then\n\\[\\mathbf{v} \\cdot \\left( \\mathbf{v} - \\begin{pmatrix} 2 \\\\ 0 \\end{pmatrix} \\right) = 0.\\]This tells us that the vectors $\\mathbf{v}$ and $\\mathbf{v} - \\begin{pmatrix} 2 \\\\ 0 \\end{pmatrix}$ are orthogonal.  In other words, the vector going from the origin to $\\mathbf{v}$ and the vector going from $\\begin{pmatrix} 2 \\\\ 0 \\end{pmatrix}$ to $\\mathbf{v}$ are orthogonal.\n\nIf $A = (0,0),$ $B = (2,0),$ and $V$ is the point corresponding to $\\mathbf{v},$ then $\\angle AVB = 90^\\circ.$  The set of such points $V$ is the circle with diameter $\\overline{AB},$ and the area of the circle is $\\boxed{\\pi}.$\n\n[asy]\nunitsize(2 cm);\n\npair A, B, V;\n\nV = (1,0) + dir(60);\nA = (0,0);\nB = (2,0);\n\ndraw((-0.5,0)--(2.5,0));\ndraw((0,-1)--(0,1));\ndraw(Circle((1,0),1),blue);\ndraw(A--V,red,Arrow(6));\ndraw(B--V,red,Arrow(6));\n\nlabel(\"$A$\", A, SW);\nlabel(\"$B$\", B, SE);\nlabel(\"$V$\", V, NE);\n[/asy]\nFinal Answer: The final answer is $\\pi$I hope it is correct.",
         "output": "We have that\n\n\\[\\mathbf{v} \\cdot \\mathbf{v} = \\mathbf{v} \\cdot \\begin{pmatrix} 2 \\\\ 0 \\end{pmatrix}\\]\n\n$$\\Rightarrow\\qquad \\mathbf{v} \\cdot \\mathbf{v} = 2v_1$$\n\n$$\\Rightarrow\\qquad v_1^2+v_2^2=2v_1$$\n\n$$\\Rightarrow\\qquad v_1^2-2v_1+v_2^2=0$$\n\n$$\\Rightarrow\\qquad (v_1-1)^2+v_2^2=1$$\n\nThis is an equation of a circle with radius 1 and center $(1,0)$.  Therefore, the area of the region contained in the curve is $\\boxed{\\pi}$.\nFinal Answer: The final answer is $\\pi$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -1111,7 +1111,7 @@ export default {
         "target": "Let $a = \\cos \\theta$ and $b = \\sin \\theta,$ so\n\\[\\frac{1}{a} + \\frac{1}{b} = \\sqrt{15}.\\]Then $\\frac{a + b}{ab} = \\sqrt{15},$ so\n\\[a + b = ab \\sqrt{15}.\\]Squaring both sides, we get\n\\[a^2 + 2ab + b^2 = 15a^2 b^2.\\]We know $a^2 + b^2 = \\cos^2 \\theta + \\sin^2 \\theta = 1,$ so\n\\[15a^2 b^2 - 2ab - 1 = 0.\\]This factors as $(3ab - 1)(5ab + 1) = 0,$ so $ab = \\frac{1}{3}$ or $ab = -\\frac{1}{5}.$\n\nIf $ab = \\frac{1}{3},$ then $a + b = ab \\sqrt{15} = \\frac{\\sqrt{15}}{3}.$  Then $a$ and $b$ are the roots of\n\\[t^2 - \\frac{\\sqrt{15}}{3} t + \\frac{1}{3} = 0.\\]We can check that both roots are real, and lie between $-1$ and 1.\n\nIf $ab = -\\frac{1}{5},$ then $a + b = ab \\sqrt{15} = -\\frac{\\sqrt{15}}{5}.$  Then $a$ and $b$ are the roots of\n\\[t^2 + \\frac{\\sqrt{15}}{5} t - \\frac{1}{5} = 0.\\]Again, we can check that both roots are real, and lie between $-1$ and 1.\n\nThus, there are four possible pairs $(a,b) = (\\cos \\theta, \\sin \\theta),$ where $a$ and $b$ are all between $-1$ and 1.  Each pair leads to a unique solution $\\theta \\in [0, 2 \\pi],$ so there are $\\boxed{4}$ solutions $\\theta.$\nFinal Answer: The final answer is $4$I hope it is correct.",
         "output": "We have\n\\[\\cos \\theta + \\sin \\theta = \\sqrt{15} \\cos \\theta \\sin \\theta\\]\n\\[(\\cos \\theta - \\sin \\theta)^2 + 2 \\cos \\theta \\sin \\theta = \\sqrt{15} \\cos \\theta \\sin \\theta\\]\n\\[(\\cos \\theta - \\sin \\theta)^2 + (\\sqrt{15} - 2) \\cos \\theta \\sin \\theta = 0.\\]\n\nNote that $\\cos \\theta - \\sin \\theta = 0$ does not lead to a solution.  Therefore, $\\cos \\theta \\sin \\theta = 0,$ which leads to $\\cos \\theta = 0$ or $\\sin \\theta = 0.$  This gives $\\theta = \\frac{\\pi}{2}, \\frac{3 \\pi}{2}, 0, \\pi.$  Hence, there are \\boxed{4} solutions.  Final Answer: The final answer is $4$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -1125,7 +1125,7 @@ export default {
         "target": "Once we realize to multiply the second equation by 4, the terms in the equations look very much like the expansion of $(x+y)^4$, with some negative signs appearing.  Closer inspection reveals that the two given equations are equivalent to the real and imaginary parts of a single statement involving complex numbers: \\[ (x+iy)^4 = 8 + 8i\\sqrt{3} = 16e^{\\pi i/3}. \\]In other words, we need only find the fourth root of $16e^{\\pi i/3}$ in the first quadrant, where $x$ and $y$ will both be positive.  Thus $x+iy=2e^{\\pi i/12}$; taking the real part yields our answer $x=2\\cos\\left(\\frac{\\pi}{12}\\right) = \\boxed{2\\cos 15^{\\circ}}$.\nFinal Answer: The final answer is $2\\cos 15^{\\circ}$I hope it is correct.",
         "output": "We will solve the second equation for $y$: \\[ y = \\frac{2\\sqrt{3}}{x^3-x}. \\]Substituting this into the first equation, we get \\[ x^4 - 6x^2\\left(\\frac{2\\sqrt{3}}{x^3-x}\\right)^2 + \\left(\\frac{2\\sqrt{3}}{x^3-x}\\right)^4 = 8. \\]Clearing denominators and moving everything to the left side, we obtain \\[ (x^3-x)^4(x^4-8)-24x^2(x^3-x)^2+24 = 0. \\]We can factor out a $x^2(x-1)^2$ from each term, obtaining \\[ x^2(x-1)^2(x^2-x-2)(x^2+x-2) = 0. \\]The only positive root of this equation is $x = 2\\cos15^\\circ$.\nFinal Answer: The final answer is $2\\cos15^\\circ$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -1139,7 +1139,7 @@ export default {
         "target": "We have that $\\mathbf{D} = \\begin{pmatrix} k & 0 \\\\ 0 & k \\end{pmatrix}$ and $\\mathbf{R} = \\begin{pmatrix} \\cos \\theta & -\\sin \\theta \\\\ \\sin \\theta & \\cos \\theta \\end{pmatrix},$ so\n\\[\\mathbf{D} \\mathbf{R} = \\begin{pmatrix} k & 0 \\\\ 0 & k \\end{pmatrix} \\begin{pmatrix} \\cos \\theta & -\\sin \\theta \\\\ \\sin \\theta & \\cos \\theta \\end{pmatrix} = \\begin{pmatrix} k \\cos \\theta & -k \\sin \\theta \\\\ k \\sin \\theta & k \\cos \\theta \\end{pmatrix}.\\]Thus, $k \\cos \\theta = -7$ and $k \\sin \\theta = -1.$  Then\n\\[k^2 \\cos^2 \\theta + k^2 \\sin^2 \\theta = 49 + 1 = 50,\\]which simplifies to $k^2 = 50.$  Since $k > 0,$ $k = \\sqrt{50} = \\boxed{5 \\sqrt{2}}.$\nFinal Answer: The final answer is $5 \\sqrt{2}$I hope it is correct.",
         "output": "We have\n\\[\\mathbf{D} \\mathbf{R} = \\begin{pmatrix} -7 & 1 \\\\ -1 & -7 \\end{pmatrix}.\\]\nWe also know that\n\\[\\mathbf{D} = \\begin{pmatrix} k & 0 \\\\ 0 & k \\end{pmatrix}.\\]\nWe have that $\\mathbf{D} \\mathbf{R} = (\\mathbf{D} \\mathbf{R})^T$, so we have\n\\[\\begin{pmatrix} k & 0 \\\\ 0 & k \\end{pmatrix}\\begin{pmatrix} \\cos\\theta & -\\sin\\theta \\\\ \\sin\\theta & \\cos\\theta \\end{pmatrix} = \\begin{pmatrix} \\cos\\theta & \\sin\\theta \\\\ -\\sin\\theta & \\cos\\theta \\end{pmatrix}\\begin{pmatrix} k & 0 \\\\ 0 & k \\end{pmatrix} = \\begin{pmatrix} k\\cos\\theta & k\\sin\\theta \\\\ -k\\sin\\theta & k\\cos\\theta \\end{pmatrix}.\\]\nWe have that $k\\cos\\theta = -7$ and $k\\sin\\theta = 1.$ Thus,\n\\[k^2\\cos^2\\theta + k^2\\sin^2\\theta = 49 + 1 = 50.\\]\nThis gives us that $k^2 = 50$, so $k = \\sqrt{50} = \\boxed{5\\sqrt{2}}.$\nFinal Answer: The final answer is $5\\sqrt{2}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -1153,7 +1153,7 @@ export default {
         "target": "Note that\n\\[\\mathbf{A}^2 = \\begin{pmatrix} 15 & 25 \\\\ -9 & -15 \\end{pmatrix} \\begin{pmatrix} 15 & 25 \\\\ -9 & -15 \\end{pmatrix} = \\begin{pmatrix} 0 & 0 \\\\ 0 & 0 \\end{pmatrix} = \\mathbf{0}.\\]Therefore, $\\mathbf{A}^n = \\mathbf{0}$ for all $n \\ge 2,$ which means\n\\begin{align*}\n\\mathbf{I} + 2 \\mathbf{A} + 3 \\mathbf{A}^2 + 4 \\mathbf{A}^3 + \\dotsb &= \\mathbf{I} + 2 \\mathbf{A} \\\\\n&= \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix} + 2 \\begin{pmatrix} 15 & 25 \\\\ -9 & -15 \\end{pmatrix} \\\\\n&= \\boxed{\\begin{pmatrix} 31 & 50 \\\\ -18 & -29 \\end{pmatrix}}.\n\\end{align*}\nFinal Answer: The final answer is $\\begin{pmatrix} 31 & 50 \\\\ -18 & -29 \\end{pmatrix}$I hope it is correct.",
         "output": "We have\n\\begin{align*}\n\\mathbf{A}^2 &= \\begin{pmatrix} 15 & 25 \\\\ -9 & -15 \\end{pmatrix} \\begin{pmatrix} 15 & 25 \\\\ -9 & -15 \\end{pmatrix} = \\begin{pmatrix} 0 & 0 \\\\ 0 & 0 \\end{pmatrix}.\n\\end{align*}\nTherefore, the given sum is\n\\begin{align*}\n\\mathbf{I} + 2 \\mathbf{A} + 3 \\mathbf{A}^2 + 4 \\mathbf{A}^3 + \\dotsb &= \\mathbf{I} + 2 \\mathbf{A} + 0 + 0 + \\dotsb \\\\\n&= \\mathbf{I} + 2 \\mathbf{A} = \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix} + 2 \\begin{pmatrix} 15 & 25 \\\\ -9 & -15 \\end{pmatrix} = \\boxed{\\begin{pmatrix} 31 & 50 \\\\ -18 & -29 \\end{pmatrix}}.\n\\end{align*}\nFinal Answer: The final answer is $\\begin{pmatrix} 31 & 50 \\\\ -18 & -29 \\end{pmatrix}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -1167,7 +1167,7 @@ export default {
         "target": "By Vieta's formulas, $\\tan A + \\tan B = -C$ and $\\tan A \\tan B = D.$  Then from the angle addition formula,\n\\[\\tan (A + B) = \\frac{\\tan A + \\tan B}{1 - \\tan A \\tan B} = -\\frac{C}{1 - D}.\\]We write the expression we are interested in, in terms of $\\tan (A + B)$:\n\\begin{align*}\n&\\sin^2 (A + B) + C \\sin (A + B) \\cos (A + B) + D \\cos^2 (A + B) \\\\\n&= \\cos^2 (A + B) \\tan^2 (A + B) + C \\cos^2 (A + B) \\tan (A + B) + D \\cos^2 (A + B) \\\\\n&= \\cos^2 (A + B) (\\tan^2 (A + B) + C \\tan (A + B) + D) \\\\\n&= \\frac{\\cos^2 (A + B)}{\\sin^2 (A + B) + \\cos^2 (A + B)} (\\tan^2 (A + B) + C \\tan (A + B) + D) \\\\\n&= \\frac{1}{\\tan^2 (A + B) + 1} \\cdot (\\tan^2 (A + B) + C \\tan (A + B) + D).\n\\end{align*}Then\n\\begin{align*}\n&\\frac{1}{\\tan^2 (A + B) + 1} \\cdot (\\tan^2 (A + B) + C \\tan (A + B) + D) \\\\\n&= \\frac{1}{(-\\frac{C}{1 - D})^2 + 1} \\cdot \\left( \\left( -\\frac{C}{1 - D} \\right)^2 - C \\cdot \\frac{C}{1 - D} + D \\right) \\\\\n&= \\frac{(1 - D)^2}{(1 - D)^2 + C^2} \\cdot \\frac{D (C^2 + (1 - D)^2)}{(1 - D)^2} \\\\\n&= \\boxed{D}.\n\\end{align*}\nFinal Answer: The final answer is $D$I hope it is correct.",
         "output": "We have that\n\\begin{align*}\n\\sin^2 (A + B) + C \\sin (A + B) \\cos (A + B) + D \\cos^2 (A + B)\n&=\\boxed{D}.\n\\end{align*}\nFinal Answer: The final answer is $D$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -1181,7 +1181,7 @@ export default {
         "target": "By the triple angle formula,\n\\[\\cos 3x = 4 \\cos^3 x - 3 \\cos x.\\]Setting $x = 20^\\circ,$ we get\n\\[\\cos 60^\\circ = 4 \\cos^3 20^\\circ - 3 \\cos 20^\\circ,\\]so $4 \\cos^3 20^\\circ - 3 \\cos 20^\\circ = \\frac{1}{2},$ or $8 \\cos^3 20^\\circ - 6 \\cos 20^\\circ - 1 = 0.$  Thus, $x = \\cos 20^\\circ$ is a root of $\\boxed{8x^3 - 6x - 1}.$\nFinal Answer: The final answer is $8x^3 - 6x - 1$I hope it is correct.",
         "output": "The polynomial is \\boxed{8x^3-6x-1}.\n\nFinal Answer: The final answer is $8x^3-6x-1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -1195,7 +1195,7 @@ export default {
         "target": "From $\\frac{\\sin (2A + B)}{\\sin B} = 5,$\n\\[\\sin (2A + B) = 5 \\sin B.\\]We can write this as $\\sin (A + (A + B)) = 5 \\sin ((A + B) - A),$ so from the angle addition and subtraction formula,\n\\[\\sin A \\cos (A + B) + \\cos A \\sin (A + B) = 5 \\sin (A + B) \\cos A - 5 \\cos (A + B) \\sin A.\\]Then\n\\[6 \\sin A \\cos (A + B) = 4 \\sin (A + B) \\cos A,\\]so\n\\[\\frac{\\sin (A + B) \\cos A}{\\cos (A + B) \\sin A} = \\frac{3}{2}.\\]In other words,\n\\[\\frac{\\tan (A + B)}{\\tan A} = \\boxed{\\frac{3}{2}}.\\]\nFinal Answer: The final answer is $\\frac{3}{2}$I hope it is correct.",
         "output": "We have that $\\frac{\\sin (2A + B)}{\\sin B} = \\frac{2\\sin A \\cos A + \\sin B}{\\sin B} = 5.$  Hence, $2\\sin A \\cos A + \\sin B = 5\\sin B$.  Dividing by $\\sin B$, we have $2\\sin A \\cot B + 1 = 5$.  Hence, $2\\sin A \\cot B = 4$, so $\\sin A \\cot B = 2$.  Dividing both sides by $\\sin A$, we have $\\cot B = \\frac{2}{\\sin A}$.  Taking the reciprocal of both sides, we have $\\tan B = \\frac{\\sin A}{2}$.  Thus, $\\frac{\\tan (A + B)}{\\tan A} = \\frac{\\tan A + \\tan B}{\\tan A} = \\frac{\\tan A + \\frac{\\sin A}{2}}{\\tan A} = \\boxed{\\frac{3}{2}}.$\nFinal Answer: The final answer is $\\frac{3}{2}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -1209,7 +1209,7 @@ export default {
         "target": "$54 = 9 \\cdot 6 + 0 \\Rightarrow 54 \\equiv \\boxed{0} \\pmod{6}$.\nFinal Answer: The final answer is $0$I hope it is correct.",
         "output": "Since 54=9(6), the remainder of 54 (mod 6) is $\\boxed{0}$.\nFinal Answer: The final answer is $0$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -1223,7 +1223,7 @@ export default {
         "target": "Grouping residues helps make some series computations easier:  \\begin{align*}\n1 + 2 + 3 + 0 + 1 + 2& + 3 + 0 + 1 + 2 + 3 + 0\\\\&\\equiv 3(1 + 2 + 3 + 0) \\\\\n&\\equiv 18\\\\\n& \\equiv \\boxed{2} \\pmod{4}.\n\\end{align*}\nFinal Answer: The final answer is $2$I hope it is correct.",
         "output": "We will use the fact that $a + b \\equiv (a + b) \\pmod{m}$ and that $a + m \\equiv a \\pmod{m}$.\n\n\\begin{align*}\n1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12 &\\equiv (1 + 2 + 3 + 4) + 5 + (6 + 8) + 9 + (10 + 12) + 11\\\\\n&\\equiv (1 + 2 + 3 + 4) + 5 + 6 + 9 + 12 + 11\\\\\n&\\equiv 5 + 5 + 6 + 9 + 12 + 11\\\\\n&\\equiv 10 + 6 + 9 + 12 + 11\\\\\n&\\equiv 6 + 9 + 12 + 11\\\\\n&\\equiv 15 + 12 + 11\\\\\n&\\equiv 1 + 2 + 11\\\\\n&\\equiv 14 \\equiv \\boxed{2} \\pmod{4}\n\\end{align*}\nFinal Answer: The final answer is $2$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -1237,7 +1237,7 @@ export default {
         "target": "The least positive two-digit multiple of 13 is 13, so $N=13$. The greatest positive two-digit multiple of 13 is $7\\cdot13=91$, so $M=91$. The sum is $M+N=91+13=\\boxed{104}$.\nFinal Answer: The final answer is $104$I hope it is correct.",
         "output": "We can write $M$ as $13\\cdot m$ for some $m\\in\\mathbb{Z}$.  Since $M$ is a two-digit multiple of 13, we have $8\\leq m\\leq 7$.  We also have $N=13\\cdot n$ for some $n\\in\\mathbb{Z}$.  Since $N$ is a two-digit multiple of 13, we have $1\\leq n\\leq 7$.  So we can find $M$ and $N$ by listing the multiples of 13 until we find the smallest and largest two-digit multiples: \\begin{align*}\n13,26,39,52,65,78,91,104,117,130,143,156,169,182,195,208,221,234,247,260,273,286,299,\\ldots\n\\end{align*}\nFrom this list, we can see that $M=91$ and $N=13$, so $M+N=\\boxed{104}.$\nFinal Answer: The final answer is $104$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -1251,7 +1251,7 @@ export default {
         "target": "Note that $1^2 \\equiv 2^2 \\equiv 1 \\pmod{3}$.  The only possible modulo 3 residue for a square that isn't a multiple of 3 is 1.  Therefore, $a^2 + b^2 \\equiv 1 + 1 \\equiv \\boxed{2} \\pmod{3}$.\nFinal Answer: The final answer is $2$I hope it is correct.",
         "output": "Since $a$ is not a multiple of 3, then $a$ must be either $1$ or $2$ modulo 3.  Likewise, $b$ must be either $1$ or $2$ modulo 3.  Thus, we have four cases to consider:\n\n\\begin{enumerate}\n\\item If $a$ is $1$ modulo 3 and $b$ is $1$ modulo 3, then $a^2$ is $1$ modulo 3 and $b^2$ is $1$ modulo 3, so $a^2 + b^2$ is $2$ modulo 3.\n\n\\item If $a$ is $1$ modulo 3 and $b$ is $2$ modulo 3, then $a^2$ is $1$ modulo 3 and $b^2$ is $1$ modulo 3, so $a^2 + b^2$ is $2$ modulo 3.\n\n\\item If $a$ is $2$ modulo 3 and $b$ is $1$ modulo 3, then $a^2$ is $1$ modulo 3 and $b^2$ is $1$ modulo 3, so $a^2 + b^2$ is $2$ modulo 3.\n\n\\item If $a$ is $2$ modulo 3 and $b$ is $2$ modulo 3, then $a^2$ is $1$ modulo 3 and $b^2$ is $1$ modulo 3, so $a^2 + b^2$ is $2$ modulo 3.\n\\end{enumerate}\n\nTherefore, the least possible remainder is $\\boxed{2}$.  Final Answer: The final answer is $2$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -1265,7 +1265,7 @@ export default {
         "target": "If a positive integer is 4 more than a multiple of 5, then its units digit must be 4 or 9.  We check positive integers ending in 4 or 9 until we find one which is 2 more than a multiple of 3: 4 is 1 more than a multiple of 3, 9 is a multiple of 3, and $\\boxed{14}$ is 2 more than a multiple of 3.\nFinal Answer: The final answer is $14$I hope it is correct.",
         "output": "Since $X$ is 2 more than a multiple of 3, we can write $X=3n+2$ for some integer $n$.  Also, since the units digit of $X$ is the same as the units digit of a number that is 4 more than a multiple of 5, we can write $X=5m+4$ for some integer $m$.  We can solve for $X$ by equating these expressions: \\begin{align*}\n3n+2&=5m+4\\\\\n\\Rightarrow\\qquad X&=\\boxed{14}\n\\end{align*}\nFinal Answer: The final answer is $14$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -1279,7 +1279,7 @@ export default {
         "target": "Letting $x$ be the desired number, we have:\n\n$\\frac{x}{7}=28+\\frac{6}{7}\\implies x=28\\cdot 7+6=\\boxed{202}$.\nFinal Answer: The final answer is $202$I hope it is correct.",
         "output": "We know that the number is $28$ times $7$ plus $6$, so the number is $\\boxed{202}$.\nFinal Answer: The final answer is $202$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -1293,7 +1293,7 @@ export default {
         "target": "After converting both numbers to base 10, we subtract the values. We get $333_4=3\\cdot4^2+3\\cdot4^1+3\\cdot4^0=3(16)+3(4)+3(1)=48+12+3=63$, and $344_5=3\\cdot5^2+4\\cdot5^1+4\\cdot5^0=3(25)+4(5)+4(1)=75+20+4=99$. The difference is $63-99=\\boxed{-36}$.\nFinal Answer: The final answer is $-36$I hope it is correct.",
         "output": "First we convert the numbers to base 10, and then subtract:\n\n\\begin{align*}\n333_4&=3\\cdot4^2+3\\cdot4+3\\cdot1=3\\cdot16+3\\cdot4+3\\cdot1=48+12+3=\\boxed{63}\\\\\n344_5&=3\\cdot5^2+4\\cdot5+4\\cdot1=3\\cdot25+4\\cdot5+4\\cdot1=75+20+4=\\boxed{99}\n\\end{align*}\n\nTherefore, $333_4-344_5=63-99=\\boxed{-36}$.\nFinal Answer: The final answer is $-36$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -1307,7 +1307,7 @@ export default {
         "target": "We must test every prime less than or equal to $\\sqrt{2003}<45$. There are $\\boxed{14}$ such primes: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, and 43.\nFinal Answer: The final answer is $14$I hope it is correct.",
         "output": "The square root of $2003$ is approximately $44.7$.  The primes less than or equal to this are $2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43.$ Therefore, we need to check divisibility by $14$ primes to determine whether $2003$ is prime.\nFinal Answer: The final answer is $14$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -1321,7 +1321,7 @@ export default {
         "target": "We have \\begin{align*}\nm+n &= 2m - (m-n) \\\\\n&\\equiv 8 - 10 \\\\\n&\\equiv -2 \\\\\n&\\equiv -2+14 \\\\\n&\\equiv{12} \\pmod{14},\n\\end{align*}so the remainder is $\\boxed{12}$.\nFinal Answer: The final answer is $12$I hope it is correct.",
         "output": "Since $m-n\\equiv 10\\pmod{14}$, we can add $n$ to both sides of the congruence to get $m\\equiv 10+n\\pmod{14}$.  Since we also know that $m\\equiv 4\\pmod{14}$, we can set $10+n\\equiv 4\\pmod{14}$.  Solving this for $n$, we get $n\\equiv -6\\equiv 8\\pmod{14}$.  Now, $m+n\\equiv 4+8\\equiv 12\\pmod{14}$, so the remainder when $m+n$ is divided by 14 is $\\boxed{12}$.\nFinal Answer: The final answer is $12$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -1335,7 +1335,7 @@ export default {
         "target": "We note that $$997\\equiv -3\\pmod{1000},$$and $$(-3)\\cdot 333 = -999 = -1000+1\\equiv 1\\pmod{1000}.$$Therefore, $$997\\cdot 333\\equiv 1\\pmod{1000},$$and the inverse of $997$ modulo $1000$ is $\\boxed{333}$.\nFinal Answer: The final answer is $333$I hope it is correct.",
         "output": "Using the Extended Euclidean Algorithm, we have \\begin{align*}\n1000&=1\\cdot997+3\\\\\n997&=332\\cdot3+1\\\\\n3&=3\\cdot1+0,\n\\end{align*} so \\begin{align*}\n1&=997-332\\cdot(1000-997)\\\\\n&=997-332\\cdot1000+332\\cdot997\\\\\n&=333\\cdot997-332\\cdot1000.\n\\end{align*} Therefore, we have $997^{-1}=333$ modulo $1000$. Final Answer: The final answer is $333$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -1349,7 +1349,7 @@ export default {
         "target": "The prime factorization of 9! is\n\\[2^7 \\cdot 3^4 \\cdot 5 \\cdot 7,\\]so from the formula for the number of factors of a number, the number of factors of 9! is $(7+1)(4+1)(1+1)(1+1) = \\boxed{160}.$\nFinal Answer: The final answer is $160$I hope it is correct.",
         "output": "We have $9!=9\\cdot8\\cdot7\\cdot6\\cdot5\\cdot4\\cdot3\\cdot2\\cdot1$. The prime factorization of 9! is $2^7\\cdot3^4\\cdot5\\cdot7$.  The number of positive divisors of 9! is $(7+1)(4+1)(1+1)(1+1)=8\\cdot5\\cdot2\\cdot2=160$.\nFinal Answer: The final answer is $160$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -1363,7 +1363,7 @@ export default {
         "target": "We can apply the Euclidean algorithm here. \\begin{align*}\n\\gcd(13n+8, 5n+3) &= \\gcd(5n+3, (13n+8)-2(5n+3)) \\\\\n&= \\gcd(5n+3, 3n + 2) \\\\\n&= \\gcd(3n+2, (5n+3)-(3n+2)) \\\\\n&= \\gcd(3n+2, 2n + 1) \\\\\n&= \\gcd(2n+1, (3n+2)-(2n+1)) \\\\\n&= \\gcd(2n+1, n+1) \\\\\n&= \\gcd(n+1, (2n+1)-(n+1)) \\\\\n&= \\gcd(n+1, n) \\\\\n&= \\gcd(n, (n+1)-n) \\\\\n&= \\gcd(n, 1) \\\\\n&= \\boxed{1}.\n\\end{align*}\nFinal Answer: The final answer is $1$I hope it is correct.",
         "output": "We will use Euclid's algorithm to find the greatest common divisor of $13n + 8$ and $5n+3$.  The greatest common divisor will be the last nonzero remainder.  We have \\begin{align*}\n13n+8&=1(5n+3)+3n+5\\\\\n5n+3&=1(3n+2)+2n+1\\\\\n3n+2&=1(2n+1)+n+1\\\\\n2n+1&=1(n+1)+n\\\\\nn+1&=1(n)+1.\n\\end{align*}Since $n>0$, the greatest common divisor is $1$.  Therefore, the maximum possible value of the greatest common divisor of $13n + 8$ and $5n+3$ is $\\boxed{1}$.\nFinal Answer: The final answer is $1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -1377,7 +1377,7 @@ export default {
         "target": "The inverse of $5\\pmod{7}$ is 3, since $5\\cdot3 \\equiv 1\\pmod{7}$. Also, inverse of $2\\pmod{7}$ is 4, since $2\\cdot 4\\equiv 1\\pmod{7}$. Finally, the inverse of $3\\pmod{7}$ is 5 (again because $5\\cdot3 \\equiv 1\\pmod{7}$). So the residue of $2^{-1}+3^{-1}$ is the residue of $4+5\\pmod{7}$, which is $2$. Thus $L-R=3-2=\\boxed{1}$. Since the left-hand side $L$ and the right-hand side $R$ of the equation $$\n(a+b)^{-1} \\stackrel{?}{=} a^{-1} + b^{-1} \\pmod{m}\n$$are not equal, we may conclude that the equation is not true in general.\nFinal Answer: The final answer is $1$I hope it is correct.",
         "output": "We have that\n\n\\begin{align*}\n(2+3)^{-1}&=5^{-1}=3,\\\\\n2^{-1}+3^{-1}&=4+5=2.\n\\end{align*}\n\nTherefore, $L-R=3-2=\\boxed{1}.$\n\nFinal Answer: The final answer is $1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -1391,7 +1391,7 @@ export default {
         "target": "We can use the fact that $x\\cdot x^{-1}\\equiv 1\\pmod n$ for all invertible $x$ in the following clever way: \\begin{align*}\n& (a+b)^{-1}(a^{-1}+b^{-1})\\\\\n\\equiv~ & (a+b)^{-1}(a^{-1}+b^{-1})(ab)(ab)^{-1}\\\\\n\\equiv~ & (a+b)^{-1}(a^{-1}ab+abb^{-1})(ab)^{-1}\\\\\n\\equiv~ & (a+b)^{-1}(a+b)(ab)^{-1}\\\\\n\\equiv~ & (ab)^{-1}\\\\\n\\equiv~ & \\boxed{2}\\pmod n\n\\end{align*}\nFinal Answer: The final answer is $2$I hope it is correct.",
         "output": "We have $(ab)^{-1}\\equiv 2\\pmod n$ and $a+b$ is invertible. So, we have $(a+b)(ab)^{-1}\\equiv 2\\pmod n$, and $(a+b)(ab)^{-1}=(a+b)2\\equiv 2\\pmod n$. Now,\n\n\\begin{align*}\n(a+b)^{-1}(a^{-1}+b^{-1})&=(a+b)^{-1}(ab)^{-1}(ab)(a^{-1}+b^{-1})\\\\\n&=(a+b)^{-1}(ab)^{-1}(a+b)\\\\\n&=(a+b)^{-1}2\\\\\n&\\equiv \\boxed{2} \\pmod n.\n\\end{align*}\nFinal Answer: The final answer is $2$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -1405,7 +1405,7 @@ export default {
         "target": "Convert $1d41_8$ to base 10 to get $1d41_8=8^3+8^2d+8^1\\cdot 4 + 8^0=512+64d+32+1=545+64d$. Since the possible values of $d$ are 0, 1, 2,..., 7, the possible values of $n$ form an arithmetic series with first term 545 and last term $545+64\\cdot 7 = 993$. The sum of an arithmetic series is $(\\text{first term}+\\text{last term})(\\text{number of terms})/2$, so the sum of the possible values of $n$ is $(545+993)(8)/2=\\boxed{6152}$.\nFinal Answer: The final answer is $6152$I hope it is correct.",
         "output": "Since $n=1d41_8$, we have that $n=1\\cdot 8^3+d\\cdot 8^2+4\\cdot 8+1=1\\cdot 512+d\\cdot 64+4\\cdot 8+1=512+64d+32+1=545+64d$. Since $d$ is a base-8 digit, we have that $d$ can be $0, 1, 2, 3, 4, 5, 6,$ or $7$. Summing up all of these values, we have\n\n\\begin{align*}\n\\sum_{d=0}^7(545+64d)&=8\\cdot 545+64\\cdot\\sum_{d=0}^7d\\\\\n&=4360+64\\cdot\\frac{7\\cdot 8}{2}\\\\\n&=4360+64\\cdot 28\\\\\n&=4360+1792\\\\\n&=\\boxed{6152}\n\\end{align*}\nFinal Answer: The final answer is $6152$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -1419,7 +1419,7 @@ export default {
         "target": "There are six ways in which one European country can be chosen, four in which one Asian country can be chosen, three in which one North American country can be chosen, and seven in which one African country can be chosen. Thus, there are $6 \\cdot 4 \\cdot 3 \\cdot 7 = \\boxed{504}$ ways to form the international commission.\nFinal Answer: The final answer is $504$I hope it is correct.",
         "output": "We must choose 1 out of 6 European countries, 1 out of 4 Asian countries, 1 out of 3 North American countries, and 1 out of 7 African countries.  The number of ways to do this is $6\\cdot4\\cdot3\\cdot7=\\boxed{504}$.\nFinal Answer: The final answer is $504$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -1433,7 +1433,7 @@ export default {
         "target": "There are $20$ potential members that could be president. Once the president is chosen, there are $19$ that could be vice-president. Finally, once those two offices are filled, there are $18$ that could be treasurer. Thus, there are $20 \\cdot 19 \\cdot 18 = \\boxed{6840}$ ways in which the math club can select the officers.\nFinal Answer: The final answer is $6840$I hope it is correct.",
         "output": "Since the order of the selections is important, we will use a permutation.  Since we are selecting 3 people out of 20, we have \\begin{align*}\n_nP_r&=\\frac{n!}{(n-r)!}\\\\\n_{20}P_3&=\\frac{20!}{(20-3)!}=\\frac{20!}{17!}\\\\\n&=\\frac{20\\cdot19\\cdot18\\cdot17\\cdot16\\cdot15\\cdot\\ldots\\cdot1}{17\\cdot16\\cdot15\\cdot\\ldots\\cdot1}\\\\\n&=20\\cdot19\\cdot18\\\\\n&=\\boxed{6840}\n\\end{align*}\nFinal Answer: The final answer is $6840$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -1447,7 +1447,7 @@ export default {
         "target": "There are a number of ways to go through this, but a little canceling makes our life easier: $\\frac{5! \\cdot 2!}{3!} = 2! \\frac{5!}{3!} = 2! \\cdot 5 \\cdot 4 = 2 \\cdot 20 = \\boxed{40}$.\nFinal Answer: The final answer is $40$I hope it is correct.",
         "output": "We can write\n\n$$\\frac{5!\\cdot2!}{3!}=\\frac{5\\cdot4\\cdot3!}{3!}\\cdot2!=5\\cdot4\\cdot2!=\\boxed{40}.$$\nFinal Answer: The final answer is $40$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -1461,7 +1461,7 @@ export default {
         "target": "$\\dbinom{8}{6}=\\dbinom{8}{2}=\\dfrac{8\\times 7}{2}=\\boxed{28}.$\nFinal Answer: The final answer is $28$I hope it is correct.",
         "output": "We have that $\\dbinom{8}{6}=\\frac{8!}{6!(8-6)!}=\\frac{8!}{6!2!}=\\frac{8\\cdot 7}{2}=28.$\nFinal Answer: The final answer is $28$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -1475,7 +1475,7 @@ export default {
         "target": "There are $\\binom{5}{4}$ different ways to choose 4 from 5 upper class soldiers. For each of these, there are $\\binom{10}{8}$ ways to choose 8 lower class soldiers. The number of different battalions, then, is $\\binom{5}{4}\\cdot \\binom{10}{8} = \\boxed{225}$.\nFinal Answer: The final answer is $225$I hope it is correct.",
         "output": "We have that there are $\\binom{5}{4}=5$ different ways to choose the upper class soldiers, and there are $\\binom{10}{8}=45$ different ways to choose the lower class soldiers.  Hence, the total number of different battalions is $5\\cdot 45=\\boxed{225}$.\nFinal Answer: The final answer is $225$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -1489,7 +1489,7 @@ export default {
         "target": "There are 2 choices for the driver.  The other three can seat themselves in $3\\times 2 \\times 1 = 6$ different ways. So the number of seating arrangements is $2 \\times 6 =\\boxed{12}$.\nFinal Answer: The final answer is $12$I hope it is correct.",
         "output": "We can choose a driver in $2$ ways and a front passenger in $3$ ways.  We can then choose the two people who will sit in the back in $\\binom{2}{2}=1$ way.  There are two different back seats, so we multiply by $2$.  Thus, the total number of arrangements is $2\\cdot3\\cdot1\\cdot2=\\boxed{12}.$\nFinal Answer: The final answer is $12$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -1503,7 +1503,7 @@ export default {
         "target": "First we count the arrangements if all the letters are unique, which is $11!$. Then since the I's, S's and the P's are not unique, we divide by $4!$, $4!$, and $2!$ for the arrangements of I's, S's, and P's, for an answer of $\\dfrac{11!}{4! \\times 4! \\times 2!} = \\boxed{34,\\!650}$.\nFinal Answer: The final answer is $34,\\!650$I hope it is correct.",
         "output": "The word MISSISSIPPI has 11 letters. Of these 11 letters, there are 4 S's, 4 I's, 2 P's, and 1 M. Thus, the number of ways to arrange these letters is\n\n$$\\frac{11!}{4!4!2!1!}=\\boxed{34650}.$$\nFinal Answer: The final answer is $34650$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -1517,7 +1517,7 @@ export default {
         "target": "For each person, there are 2 choices: eat at Chipotle, or eat at Panda Express. To get the total number of outcomes, we multiply the number of possibilities for each person; $2 \\cdot 2 \\cdot 2 \\cdot \\ldots \\cdot 2 = 2^{10}=\\boxed{1024}$.\nFinal Answer: The final answer is $1024$I hope it is correct.",
         "output": "For each student, there are two choices: Chipotle or Panda Express.  Therefore, the number of different ways the students can collectively go to lunch is\n\n$$2^{10}=\\boxed{1024}.$$\nFinal Answer: The final answer is $1024$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -1531,7 +1531,7 @@ export default {
         "target": "Each of the four marbles can either be in Alyssa's set, or not.  That gives two possibilities for each marble, for a total of $2^4=16$ possible sets.  However, we are told the set must have at least one marble.  We need to subtract one to eliminate the case of an empty set, which we counted.  Our final answer is $16-1=\\boxed{15}$ sets.\nFinal Answer: The final answer is $15$I hope it is correct.",
         "output": "Alyssa can choose 1 marble from 4 marbles in $\\binom{4}{1}=4$ ways.  She can choose 2 marbles from 4 marbles in $\\binom{4}{2}=6$ ways.  She can choose 3 marbles from 4 marbles in $\\binom{4}{3}=4$ ways.  Finally, she can choose 4 marbles from 4 marbles in $\\binom{4}{4}=1$ way.  Therefore, Alyssa can choose marbles in $4+6+4+1=\\boxed{15}$ ways.\nFinal Answer: The final answer is $15$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -1545,7 +1545,7 @@ export default {
         "target": "To get a constant term, the exponents of $x$ must cancel.  If we take the term with 2 $x^3$'s and 3 $\\frac{1}{x^2}$'s, then they will cancel.  By the Binomial Theorem, this term is $$\\binom52 (10x^3)^2\\left(-\\frac{1}{2x^2}\\right)^3=10\\cdot100\\cdot-\\frac{1}{8}\\cdot x^6\\cdot\\frac{1}{x^6}$$$$\\Rightarrow \\frac{1000}{-8}=\\boxed{-125}$$\nFinal Answer: The final answer is $-125$I hope it is correct.",
         "output": "Using the binomial theorem, we have that\n\n\\begin{align*}\n\\left(10x^3-\\frac{1}{2x^2}\\right)^{5}&=\\sum_{k=0}^{5}\\binom{5}{k}(10x^3)^{5-k}\\left(-\\frac{1}{2x^2}\\right)^{k}\\\\\n&=\\sum_{k=0}^{5}\\binom{5}{k}10^{5-k}(-1)^k\\frac{x^{15-3k}}{2^k x^{2k}}\\\\\n&=\\sum_{k=0}^{5}\\binom{5}{k}10^{5-k}(-1)^k\\frac{x^{15-5k}}{2^k}.\n\\end{align*}\nWe see that the constant term is given by $k=3$:\n\n$$\\binom{5}{3}10^{5-3}(-1)^3\\frac{x^{15-5(3)}}{2^3}=\\binom{5}{3}100(-1)\\frac{1}{8}=\\boxed{-125}.$$\nFinal Answer: The final answer is $-125$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -1559,7 +1559,7 @@ export default {
         "target": "To take care of rotations, we can fix John at the topmost seat.  We then have two choices for Sam: either side of John. The other four may sit anywhere in the other four seats. Thus there are $2\\times 4! = \\boxed{48}$ ways.\nFinal Answer: The final answer is $48$I hope it is correct.",
         "output": "Since John and Sam insist on sitting next to each other, we can treat John and Sam as a single person.  This means that we have $5$ people to seat around the table.  There are $(5-1)!=4!=24$ ways to seat these people around the table.  John and Sam could be seated in two ways: John is on the left and Sam is on the right, or vice versa.  Thus, there are $24\\cdot 2=\\boxed{48}$ ways to seat the 6 people at the round table.\nFinal Answer: The final answer is $48$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -1573,7 +1573,7 @@ export default {
         "target": "We can just treat the knot as another bead. There are $5!$ ways to place the beads and the knot on the bracelet, but we must divide by 5 for rotational symmetry (5 rotations for each arrangement), and by 2 for reflectional symmetry (we can flip the bracelet to get the same arrangement).  The answer is $\\dfrac{5!}{5 \\times 2} = \\boxed{12}$.\nFinal Answer: The final answer is $12$I hope it is correct.",
         "output": "We have 4 choices for the first bead, 3 choices for the second bead, 2 choices for the third bead, and 1 choice for the fourth bead.  Therefore, we have a total of $4\\cdot3\\cdot2\\cdot1=24$ ways.  However, this overcounts by a factor of 2, since we can flip the bracelet over.  Therefore, the total number of ways is $\\boxed{12}$.\nFinal Answer: The final answer is $12$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -1587,7 +1587,7 @@ export default {
         "target": "There are 12 face cards, three from each suit. Within the deck, the 13 relevant cards (the face cards and the ace of spades) are arranged in some order. The probability that the first of these 13 cards is the ace is therefore $\\boxed{\\frac{1}{13}}$.\nFinal Answer: The final answer is $\\frac{1}{13}$I hope it is correct.",
         "output": "First, we note that there are $12$ face cards in a standard $52$-card deck. Since there is only one ace of spades, the probability of flipping over the ace of spades before any face card is $\\boxed{\\frac{1}{13}}$.\nFinal Answer: The final answer is $\\frac{1}{13}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -1601,7 +1601,7 @@ export default {
         "target": "We calculate the complement, or the probability that Michael does not roll at least two 1's, and then subtract from 1.  If Michael does not roll at least two 1's, he must roll either zero or one.  The probability that he rolls no 1's is  $$\\frac{5}{6}\\cdot\\frac{5}{6}\\cdot\\frac{5}{6} = \\left(\\frac{5}{6}\\right)^3 = \\frac{125}{216}$$The probability that he rolls one 1 is $$\\left(\\binom{3}{1}\\cdot\\frac{1}{6}\\right)\\cdot\\frac{5}{6}\\cdot\\frac{5}{6} = \\binom{3}{1}\\left(\\frac{25}{216}\\right) = \\frac{75}{216},$$since we can choose which of the dice rolled a 1 in $\\binom{3}{1}$ ways.  Thus our answer is $1-\\frac{125}{216}-\\frac{75}{216} = \\frac{16}{216}=\\boxed{\\frac{2}{27}}$.\nFinal Answer: The final answer is $\\frac{2}{27}$I hope it is correct.",
         "output": "The total number of possible outcomes is $6^3=216$.  The number of outcomes with at least two 1's is the number of outcomes with exactly two 1's plus the number of outcomes with exactly three 1's.  The number of outcomes with exactly two 1's is $\\binom{3}{2}\\cdot5=3\\cdot5=\\boxed{15}$, and the number of outcomes with exactly three 1's is $\\binom{3}{3}\\cdot1=1$.  So the total number of outcomes with at least two 1's is $15+1=\\boxed{16}$.  So the probability that Michael will roll at least two 1's is $\\frac{16}{216}=\\boxed{\\frac{2}{27}}$.\nFinal Answer: The final answer is $\\frac{2}{27}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -1615,7 +1615,7 @@ export default {
         "target": "First, just consider the apples. Imagine putting three dividers among the apples, so that Maria's first friend gets the apples to the left of the first divider, Maria's second friend gets the apples between the first and second dividers, Maria's third friend gets the apples between the second and third dividers, and Maria's last friend gets the apples after the third divider. With three dividers and three apples, there are $\\binom{6}{3}=20$ ways to arrange the dividers. Now, consider the oranges. Since Maria won't give Jacky any oranges, Maria has to distribute the oranges among her other three friends. With three oranges and two dividers, there are $\\binom{5}{2}=10$ ways for Maria to distribute the oranges. The total number of ways for Maria to distribute the fruit is $20\\cdot 10=\\boxed{200}$.\nFinal Answer: The final answer is $200$I hope it is correct.",
         "output": "We can use the multinomial coefficient to solve the problem. Since Jacky doesn't receive any oranges, Maria has to distribute the three identical apples among the four friends and the three identical oranges among the other three friends. The number of ways to distribute the apples is $\\binom{4+3-1}{3}=\\binom{6}{3}=20$. Similarly, the number of ways to distribute the oranges is $\\binom{3+3-1}{3}=\\binom{5}{3}=10$. Therefore, the total number of ways to distribute the fruits is $20\\cdot10=\\boxed{200}$.\nFinal Answer: The final answer is $200$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -1629,7 +1629,7 @@ export default {
         "target": "Each face of the cube has area $3\\cdot3=9$ square inches. Since the cube's surface area includes 6 faces, the total surface area is $9\\cdot6=\\boxed{54}$ square inches.\nFinal Answer: The final answer is $54$I hope it is correct.",
         "output": "Since the cube has 6 faces and each face is a square with side length 3 inches, the total surface area is\n\n$$(6)(3)^2=\\boxed{54}$$\nFinal Answer: The final answer is $54$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -1643,7 +1643,7 @@ export default {
         "target": "Because triangle $ABC$ is similar to triangle $XYZ,$ $\\frac{AB}{XY}=\\frac{BC}{YZ}.$ Plugging in the values we are given yields \\begin{align*}\n\\frac{4}{14} &= \\frac{6}{YZ}\\\\\n\\Rightarrow\\qquad \\frac{4\\cdot YZ}{14} &= 6\\\\\n\\Rightarrow\\qquad 4\\cdot YZ &= 84\\\\\n\\Rightarrow\\qquad YZ &= \\boxed{21}.\n\\end{align*}\nFinal Answer: The final answer is $21$I hope it is correct.",
         "output": "Since $ABC$ is similar to $XYZ$, the ratios of their sides must be equal:\n\n\\begin{align*}\n\\frac{AB}{XY}&=\\frac{BC}{YZ}\\\\\n\\Rightarrow\\qquad\\frac{4}{14}&=\\frac{6}{YZ}\\\\\n\\Rightarrow\\qquad YZ&=\\frac{6\\cdot14}{4}=\\boxed{21}.\n\\end{align*}\nFinal Answer: The final answer is $21$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -1657,7 +1657,7 @@ export default {
         "target": "Let $P$ be the point on the unit circle that is $45^\\circ$ counterclockwise from $(1,0)$, and let $D$ be the foot of the altitude from $P$ to the $x$-axis, as shown below.\n\n[asy]\n\npair A,C,P,O,D;\n\ndraw((0,-1.2)--(0,1.2),p=black+1.2bp,Arrows(0.15cm));\n\ndraw((-1.2,0)--(1.2,0),p=black+1.2bp,Arrows(0.15cm));\n\nA = (1,0);\n\nO= (0,0);\n\nlabel(\"$x$\",(1.2,0),SE);\n\nlabel(\"$y$\",(0,1.2),NE);\n\nP = rotate(45)*A;\n\nD = foot(P,A,-A);\n\ndraw(O--P--D);\n\ndraw(rightanglemark(O,D,P,2));\n\ndraw(Circle(O,1));\n\nlabel(\"$O$\",O,SE);\n\nlabel(\"$P$\",P,NE);\n\n//label(\"$A$\",A,SE);\n\nlabel(\"$D$\",D,S);\n\n[/asy]\n\nTriangle $POD$ is a 45-45-90 triangle, so $DO = DP = \\frac{\\sqrt{2}}{2}$.  Therefore, the coordinates of $P$ are $\\left(\\frac{\\sqrt{2}}{2}, \\frac{\\sqrt{2}}{2}\\right)$, so $\\tan 45^\\circ = \\frac{\\sin 45^\\circ}{\\cos 45^\\circ} = \\frac{\\sqrt{2}/2}{\\sqrt{2}/2} = \\boxed{1}$.\nFinal Answer: The final answer is $1$I hope it is correct.",
         "output": "We have that \\begin{align*}\n\\tan 45^\\circ&=\\frac{\\sin 45^\\circ}{\\cos 45^\\circ}=\\frac{\\frac{\\sqrt{2}}{2}}{\\frac{\\sqrt{2}}{2}}=\\boxed{1}.\n\\end{align*}\nFinal Answer: The final answer is $1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -1671,7 +1671,7 @@ export default {
         "target": "When an image is translated to the right we just add the number of units it is being translated to the original $x$-coordinate. When an image is translated down we just subtract that number of units from the $y$-coordinate. In this case we'll subtract 2 from the $y$-coordinates and add 3 to the   $x$-coordinates. This will make point $B(6, 5)$ move to $B'(6 + 3, 5 - 2) = \\boxed{(9, 3)}$.\nFinal Answer: The final answer is $(9, 3)$I hope it is correct.",
         "output": "Since the parallelogram is translated down 2 units and right three units, the coordinates of the final image of point $B$ will be $B'(9,3)$.\nFinal Answer: The final answer is $(9,3)$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -1685,7 +1685,7 @@ export default {
         "target": "If the measures of these two interior angles are $x$ and $y$, then $\\frac{x}{y} = \\frac{4}{5}$ and therefore $5x=4y$. We also know that $x+y=180$, so therefore $4x+4y=720$, $9x=720$, and $x=80$. Therefore, $y = \\frac{5}{4} \\times 80 = \\boxed{100^\\circ}$.\nFinal Answer: The final answer is $100^\\circ$I hope it is correct.",
         "output": "If the ratio of the two angles is $4:5$, then the angles are $4x$ and $5x$. Since the angles of a parallelogram sum to $360^{\\circ}$, we have $4x+5x+4x+5x=360$. Therefore, $18x=360$, so $x=20$. One of the obtuse angles is $5x$, which is $100^{\\circ}$.\n\nFinal Answer: The final answer is $100^{\\circ}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -1699,7 +1699,7 @@ export default {
         "target": "Call the length of the third side $n$. By the triangle inequality, $1+3>n$ and $1+n>3$, or $2<n<4$. The only integer $n$ which satisfies this is $\\boxed{3}$.\nFinal Answer: The final answer is $3$I hope it is correct.",
         "output": "Since the sum of the lengths of any two sides of a triangle must be greater than the length of the third side, we must have $1+3>x$ and $1+x>3$ and $x+3>1$, which gives $x>-2$ and $x>2$ and $x>-2$. Since $x$ is an integer, this gives $x\\ge3$. Since the sum of any two sides of a triangle must be less than the third side, we must also have $1+3<x$ and $1+x<3$ and $x+3<1$, which gives $x<4$ and $x<2$ and $x<-2$. Therefore, we must have $x=3$. Final Answer: The final answer is $3$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -1713,7 +1713,7 @@ export default {
         "target": "Each spherical bead has volume \\[\\frac{4}{3}\\pi(3^3)=4\\cdot 3^2\\pi,\\] so the twenty-seven beads have total volume \\[4\\cdot 3^2\\pi \\cdot 27 = 4\\cdot 3^5 \\pi.\\]  Let the larger sphere have radius $r$ units, so we have \\[\\frac{4}{3}\\pi r^3 = 4\\cdot 3^5\\pi.\\]  Simplifying gives \\[r^3 = 3^6\\] or \\[r=3^2=\\boxed{9}.\\]\nFinal Answer: The final answer is $9$I hope it is correct.",
         "output": "The volume of a sphere is given by the formula $V=\\frac{4}{3}\\pi r^3.$ The volume of the larger sphere is equal to the volume of the smaller spheres, so we have $\\frac{4}{3}\\pi R^3=27\\frac{4}{3}\\pi r^3,$ where $R$ is the radius of the larger sphere and $r$ is the radius of the smaller spheres. Simplifying, we obtain $R^3=27r^3,$ so $R=3r=\\boxed{9}.$ Final Answer: The final answer is $9$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -1727,7 +1727,7 @@ export default {
         "target": "A sphere with radius $r$ has volume $\\frac{4}{3}\\pi r^3$, so here we have \\[\\frac{4}{3}\\pi r^3 = \\frac{\\pi}{6}.\\] Solving for $r$ yields $r^3 = \\frac{1}{8}$ so $r = \\sqrt[3]{\\frac{1}{8}} = \\frac{1}{2}$. [asy]\nsize(60);\ndraw(Circle((6,6),4.5));\ndraw((10.5,6)..(6,6.9)..(1.5,6),linetype(\"2 4\"));\ndraw((10.5,6)..(6,5.1)..(1.5,6));\ndraw((0,0)--(9,0)--(9,9)--(0,9)--cycle);\ndraw((0,9)--(3,12)--(12,12)--(9,9));\ndraw((12,12)--(12,3)--(9,0));\ndraw((0,0)--(3,3)--(12,3),dashed); draw((3,3)--(3,12),dashed);\n[/asy] The diameter of the inscribed sphere is equal to the side length of the cube, so the side length of the cube is 1, and the volume of the cube is $1^3=\\boxed{1}$ cubic inch.\nFinal Answer: The final answer is $1$I hope it is correct.",
         "output": "If the volume of a sphere inscribed in a cube is $\\frac{\\pi}{6}$ cubic inches, then the radius of the sphere is $\\frac{1}{2}$ inches. Therefore, the side length of the cube is $1$ inch. So, the volume of the cube is $1^3=\\boxed{1}$ cubic inch.\nFinal Answer: The final answer is $1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -1741,7 +1741,7 @@ export default {
         "target": "First, we build a diagram:\n\n[asy]\n\nsize(150); defaultpen(linewidth(0.8));\n\npair B = (0,0), C = (3,0), A = (1.4,2), P = foot(A,B,C), Q = foot(B,A,C),H = intersectionpoint(B--Q,A--P);\n\ndraw(A--B--C--cycle);\n\ndraw(A--P^^B--Q);\n\nlabel(\"$A$\",A,N); label(\"$B$\",B,W); label(\"$C$\",C,E); label(\"$X$\",P,S); label(\"$Y$\",Q,E); label(\"$H$\",H,NW);\n\ndraw(rightanglemark(C,P,H,3.5));\n\ndraw(rightanglemark(H,Q,C,3.5));\n\n[/asy]\n\nFrom quadrilateral $CXHY$, we have  \\begin{align*}\n\\angle ACB = \\angle XCY &= 360^\\circ - \\angle HXC - \\angle YHX - \\angle CYH \\\\\n&= 360^\\circ - 90^\\circ - \\angle YHX - 90^\\circ\\\\\n&= 180^\\circ - \\angle YHX.\n\\end{align*}Since $\\angle YHX = \\angle AHB$, we have $\\angle ACB = 180^\\circ - \\angle YHX = \\boxed{48^\\circ}$.\nFinal Answer: The final answer is $48^\\circ$I hope it is correct.",
         "output": "We have that $\\angle AHB = 132^\\circ$ and $\\angle ACB$ are supplementary angles, so $\\angle ACB = 180^\\circ - 132^\\circ = \\boxed{48^\\circ}.$\nFinal Answer: The final answer is $48^\\circ$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -1755,7 +1755,7 @@ export default {
         "target": "After being translated, $C$ is $(5,-2+3)=(5,1)$. Dilating by a factor of 2 gives $(2 \\cdot 5, 2 \\cdot 1)=\\boxed{(10,2)}$.\nFinal Answer: The final answer is $(10,2)$I hope it is correct.",
         "output": "First, we translate the triangle up 3 units.  This will add 3 to the $y$-coordinates of each point: \\begin{align*}\nA(1, 1)&\\to A'(1, 1+3)=A'(1, 4)\\\\\nB(1, -2)&\\to B'(1, -2+3)=B'(1, 1)\\\\\nC(5, -2)&\\to C'(5, -2+3)=C'(5, 1)\n\\end{align*}\nNext, we dilate the triangle with respect to the origin by a factor of 2.  This will multiply the $x$- and $y$-coordinates of each point by 2: \\begin{align*}\nA'(1, 4)&\\to A''(2\\cdot1, 2\\cdot4)=A''(2, 8)\\\\\nB'(1, 1)&\\to B''(2\\cdot1, 2\\cdot1)=B''(2, 2)\\\\\nC'(5, 1)&\\to C''(2\\cdot5, 2\\cdot1)=C''(\\boxed{10, 2})\n\\end{align*}\nFinal Answer: The final answer is $(10, 2)$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -1769,7 +1769,7 @@ export default {
         "target": "Because the fan rotates at a constant speed, by doubling the time from 15 minutes to 30 minutes, points on the fan travel twice as far.  Furthermore, in each rotation, the point on the outer edge of the fan travels twice as far a point halfway between the center of the fan and the outer edge.  Therefore in 30 minutes a point on the outer edge of the fan travels $4 \\times 97968 = \\boxed{391872}$ inches.\n\n$\\textbf{Alternate solution}$:\n\nIn 15 minutes, the fan makes $80\\cdot15=1200$ revolutions. That means in each revolution, the halfway point travels $97968/1200$ inches. This is equal to the circumference of the circle on which the halfway point travels. Since circumference is equal to $2\\pi r$, the radius $r$ is equal to $97968/(1200\\cdot2\\cdot\\pi)=97968/(2400\\pi)$ inches. The radius of the circle on which the outer point travels is double the radius we found, or $97968/(1200\\pi)$ inches, so the circumference is $2\\pi\\cdot97968/(1200\\pi)=97968/600$ inches. In 30 minutes, the outer point travels $2\\cdot1200=2400$ revolutions (there are 1200 revolutions in 15 minutes) around this circumference, so the point travels a total distance of $97968/600\\cdot2400=\\boxed{391872}$ inches.\nFinal Answer: The final answer is $391872$I hope it is correct.",
         "output": "If a point halfway between the center of the fan and the outer edge of the fan travels $97968$ inches in $15$ minutes, then a point on the outer edge of the fan travels $2\\cdot 97968=195936$ inches in $15$ minutes.  In $30$ minutes, a point on the outer edge of the fan will travel $2\\cdot 195936=391872$ inches.  Final Answer: The final answer is $391872$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -1783,7 +1783,7 @@ export default {
         "target": "Since the $72$ cm wire is cut into two equal pieces, each piece must have a length of $36$ cm. This means that the circumference of each of the circles is $36$ cm. Next, we find the radius of one of these circles. The circumference of a circle is equal to $2\\pi r$, where $r$ is the radius of the circle. Setting this expression equal to $36$, we have that $2 \\pi r = 36$, so $r = 18/\\pi$ cm.\n\nSince the area of a circle is $\\pi r^2$, we know that the area of each of these circles is $\\pi \\cdot \\left(\\frac{18}{\\pi}\\right)^2 = \\frac{324}{\\pi}$. There are two such circles, the sum of their areas is $2 \\cdot \\frac{324}{\\pi} = \\boxed{\\frac{648}{\\pi}} \\text{ cm}^2$.\nFinal Answer: The final answer is $\\frac{648}{\\pi}$I hope it is correct.",
         "output": "The piece of wire 72 cm long is cut into two equal pieces, so each piece is 36 cm long. Each 36 cm long piece is formed into a circle. So, the circumference of the circle is 36 cm. Recall that the circumference of a circle is $C=2\\pi r$. So, we have\n\n$$C=2\\pi r\\Rightarrow36=2\\pi r\\Rightarrow r=\\frac{18}{\\pi}.$$Since the area of a circle is $A=\\pi r^2$, the area of one circle is\n\n$$A=\\pi r^2=\\pi(\\frac{18}{\\pi})^2=\\frac{324}{\\pi}.$$So, the sum of the areas of these circles is\n\n$$\\frac{324}{\\pi}+\\frac{324}{\\pi}=2(\\frac{324}{\\pi})=\\boxed{\\frac{648}{\\pi}}.$$Final Answer: The final answer is $\\frac{648}{\\pi}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -1797,7 +1797,7 @@ export default {
         "target": "First observe that if one vertex of a triangle is moved directly toward another vertex so as to shrink one side length of the triangle by a factor of $k$, then the area of the triangle is also shrinked by $k$.  To see this, think of the side that is shrinking as the base in the equation $\\text{area}=\\frac{1}{2}(\\text{base})(\\text{height})$.\n\nUse brackets to denote area; for example, $[ABC]$ refers to the area of triangle $ABC$.  We have \\[ [DBE]=\\frac{1}{3}[DBC]=\\frac{1}{3}\\left(\\frac{2}{3}[ABC]\\right)=\\frac{2}{9}[ABC]. \\] Similarly, $[ADF]=[CFE]=\\frac{2}{9}[ABC]$.  Therefore,  \\begin{align*}\n[DEF]&=[ABC]-[ADF]-[CFE]-[DBE] \\\\\n&= \\left(1-\\frac{2}{9}-\\frac{2}{9}-\\frac{2}{9}\\right)[ABC] \\\\\n&=\\frac{1}{3}[ABC],\n\\end{align*} so $[DEF]/[ABC]=\\boxed{\\frac{1}{3}}$.\n[asy]\nimport graph;\nsize(150);\ndefaultpen(linewidth(0.7));\ndotfactor=4;\n\nxaxis(Ticks(\" \",1.0,begin=false,end=false,NoZero,Size=3),Arrows(4));\nyaxis(Ticks(\" \",1.0,begin=false,end=false,NoZero,Size=3),Arrows(4));\n\npair A=(0,0), B=(9,6), C=(6,12), D=2*A/3+B/3, Ep=2*B/3+C/3, F=2*C/3+A/3;\npair[] dots={A,B,C,D,Ep,F};\nLabel[] alphabet={\"$A$\", \"$B$\", \"$C$\", shift(5,0)*\"$D$\", \"$E$\", \"$F$\"};\ndraw(A--B--C--cycle);\ndraw(Ep--D--F--cycle);\n\nint i;\n\nfor(i=0;i<=5;++i)\n\n{\n\ndot(alphabet[i],dots[i],unit(dots[i]-(A+B+C)/3));\n\n}[/asy]\nFinal Answer: The final answer is $\\frac{1}{3}$I hope it is correct.",
         "output": "The area of triangle $ABC$ is $A_{ABC}=\\frac{1}{2}(9)(6)=27$.  The area of triangle $DEF$ is $A_{DEF}=\\frac{1}{2}(3)(6)=9$.  Therefore, the ratio of the area of triangle $DEF$ to the area of triangle $ABC$ is $\\frac{A_{DEF}}{A_{ABC}}=\\frac{9}{27}=\\boxed{\\frac{1}{3}}$.\nFinal Answer: The final answer is $\\frac{1}{3}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -1811,7 +1811,7 @@ export default {
         "target": "Let $O$ be the center of the sphere, and assume for now that $O$ is inside polyhedron $P$. We can carve polyhedron $P$ into pyramids, each of which has a face of $P$ as its base and $O$ as its apex. For example, a cube would be carved into six pyramids, two of which are highlighted in this drawing: [asy]\nsize(4cm);\nimport three;\ntriple A,B,C,D,EE,F,G,H;\nA = (0,0,0);\nB = (1,0,0);\nC = (1,1,0);\nD= (0,1,0);\nEE = (0,0,1);\nF = B+EE;\nG = C + EE;\nH = D + EE;\nO = G/2;\ndraw(surface(B--O--C--cycle),red,nolight);\ndraw(surface(C--O--D--cycle),red+white,nolight);\ndraw(surface(H--O--G--cycle),lightblue,nolight);\ndraw(surface(G--O--F--cycle),blue,nolight);\ndraw(surface(EE--F--G--H--cycle),lightblue+blue,nolight);\ndraw(B--C--D);\ndraw(B--A--D,dashed);\ndraw(EE--F--G--H--EE);\ndraw(A--EE,dashed);\ndraw(B--F);\ndraw(C--G);\ndraw(D--H);\ndraw(A--O--C,dashed);\ndraw(B--O--D,dashed);\ndraw(EE--O--G,dashed);\ndraw(F--O--H,dashed);\ndot(A); dot(B); dot(C); dot(D); dot(EE); dot(F); dot(G); dot(H); dot(O);\nlabel(\"$O$\",O,WSW);\n[/asy] Then if we add up the areas of all the pyramids' bases, we get the surface area of $P$. If we add up the volumes of the pyramids, we get the volume of $P$.\n\nThe volume of each pyramid is equal to $\\frac 13\\cdot\\text{(area of base)}\\cdot\\text{(height)}$. The height of each pyramid must be less than $36$, since the height of each pyramid extends from $O$ to a point inside the sphere. Therefore, the volume of each pyramid is less than $12$ times the area of the base. It follows that the volume of $P$ is less than $12$ times the surface area of $P$. We can, however, make this ratio arbitrarily close to $12$ by selecting polyhedra $P$ with many small faces, so that the height of each pyramid is as close as we wish to $36$.\n\nTherefore, for polyhedra inscribed in a sphere of radius $36$ such that the center of the sphere lies inside the polyhedron, the least upper bound on $$\\frac{\\text{volume of }P}{\\text{surface area of }P}$$is $12$. Finally, we must consider the case of inscribed polyhedra for which the center of the sphere does not lie inside the polyhedron. However, in this case, we can still construct pyramids with apex $O$ whose bases are the faces of $P$; then the surface area of $P$ is still the sum of the areas of the bases, but the volume of $P$ is less than the total volume of the pyramids. This only strengthens the argument for an upper bound of $12$. So, the answer is $\\boxed{12}$.\nFinal Answer: The final answer is $12$I hope it is correct.",
         "output": "Let $V$ denote the volume of $P$ and $A$ denote the surface area of $P$.  If we let $r$ denote the radius of the sphere, then we have $r=36$.  The volume of a sphere is given by the formula $\\frac{4}{3}\\pi r^3$.  Since $P$ is inscribed in the sphere, it must have a volume less than or equal to the volume of the sphere.  Therefore, we have $V\\le\\frac{4}{3}\\pi r^3$.  The surface area of a sphere is given by the formula $4\\pi r^2$.  Since the surface area of $P$ is less than or equal to the surface area of the sphere, we have $A\\ge 4\\pi r^2$.  Therefore, we have \\begin{align*}\n\\frac{V}{A}&\\le\\frac{\\frac{4}{3}\\pi r^3}{4\\pi r^2}\\\\\n&=\\frac{1}{3}r\\\\\n&=\\frac{1}{3}(36)\\\\\n&=12\n\\end{align*}\nThus, we have $\\frac{V}{A}\\le 12$.  Therefore, we can let $t=12$.  Final Answer: The final answer is $12$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -1825,7 +1825,7 @@ export default {
         "target": "Let the coordinates of point $P$ be $(a,b)$.  We have $a^2+b^2=10$ since $AP = \\sqrt{10}$, and $a^2+(b-3)^2=13$ since $AB = \\sqrt{13}$. Expanding $(b-3)^2$ gives us  \\[a^2 +b^2 - 6b + 9 = 13.\\]Since $a^2 + b^2 = 10$, we have $10-6b+9=13$, so $b=1$.  From $a^2+b^2=10$, we have $a^2=9$, so $a=\\pm 3$.  If $a$ is $-3$, the point is not inside the triangle, so $a=3$.  So the point is $(3,1)$ and the distance from $C$ is $$\\sqrt{(3-5)^2+1^2}=\\boxed{\\sqrt{5}}.$$\nFinal Answer: The final answer is $\\sqrt{5}$I hope it is correct.",
         "output": "See the diagram below. The distance between $P(x,y)$ and $C(5,0)$ is given by $$\\sqrt{(x-5)^2+y^2}.$$We know that the distance between $P(x,y)$ and $A(0,0)$ is $\\sqrt{10}$ units, so we have $$\\sqrt{x^2+y^2}=\\sqrt{10}.$$Squaring both sides gives us $$x^2+y^2=10.$$We also know that the distance between $P(x,y)$ and $B(0,3)$ is $\\sqrt{13}$ units, so we have $$\\sqrt{x^2+(y-3)^2}=\\sqrt{13}.$$Squaring both sides gives us $$x^2+(y-3)^2=13.$$Now we have a system of equations:\n\n\\begin{align*}\nx^2+y^2&=10,\\\\\nx^2+(y-3)^2&=13.\n\\end{align*}\nWe can subtract the first equation from the second to get\n\n$$(y-3)^2-y^2=3\\Rightarrow y^2-6y+9-y^2=3\\Rightarrow -6y+9=3\\Rightarrow -6y=-6\\Rightarrow\\boxed{y=1}.$$Since we know that $x^2+y^2=10$, we have $x^2+1=10\\Rightarrow x^2=9\\Rightarrow x=\\boxed{3}$.\n\nNow we can find the distance between $P(3,1)$ and $C(5,0)$: $$\\sqrt{(3-5)^2+(1-0)^2}=\\sqrt{4+1}=\\boxed{\\sqrt{5}}.$$\nFinal Answer: The final answer is $\\sqrt{5}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -1839,7 +1839,7 @@ export default {
         "target": "The product of the numerators is\n\\begin{align*}\n&(2 \\cdot 2) \\cdot (2 \\cdot 3) \\cdot (2 \\cdot 4) \\cdot (2 \\cdot 5) \\cdot (2 \\cdot 6) \\cdot (2 \\cdot 7) \\cdot (2 \\cdot 8) \\cdot (2 \\cdot 9) \\\\\n&= 2^8 \\cdot 2 \\cdot 3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9.\n\\end{align*}Then the given expression is equal to\n\\[10 \\cdot \\frac{2^8 \\cdot 2 \\cdot 3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9}{3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9 \\cdot 10} = 2^9 = \\boxed{512}.\\]\nFinal Answer: The final answer is $512$I hope it is correct.",
         "output": "We have that\n\n\\begin{align*}\n10 \\cdot \\frac{4}{3} \\cdot \\frac{6}{4} \\cdot \\frac{8}{5} \\cdot \\frac{10}{6} \\cdot \\frac{12}{7} \\cdot \\frac{14}{8} \\cdot \\frac{16}{9} \\cdot \\frac{18}{10}&=\\frac{10 \\cdot 4 \\cdot 6 \\cdot 8 \\cdot 10 \\cdot 12 \\cdot 14 \\cdot 16 \\cdot 18}{3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9 \\cdot 10}\\\\\n&=\\frac{2^9 \\cdot 3^4 \\cdot 5^2 \\cdot 7 \\cdot 11 \\cdot 13}{2^6 \\cdot 3^3 \\cdot 5 \\cdot 7 \\cdot 9}\\\\\n&=\\boxed{\\frac{2^3 \\cdot 3 \\cdot 11 \\cdot 13}{9}}.\n\\end{align*}\nFinal Answer: The final answer is $\\frac{2^3 \\cdot 3 \\cdot 11 \\cdot 13}{9}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -1853,7 +1853,7 @@ export default {
         "target": "We recognize the given expression as the factorization $(a+b)(a^2-ab+b^2)$ of the difference of cubes $a^3+b^3$, where $a=x^3$ and $b=19$.  Thus the product is $a^3+b^3 = (x^3)^3+19^3=\\boxed{x^9+6859}$.\nFinal Answer: The final answer is $x^9+6859$I hope it is correct.",
         "output": "We have that\n\\begin{align*}\n(x^6 -19x^3 + 361) (x^3+19) &= (x^6 -19x^3 + 361)x^3 + (x^6 -19x^3 + 361)19 \\\\\n&= x^9 -19x^6 + 361x^3 + 19x^6 -361x^3 + 6859 \\\\\n&= \\boxed{x^9+19x^6 -165x^3 + 6859}\n\\end{align*}\nFinal Answer: The final answer is $x^9+19x^6 -165x^3 + 6859$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -1867,7 +1867,7 @@ export default {
         "target": "By the Integer Root Theorem, the possible integer roots are all the divisors of 14 (including negative divisors), which are $-14,$ $-7,$ $-2,$ $-1,$ $1,$ $2,$ $7,$ and $14.$  Checking, we find that the only integer roots are $\\boxed{-2,1}.$\nFinal Answer: The final answer is $-2,1$I hope it is correct.",
         "output": "We can factor the polynomial as\n\\begin{align*}\nx^4 + 5x^3 + 9x^2 - x - 14 &= x^4 + 5x^3 + 6x^2 + 3x^2 - 6x + 5x - 14\\\\\n&=x^2(x^2 + 5x + 6) + 3x(x - 2) + 5(x - 2)\\\\\n&=(x^2 + 3x + 5)(x^2 + 2x - 2)\\\\\n&=(x + 1)(x + 2)(x + 1)(x - 1)\\\\\n&=(x + 1)^2 (x + 2)(x - 1)\n\\end{align*}\nTherefore, the roots are $x = -1, -1, -2, 1$. Final Answer: The final answer is $-1, -2, 1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -1881,7 +1881,7 @@ export default {
         "target": "We can start by factoring the polynomials in the numerator and denominator, which gives us\n$$\\frac{x(2x-3)}{x(x-1)} + 5x -11 = \\frac{(x+1)(3x+2)}{(x+1)(x-1)}.$$If $x \\ne 0$ and $x \\ne -1$, we can cancel out some factors to get\n$$\\frac{2x-3}{x-1} + 5x -11 = \\frac{3x+2}{x-1}.$$Moving the fractional terms to one side gives us\n$$ 5x -11 = \\frac{x+5}{x-1}.$$Now we can eliminate the denominator by multiplying by $x-1$ on both sides (as long as $x\\ne1$) and then move all the terms to one side,\n$$5x^2- 17x + 6 = 0.$$Factoring gives us\n$$(x-3)(5x-2) = 0.$$Hence, $x$ must be $\\boxed{3}$ or $\\boxed{\\frac{2}{5}}$.\nFinal Answer: The final answer is $\\frac{2}{5}$I hope it is correct.",
         "output": "",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -1895,7 +1895,7 @@ export default {
         "target": "By the Integer Root Theorem, the only possible integers roots are $\\pm 1$ and $\\pm 3$.  Checking, we find that $\\boxed{1,-3}$ are the only integer roots.\nFinal Answer: The final answer is $1,-3$I hope it is correct.",
         "output": "We can factor the polynomial as\n\n$$(x-1)(x+1)(2x^2+4x+3)=0.$$The first two factors give us the integer solutions $x=1$ and $x=-1$.  The quadratic factor has no integer solutions.  Thus, the solution is \\boxed{1,-1}.\nFinal Answer: The final answer is $1,-1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -1909,7 +1909,7 @@ export default {
         "target": "For the given function to have a horizontal asymptote, it can't go to infinity as $x$ goes to infinity. This is only possible if the numerator has the same or smaller degree than the denominator. Since the denominator has degree 6, the largest possible degree of $q(x)$ that will allow the function to have a horizontal asymptote is $\\boxed{6}.$\n\nTo see that a degree of $6$ works, we can consider $q(x) = x^6.$ Then as $x$ grows away from $0,$ the $x^6$ terms in the function will dominate and the function will tend towards $\\frac{x^6}{x^6} = 1.$\nFinal Answer: The final answer is $6$I hope it is correct.",
         "output": "The degree of the denominator is $6$.  The degree of the numerator must be less than or equal to the degree of the denominator.  Therefore, the largest possible degree of $q(x)$ is $\\boxed{5}$.\nFinal Answer: The final answer is $5$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -1923,7 +1923,7 @@ export default {
         "target": "We start with $ 2^{1+\\lfloor\\log_{2}(N-1)\\rfloor}-N = 19$. After rearranging, we get\n\\[\\lfloor\\log_{2}(N-1)\\rfloor = \\log_{2} \\left(\\frac{N+19}{2}\\right).\\]Since $ \\lfloor\\log_{2}(N-1)\\rfloor $ is a positive integer, $ \\frac{N+19}{2}$ must be in the form of $2^{m} $ for some positive integer $ m $. From this fact, we get $N=2^{m+1}-19$.\n\nIf we now check integer values of $N$ that satisfy this condition, starting from $N=19$, we quickly see that the first values that work for $N$ are $2^6 -19$ and $2^7 -19$, giving values of $5$ and $6$ for $m$, respectively. Adding up these two values for $N$, we get $45 + 109 = \\boxed{154}$.\nFinal Answer: The final answer is $154$I hope it is correct.",
         "output": "We have that $2^{1+\\lfloor \\log_{2} (N-1) \\rfloor}-N=19$. This implies that $2^{1+\\lfloor \\log_{2} (N-1) \\rfloor}=N+19$, which further implies that $2^{\\lfloor \\log_{2} (N-1) \\rfloor}=\\frac{N+19}{2}$. The left-hand side of this equation is an integer, so the right-hand side must also be an integer. Since $\\frac{N+19}{2}$ is an integer if and only if $N+19$ is even, we have that $N$ is odd. This means that $\\lfloor \\log_{2} (N-1) \\rfloor$ is equal to $\\log_{2} (N-1)-1$, since $N-1$ is even. We can rewrite the equation $2^{\\lfloor \\log_{2} (N-1) \\rfloor}=\\frac{N+19}{2}$ as $2^{\\log_{2} (N-1)-1}=\\frac{N+19}{2}$. This implies that $2^{\\log_{2} (N-1)}=N+19$. Since $2^{\\log_{2} (N-1)}=N-1$, we have that $N-1=N+19$, which is impossible. Therefore, there is no solution for $N$.\nFinal Answer: The final answer is that there is no solution for $N$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -1937,7 +1937,7 @@ export default {
         "target": "Let $b_n = \\frac{1}{a_n}.$  Then $a_n = \\frac{1}{b_n},$ so\n\\[\\frac{1}{b_n} = \\frac{\\frac{1}{b_{n - 1}}}{1 + \\frac{1}{b_{n - 1}}} = \\frac{1}{b_{n - 1} + 1},\\]so $b_n = b_{n - 1} + 1.$  Since $b_0 = \\frac{1}{6},$ it follows that $b_n = n + \\frac{1}{6}$ for all $n.$  Hence,\n\\[a_n = \\frac{1}{n + \\frac{1}{6}} = \\frac{6}{6n + 1}.\\]for all $n.$  It follows that $a_{100} = \\boxed{\\frac{6}{601}}.$\nFinal Answer: The final answer is $\\frac{6}{601}$I hope it is correct.",
         "output": "We can use the given formula to find the first few terms:\n\n\\begin{align*}\na_0&=6\\\\\na_1&=\\frac{6}{1+6}=\\frac{3}{2}\\\\\na_2&=\\frac{3/2}{1+3/2}=\\frac{3}{5}\\\\\na_3&=\\frac{3/5}{1+3/5}=\\frac{3}{8}\\\\\na_4&=\\frac{3/8}{1+3/8}=\\frac{3}{11}\\\\\na_5&=\\frac{3/11}{1+3/11}=\\frac{3}{14}\\\\\na_6&=\\frac{3/14}{1+3/14}=\\frac{3}{17}\n\\end{align*}\n\n\nNote that the numerators are all 3, and the denominators are all 1 more than the numerators of the previous terms.  So we conjecture that\n\n$$a_n=\\frac{3}{3+n}.$$We prove this by induction.  First, note that $a_0=\\frac{3}{3+0}$, so the formula holds for the base case.  Now assume that the formula holds for $a_{n-1}$.  Then\n\n\\begin{align*}\na_n&=\\frac{a_{n-1}}{1+a_{n-1}}\\\\\n&=\\frac{3/(3+(n-1))}{1+3/(3+(n-1))}\\\\\n&=\\frac{3}{3+(n-1)+3}\\\\\n&=\\frac{3}{3+n}.\n\\end{align*}\n\nTherefore,\n\n$$a_{100}=\\frac{3}{3+100}=\\boxed{\\frac{3}{103}}.$$\nFinal Answer: The final answer is $\\frac{3}{103}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -1951,7 +1951,7 @@ export default {
         "target": "After the first lottery and first shop, Stacy has\n\\[2d - 1024\\]dollars.  After the second lottery and second shop, Stacy has\n\\[2(2d - 1024) - 1024 = 2^2 d - (1 + 2) 1024\\]dollars.  After the third lottery and third shop, Stacy has\n\\[2(2^2 d - (1 + 2) 1024) - 1024 = 2^3 d - (1 + 2 + 2^2) 1024\\]dollars.\n\nMore generally, after the $n$th lottery and $n$th shop, Stacy has\n\\[2^n d - (1 + 2 + 2^2 + \\dots + 2^{n - 1}) 1024 = 2^n d - 1024 (2^n - 1)\\]dollars.  In particular, for $n = 10,$ Stacy has\n\\[1024d - 1024 (1023)\\]dollars, which is also 0.  Hence, $d = \\boxed{1023}.$\nFinal Answer: The final answer is $1023$I hope it is correct.",
         "output": "Let $d=2^n$. Then she will go to $n$ shops and spend $n\\cdot1024$ dollars. Therefore, $d=2^n \\ge n\\cdot1024$. We wish to find the smallest value of $n$ such that $2^n \\ge n\\cdot1024$. We have that $2^n \\ge n\\cdot1024$ when $n=10$. Therefore, the minimum possible value of $d$ is $\\boxed{d=1024}$.\nFinal Answer: The final answer is $1024$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -1965,7 +1965,7 @@ export default {
         "target": "Let $q$ and $r$ be the remainder when $x$ is divided by 19, so $x = 19q + r,$ where $0 \\le r \\le 18.$  Then\n\\begin{align*}\n\\lfloor x \\rfloor - 19 \\left\\lfloor \\frac{x}{19} \\right\\rfloor &= 19q + r - 19 \\left\\lfloor \\frac{19q + r}{19} \\right\\rfloor \\\\\n&= 19q + r - 19 \\left\\lfloor q + \\frac{r}{19} \\right\\rfloor \\\\\n&= 19q + r - 19q \\\\\n&= r.\n\\end{align*}Thus, when $x$ is divided by 19, the remainder is 9.  In other words, $x$ is 9 more than a multiple of 19.\n\nSimilarly, when $x$ is 9 more than a multiple of 89.  Since 19 and 89 are relatively prime, $x$ is 9 greater than a multiple of $19 \\cdot 89 = 1691.$  Since $x$ is greater than 9, the smallest possible value of $x$ is $1691 + 9 = \\boxed{1700}.$\nFinal Answer: The final answer is $1700$I hope it is correct.",
         "output": "We have\n\n\\begin{align*}\n\\lfloor x \\rfloor - 19 \\left\\lfloor \\frac{x}{19} \\right\\rfloor &= 9 = \\lfloor x \\rfloor - 89 \\left\\lfloor \\frac{x}{89} \\right\\rfloor,\\\\\n\\Rightarrow\\qquad 19 \\left\\lfloor \\frac{x}{19} \\right\\rfloor &= \\lfloor x \\rfloor - 9 = 89 \\left\\lfloor \\frac{x}{89} \\right\\rfloor,\\\\\n\\Rightarrow\\qquad 19 \\left\\lfloor \\frac{x}{19} \\right\\rfloor &= 89 \\left\\lfloor \\frac{x}{89} \\right\\rfloor,\\\\\n\\Rightarrow\\qquad \\frac{19}{89} &= \\frac{\\left\\lfloor \\frac{x}{89} \\right\\rfloor}{\\left\\lfloor \\frac{x}{19} \\right\\rfloor},\\\\\n\\Rightarrow\\qquad \\frac{19}{89} &\\le \\frac{\\frac{x}{89}}{\\frac{x}{19}}=\\frac{19}{89},\\\\\n\\Rightarrow\\qquad \\frac{\\frac{x}{89}}{\\frac{x}{19}} &= \\frac{19}{89},\\\\\n\\Rightarrow\\qquad \\frac{x}{89}\\cdot\\frac{19}{x} &= \\frac{19}{89},\\\\\n\\Rightarrow\\qquad \\frac{x}{89} &= \\frac{x}{19},\\\\\n\\Rightarrow\\qquad x &= 89.\n\\end{align*}\n\nFinal Answer: The final answer is $89$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -1979,7 +1979,7 @@ export default {
         "target": "Since $p(2) = p(-1) = 0,$ $p(x)$ is of the form\n\\[p(x) = (ax + b)(x - 2)(x + 1)\\]for some constants $a$ and $b.$  Setting $x = 4$ and $x = 5,$ we get\n\\begin{align*}\n(4a + b)(2)(5) &= p(4) = 6, \\\\\n(5a + b)(3)(6) &= p(5) = 8,\n\\end{align*}so\n\\begin{align*}\n4a + b &= \\frac{3}{5}, \\\\\n5a + b &= \\frac{4}{9}.\n\\end{align*}Solving, we find $a = -\\frac{7}{45}$ and $b = \\frac{11}{9}.$  Hence,\n\\[p(x) = \\left( -\\frac{7}{45} x + \\frac{11}{9} \\right) (x - 2)(x + 1) = -\\frac{(7x - 55)(x - 2)(x + 1)}{45}.\\]Therefore,\n\\[p(7) = -\\frac{(49 - 55)(5)(8)}{45} = \\boxed{\\frac{16}{3}}.\\]\nFinal Answer: The final answer is $\\frac{16}{3}$I hope it is correct.",
         "output": "",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -1993,7 +1993,7 @@ export default {
         "target": "Let $x = \\sqrt{a}$ and $y = \\sqrt{b},$ so $x - y = 20,$ $a = x^2,$ and $b = y^2.$  Then\n\\begin{align*}\na - 5b &= x^2 - 5y^2 \\\\\n&= (y + 20)^2 - 5y^2 \\\\\n&= -4y^2 + 40y + 400 \\\\\n&= -4(y - 5)^2 + 500.\n\\end{align*}The maximum of $\\boxed{500}$ occurs when $y = 5,$ so $x = 25,$ $a = 625,$ and $b = 25.$\nFinal Answer: The final answer is $500$I hope it is correct.",
         "output": "We have $\\sqrt{a} - \\sqrt{b} = 20$. Squaring both sides, we get\n\n$$a - 2\\sqrt{ab} + b = 400.$$\n\nWe can rewrite this as\n\n$$a - 5b = 400 + 2\\sqrt{ab} - 3b.$$\n\nNow, $a$ and $b$ are nonnegative, so $\\sqrt{ab}$ is also nonnegative. Thus, the maximum value of $a - 5b$ occurs when $b = 0$. This gives us $a - 5b = \\boxed{400}$.\n\nFinal Answer: The final answer is $400$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -2007,7 +2007,7 @@ export default {
         "target": "In the arithmetic sequence $a,$ $b,$ $c,$ let $d$ be the common difference, so $a = b - d$ and $c = b + d.$  Then\n\\begin{align*}\n3a + b &= 3(b - d) + b = 4b - 3d, \\\\\n3b + c &= 3b + b + d = 4b + d, \\\\\n3c + a &= 3(b + d) + (b - d) = 4b + 2d,\n\\end{align*}so\n\\[(4b + d)^2 = (4b - 3d)(4b + 2d).\\]This simplifies to $12bd + 7d^2 = d(12b + 7d) = 0.$  If $d = 0,$ then $a = b = c,$ so $a^3 = 17955.$  Since 17955 is not a perfect cube, $12b + 7d = 0,$ so $d = -\\frac{12}{7} b.$\n\nThen $a = b - d = \\frac{19}{7} b$ and $c = b + d = -\\frac{5}{7} b.$  Substituting into $abc = 17955,$ we get\n\\[\\frac{19}{7} b \\cdot b \\cdot \\left( -\\frac{5}{7} b \\right) = 17955.\\]Then $b^3 = -9261,$ so $b = -21.$  Hence, $a = -57$ and $c = 15,$ so $a + b + c = \\boxed{-63}.$\nFinal Answer: The final answer is $-63$I hope it is correct.",
         "output": "",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -2021,7 +2021,7 @@ export default {
         "target": "Since $|a| = 1,$ $a \\overline{a} = |a|^2,$ so $\\overline{a} = \\frac{1}{a}.$  Similarly, $\\overline{b} = \\frac{1}{b},$ $\\overline{c} = \\frac{1}{c},$ and $\\overline{d} = \\frac{1}{d}.$\n\nFrom the equation $a + b + c + d = 0,$ $\\overline{a} + \\overline{b} + \\overline{c} + \\overline{d} = 0,$ so\n\\[\\frac{1}{a} + \\frac{1}{b} + \\frac{1}{c} + \\frac{1}{d} = 0.\\]This gives us $abc + abd + acd + bcd = 0.$\n\nThen by Vieta's formulas, $a,$ $b,$ $c,$ $d$ are roots of a polynomial of the form\n\\[z^4 + p_2 z^2 + p_0 = 0.\\]If $z$ is a root of this polynomial, then so is $-z.$  This means $-a$ is equal to one of $b,$ $c,$ or $d,$ so\n\\[(a + b)(a + c)(a + d)(b + c)(b + d)(c + d) = 0.\\]Therefore, the maximum value is $\\boxed{0}.$\nFinal Answer: The final answer is $0$I hope it is correct.",
         "output": "We have\n\\begin{align*}\n|(a + b)(a + c)(a + d)(b + c)(b + d)(c + d)| &= |(a + b)(a + c)(b + c)(a + d)(b + d)(c + d)|\\\\\n&\\le |(a + b)(a + c)(b + c)| + |(a + d)(b + d)(c + d)|\\\\\n&\\le |a + b| + |a + c| + |b + c| + |a + d| + |b + d| + |c + d|\\\\\n&\\le |a| + |b| + |c| + |a| + |c| + |b + c| + |a| + |d| + |b| + |c| + |d| + |b| + |d|\\\\\n&\\le 1 + 1 + |b + c| + 1 + 1 + |b + c| + 1 + 1 + |b + c|\\\\\n&= 6 + 3|b + c|\\\\\n&\\le 6 + 3(|b| + |c|)\\\\\n&= 6 + 3(1 + 1)\\\\\n&= 6 + 3\\cdot 2\\\\\n&= 6 + 6\\\\\n&= \\boxed{12}\n\\end{align*}\nFinal Answer: The final answer is $12$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -2035,7 +2035,7 @@ export default {
         "target": "We count the number of times $\\frac{1}{n^3}$ appears in the sum\n\\[\\sum_{j = 1}^\\infty \\sum_{k = 1}^\\infty \\frac{1}{(j + k)^3},\\]where $n$ is a fixed positive integer.  (In other words, we are conditioning the sum on $j + k$.)  We get a term of $\\frac{1}{n^3}$ each time $j + k = n.$  The pairs $(j,k)$ that work are $(1,n - 1),$ $(2,n - 2),$ $\\dots,$ $(n - 1,1),$ for a total of $n - 1$ pairs.  Therefore,\n\\begin{align*}\n\\sum_{j = 1}^\\infty \\sum_{k = 1}^\\infty \\frac{1}{(j + k)^3} &= \\sum_{n = 1}^\\infty \\frac{n - 1}{n^3} \\\\\n&= \\sum_{n = 1}^\\infty \\left( \\frac{n}{n^3} - \\frac{1}{n^3} \\right) \\\\\n&= \\sum_{n = 1}^\\infty \\left( \\frac{1}{n^2} - \\frac{1}{n^3} \\right) \\\\\n&= \\sum_{n = 1}^\\infty \\frac{1}{n^2} - \\sum_{n = 1}^\\infty \\frac{1}{n^3} \\\\\n&= \\boxed{p - q}.\n\\end{align*}\nFinal Answer: The final answer is $p - q$I hope it is correct.",
         "output": "",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Intermediate Algebra"
@@ -2049,7 +2049,7 @@ export default {
         "target": "Each full circle is 360 degrees.  Dividing 360 into 2250 gives a quotient of 6 with a remainder of 90.  So, she spins 90 degrees to her right past north, which leaves her facing $\\boxed{\\text{east}}$.\nFinal Answer: The final answer is $\\text{east}$I hope it is correct.",
         "output": "She is facing south. She spins 2250 degrees, which is five 360 degree rotations and 150 degrees. Thus, she is facing south.\nFinal Answer: The final answer is south. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -2063,7 +2063,7 @@ export default {
         "target": "The average of any set of integers is equal to the sum of the integers divided by the number of integers. Thus, the average of the integers is $$\\frac{71+72+73+74+75}{5}=\\frac{365}{5}=\\boxed{73}.$$\nFinal Answer: The final answer is $73$I hope it is correct.",
         "output": "The average of the five integers is given by $\\frac{71+72+73+74+75}{5}=\\frac{375}{5}=\\boxed{75}.$\nFinal Answer: The final answer is $75$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -2077,7 +2077,7 @@ export default {
         "target": "Instead of doing each division separately and then adding, recall that  $x\\div d + y\\div d = (x+y)\\div d $ if $d$ is nonzero.  Using this fact, we can compute as follows: \\begin{align*}\n49{,}994\\div 7 + 20{,}006\\div 7 &= (49{,}994 + 20{,}006) \\div 7\\\\\n&= 70{,}000\\div 7\\\\\n&=\\boxed{10{,}000}.\n\\end{align*}\nFinal Answer: The final answer is $10{,}000$I hope it is correct.",
         "output": "We have that $49{,}994\\div 7 + 20{,}006\\div 7 = 7142+2858=\\boxed{9998}.$\nFinal Answer: The final answer is $9998$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -2091,7 +2091,7 @@ export default {
         "target": "Since multiplication is commutative, we can reorder these factors as: $$(3^2)(2^4)(37)(5^3)=(3\\cdot 37)(2^3\\cdot 5^3)(3\\cdot 2)=(111)(1000)(6)$$ $$=666\\cdot 1000=\\boxed{666000}$$\nFinal Answer: The final answer is $666000$I hope it is correct.",
         "output": "$(3^2)(2^4)(37)(5^3) = 9\\cdot16\\cdot37\\cdot125 = \\boxed{607,500}$\n\nFinal Answer: The final answer is $607,500$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -2105,7 +2105,7 @@ export default {
         "target": "Let $m$ be the number of rows in the grid of students and let $n$ be the number of columns.  The total number of students is $mn$.  If the only way to express $mn$ as a product of positive integers is for one of the integers to be 1, then 1 and $mn$ are the only divisors of $mn$, so $mn$ is prime.  The number of students in Jon's class is $\\boxed{23}$, the only prime between 20 and 28.\nFinal Answer: The final answer is $23$I hope it is correct.",
         "output": "",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -2119,7 +2119,7 @@ export default {
         "target": "Remember, even powers of $-1$ equal $1$, and odd powers of $-1$ equal $-1$.  Therefore, $x + x^2 = -1 + (-1)^2 = -1 + 1 = 0$.  The next pair cancels out in the same way: $x^3 + x^4 = (-1)^3 + (-1)^4 = -1 + 1 = 0$.  Now, it is easy to see that the pattern continues for every pair of powers, all the way up to $x^{2009} + x^{2010}$.  Notice that $x^{2011}$ is the only power that hasn't been canceled out.  Therefore, the answer is $(-1)^{2011} = \\boxed{-1}.$\nFinal Answer: The final answer is $-1$I hope it is correct.",
         "output": "We have that\n\n\\begin{align*}\nx+x^2+x^3+\\cdots+x^{2010}+x^{2011}&=(x-x^{2012})+(x^2-x^{2013})+\\cdots+(x^{2011}-x^{4023})\\\\\n&=-(x^{2012}+x^{2013}+\\cdots+x^{4023})\\\\\n&=-x^{2012}(1+x+\\cdots+x^{2011})\\\\\n&=-x^{2012}\\cdot\\frac{1-x^{2012}}{1-x}\\\\\n&=-\\frac{x^{2012}-x^{4024}}{1+x}\\\\\n&=-\\frac{(-1)^{2012}-(-1)^{4024}}{1-1}\\\\\n&=-\\frac{1-1}{0}=\\boxed{0}.\n\\end{align*}\nFinal Answer: The final answer is $0$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -2133,7 +2133,7 @@ export default {
         "target": "We factor 1000 as $10 \\times 10 \\times 10 = 2^3 \\times 5^3$. We are looking for two factors, neither of which is a multiple of 10. This means that neither number can contain a factor of both 2 and 5. This can only happen if one of the numbers is $2^3$ and the other is $5^3$. $2^3 = 8$ and $5^3 = 125$; their sum is $125 + 8 = \\boxed{133}$.\nFinal Answer: The final answer is $133$I hope it is correct.",
         "output": "We need to find two numbers that multiply to 1000, but are not multiples of 10.  The prime factorization of 1000 is $2^3\\cdot5^3$, so we can take $2\\cdot2\\cdot2\\cdot5\\cdot5=200$ and $2\\cdot5\\cdot5\\cdot5=125$ as our two numbers.  Then, their sum is $200+125=\\boxed{325}.$\nFinal Answer: The final answer is $325$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -2147,7 +2147,7 @@ export default {
         "target": "Since $2^2 < 5 < 3^2$ and $13^2 < 211 < 15^2$, we have the list $3^2,5^2,7^2,\\ldots,13^2$, which has the same number of elements as $3,5,7,\\ldots,13$, which has $\\boxed{6}$ elements.\nFinal Answer: The final answer is $6$I hope it is correct.",
         "output": "The first odd perfect square after 5 is $9 = 3^2$. The largest odd perfect square before 211 is $196 = 14^2$. Since 14 is the largest integer whose perfect square is less than or equal to 211, the answer is $14 - 3 + 1 = \\boxed{12}$.\nFinal Answer: The final answer is $12$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -2161,7 +2161,7 @@ export default {
         "target": "In order to cut all three pieces of timber into equal length logs, the length of the logs must be a factor of each of the three original lengths. The prime factors of 48 are $2^4\\cdot3$, those of 72 are $2^3\\cdot3^2$, and those of 40 are $2^3\\cdot5$. The greatest common factor of all three is $2^3=\\boxed{8}$, so that is the greatest possible length the sawmill operator can cut.\nFinal Answer: The final answer is $8$I hope it is correct.",
         "output": "The lengths of the three pieces of timber are 48, 72, and 40.  The greatest common divisor of these three numbers is 16, so the greatest possible length of the logs the sawmill operator can cut is 16 feet.  This means that there will be three logs of length 16 feet, one log of length 16 feet, and two logs of length 16 feet, for a total of six logs of length 16 feet.\nFinal Answer: The final answer is $16$ feet. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -2175,7 +2175,7 @@ export default {
         "target": "The easiest approach is to consider how many times $6$ can appear in the units place and how many times in the tens place. If we put a $6$ in the units place, there are $10$ choices for the tens place. Likewise, if we put a $6$ in the tens place, there are $10$ choices for the units place. So, there are $\\boxed{20}$ appearances of the digit $6.$\n\nNote: Read the question carefully. There are $19$ numbers that include $6,$ but $6$ appears $20$ times. Always answer the question that is asked.\nFinal Answer: The final answer is $20$I hope it is correct.",
         "output": "The digit 6 appears 19 times in the list of all integers from 1 to 100.\nFinal Answer: The final answer is $19$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -2189,7 +2189,7 @@ export default {
         "target": "For the greatest quotient, we want the largest numerator and the smallest denominator. This gives $\\dfrac{10}{2/5} = 10 \\cdot \\dfrac{5}{2} = \\boxed{25}$.\nFinal Answer: The final answer is $25$I hope it is correct.",
         "output": "The largest number in the set is $10$. The smallest number in the set is $\\frac{1}{2}$. Therefore, the greatest possible quotient is $\\boxed{10\\div\\frac{1}{2}=20}$.\nFinal Answer: The final answer is $20$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -2203,7 +2203,7 @@ export default {
         "target": "The four smallest prime numbers are 2, 3, 5, and 7, with product $2 \\cdot 3 \\cdot 5 \\cdot 7 = 210$.  The four smallest composite numbers are 4, 6, 8, and 9, with product $4 \\cdot 6 \\cdot 8 \\cdot 9 = 1728$.  The positive difference is thus $1728 - 210 = \\boxed{1518}$.\nFinal Answer: The final answer is $1518$I hope it is correct.",
         "output": "The four smallest prime numbers are 2, 3, 5, and 7.  The four smallest composite numbers greater than 0 are 1, 4, 6, and 8.  The product of the four smallest prime numbers is \\begin{align*}\n2\\cdot3\\cdot5\\cdot7=210\n\\end{align*} and the product of the four smallest composite numbers greater than 0 is \\begin{align*}\n1\\cdot4\\cdot6\\cdot8=192.\n\\end{align*} The positive difference between the two products is \\begin{align*}\n210-192=\\boxed{18}.\n\\end{align*} Final Answer: The final answer is $18$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -2217,7 +2217,7 @@ export default {
         "target": "There are $9$ one-digit positive integers ($1$ through $9$). There are $900$ three-digit positive integers, since there are $100$ three-digit numbers with each hundreds digit from $1$ to $9$. So far, we've counted $909$ positive integers with an odd number of digits. Next are five-digit numbers. Since $909+91=1000$, we're looking for the $91^{\\rm st}$ five-digit number.\n\nThe $1^{\\rm st}$ five-digit number is $10000$, so the $91^{\\rm st}$ five-digit number is $10000+90$, or $\\boxed{10090}$.\nFinal Answer: The final answer is $10090$I hope it is correct.",
         "output": "We will find this number by counting how many positive integers have an odd number of digits.\n\n\\begin{itemize}\n\\item One-digit integers: $9$\n\\item Three-digit integers: $900$\n\\item Five-digit integers: $90000$\n\\item Seven-digit integers: $9000000$\n\\item Nine-digit integers: $90000000$\n\\item Eleven-digit integers: $900000000$\n\\item Thirteen-digit integers: $9000000000$\n\\item Fifteen-digit integers: $90000000000$\n\\end{itemize}\n\nWe have counted $9+900+90000+9000000+90000000+900000000+9000000000+90000000000=1080808089$ positive integers with an odd number of digits.  The $1000^{\\rm th}$ positive integer with an odd number of digits is the $1000^{\\rm th}$ number in this list, so \\boxed{the answer is 900000000}. Final Answer: The final answer is $900000000$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -2231,7 +2231,7 @@ export default {
         "target": "Once we've picked the first two digits of a $4$-digit palindrome, the last two digits are automatically chosen by mirroring the first two. Thus, we can make exactly one $4$-digit palindrome for every $2$-digit number. For example, the $2$-digit number $57$ gives the palindrome $5775$.\n\nFor an integer to be divisible by $3$, the sum of its digits must also be divisible by $3$. A $4$-digit palindrome has two identical pairs of digits. If the total of all four digits is a multiple of $3$, then the first two digits must also add up to a multiple of $3$ (since doubling a non-multiple of $3$ can't give us a multiple of $3$). Thus, to make a $4$-digit palindrome which is a multiple of $3$, we must use a $2$-digit number that is a multiple of $3$.\n\nThis tells us that the number of $4$-digit palindromes that are divisible by $3$ is identical to the number of multiples of $3$ from $10$ through $99$. Here is a list of those multiples of $3$: $$12, 15, 18, 21, 24, \\ldots, 90, 93, 96, 99.$$ This list consists of the $30$ positive multiples of $3$ greater than $10.$ So, there are $30$ numbers in the list, and therefore $\\boxed{30}$ four-digit palindromes that are divisible by $3$.\n\nHere is a list of those palindromes: $$1221, 1551, 1881, 2112, 2442, \\ldots, 9009, 9339, 9669, 9999.$$\nFinal Answer: The final answer is $30$I hope it is correct.",
         "output": "",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -2245,7 +2245,7 @@ export default {
         "target": "Since two of the outfits are ruined, we only have three outfits. There are five models available for the first outfit, four models available for the second outfit, and three models available for the third outfit. Therefore, there are $5 \\cdot 4 \\cdot 3 = \\boxed{60}$ ways in which the models can be matched to the outfits.\nFinal Answer: The final answer is $60$I hope it is correct.",
         "output": "There are five outfits and three models. This is a combination problem. The answer is \\begin{align*}\n\\frac{5!}{3!2!}&=\\frac{5\\cdot 4}{2}\\\\\n&=\\frac{20}{2}\\\\\n&=\\boxed{10}\n\\end{align*}\nFinal Answer: The final answer is $10$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Prealgebra"
@@ -2259,7 +2259,7 @@ export default {
         "target": "We must find the least prime number, $p$, such that $p=25n+2$ for some positive integer $n$. It is clear that $n$ must be odd because otherwise $p$ is divisible by 2 and hence not prime. $n=1$ gives $p=27$, which is composite. $n=3$ gives $p=77$, which is composite. But $n=5$ gives $p=127$, which is prime. Thus, $\\boxed{127}$ is the least prime number greater than 25 that has a remainder of 2 when divided by 25.\nFinal Answer: The final answer is $127$I hope it is correct.",
         "output": "The primes greater than 25 are 27, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499. The least prime number greater than 25 that will have a remainder of 2 when divided by 25 is \\boxed{27}.\nFinal Answer: The final answer is $27$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -2273,7 +2273,7 @@ export default {
         "target": "All numbers are divisible by $1$. The last two digits, $52$, form a multiple of 4, so the number is divisible by $4$, and thus $2$. $1+4+5+2=12$, which is a multiple of $3$, so $1452$ is divisible by $3$.  Since it is divisible by $2$ and $3$, it is divisible by $6$.  But it is not divisible by $5$ as it does not end in $5$ or $0$.  So the total is $\\boxed{5}$.\nFinal Answer: The final answer is $5$I hope it is correct.",
         "output": "The prime factorization of 1452 is $1452=2^2\\cdot3\\cdot11^2$.  The positive divisors of 1452 are the positive integers that can be written in the form $2^a3^b11^c$, where $a, b, c$ are nonnegative integers.  There are 3 choices for $a$, 2 choices for $b$, and 3 choices for $c$, for a total of $3\\cdot2\\cdot3=\\boxed{18}$ positive divisors of 1452.  Of these 18 divisors, only 6 are less than or equal to 6, so the answer is $\\boxed{6}$.\nFinal Answer: The final answer is $6$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -2287,7 +2287,7 @@ export default {
         "target": "$1529 = 254 \\cdot 6 + 5 \\Rightarrow 1529 \\equiv \\boxed{5} \\pmod{6}$.\nFinal Answer: The final answer is $5$I hope it is correct.",
         "output": "We have that\n\n$$1529=254\\cdot6+3.$$Therefore, the remainder is $\\boxed{3}$.\nFinal Answer: The final answer is $3$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -2301,7 +2301,7 @@ export default {
         "target": "To get the largest number, first maximize the hundreds digit, then the tens, then the ones. One-digit factors of $12$ are $6$, $2$, $3$, $4$, and $1$, so the hundreds digit must be $6$.  In order to make the digits multiply to 12, the next two digits must be $2$ and $1$.  Therefore, the largest three-digit number in which the product of the digits is $12$ is $\\boxed{621}$.\nFinal Answer: The final answer is $621$I hope it is correct.",
         "output": "The largest three-digit number is $999$.  The prime factorization of $12$ is $2^2\\cdot 3$.  The digits $2,2,3$ will work, but the largest three-digit number will be obtained by choosing the largest digit for the hundreds place.  So the largest three-digit number is $\\boxed{932}$.\n\nFinal Answer: The final answer is $932$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -2315,7 +2315,7 @@ export default {
         "target": "Since $7438,7439,\\ldots,7445$ are $8$ consecutive integers, they include exactly one integer from each residue class $\\pmod 8$. Therefore, their sum is congruent $\\pmod 8$ to $0+1+2+3+4+5+6+7=28$. The remainder of this sum $\\pmod 8$ is $\\boxed{4}$.\nFinal Answer: The final answer is $4$I hope it is correct.",
         "output": "We have that\n\n\\begin{align*}\n7438+7439+7440+7441+7442+7443+7444+7445&=56330\\\\\n&=56328+2\\\\\n&=8\\cdot7041+2.\n\\end{align*}\nTherefore, the remainder is $\\boxed{2}$.\nFinal Answer: The final answer is $2$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -2329,7 +2329,7 @@ export default {
         "target": "$Q\\in\\{35, 36, 37, 38, 39, 40, 41, 42\\}$. Only 2 of these 8 numbers are prime: 37 and 41. Thus, the probability that Ray will choose a prime number is $2/8=\\boxed{\\frac{1}{4}}$.\nFinal Answer: The final answer is $\\frac{1}{4}$I hope it is correct.",
         "output": "The prime numbers between $34$ and $43$ are $37$, $41$, and $43$.  There are $10$ numbers between $34$ and $43$.  Thus, the probability of Ray choosing a prime number is $\\frac{3}{10}$.\nFinal Answer: The final answer is $\\frac{3}{10}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -2343,7 +2343,7 @@ export default {
         "target": "The hundreds digit in the given expression is the same as the tens digit in the expression $5\\times6\\times7\\times8\\times9$, which is the same as the ones digit in the expression $6\\times7\\times4\\times9$ (we divide out a 10 each time). $6\\times7=42$ has a ones digit of 2 and $4\\times9=36$ has a ones digit of 6, and $2\\times6=12$, so the entire product has a ones digit of $\\boxed{2}$.\nFinal Answer: The final answer is $2$I hope it is correct.",
         "output": "Since the units digit is zero, the tens digit is zero, and the hundreds digit is the same as the tens digit in the product of $5 \\times 6 \\times 7 \\times 8 \\times 9$. The product $5 \\times 6 \\times 7 \\times 8 \\times 9 = 15120$, so the hundreds digit is \\boxed{1}.\nFinal Answer: The final answer is $1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -2357,7 +2357,7 @@ export default {
         "target": "The square root of 72,361 is 269. If we divide this by 3, we will be in the ballpark of our three consecutive primes. The primes are 83, 89 and 97, so the largest is $\\boxed{97}$.\nFinal Answer: The final answer is $97$I hope it is correct.",
         "output": "",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -2371,7 +2371,7 @@ export default {
         "target": "Testing for divisibility by 9 does not work, because the sum of the digits is 18, so the digit could be either 0 or 9. Test for divisibility by 11. The alternating sum of the digits of $12!$ is $4-7+a-1+6 = 2+a$, which must be divisible by 11. Therefore, since $2+9=11$, we have $\\boxed{a=9}$.\nFinal Answer: The final answer is $a=9$I hope it is correct.",
         "output": "The prime factorization of $12!$ is\n\n$$2^8\\cdot3^4\\cdot5^2\\cdot7\\cdot11.$$\nFrom this, we can find that $12!$ has a total of 8 zeros, and $a=8$.\n\nFinal Answer: The final answer is $8$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -2385,7 +2385,7 @@ export default {
         "target": "$817_9 - 145_9 - 266_9 = 817_9 - (145_9 + 266_9) = 817_9 - 422_9 = \\boxed{385_9}$.\nFinal Answer: The final answer is $385_9$I hope it is correct.",
         "output": "We will use the fact that $817_9 = 8 \\cdot 9^2 + 1 \\cdot 9^1 + 7 \\cdot 9^0 = 646$ and $145_9 = 1 \\cdot 9^2 + 4 \\cdot 9^1 + 5 \\cdot 9^0 = 128$ and $266_9 = 2 \\cdot 9^2 + 6 \\cdot 9^1 + 6 \\cdot 9^0 = 234$.\nTherefore, we have\n\\begin{align*}\n817_9 - 145_9 - 266_9 &= 646 - 128 - 234\\\\\n&= \\boxed{284}\n\\end{align*}\nFinal Answer: The final answer is $284$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -2399,7 +2399,7 @@ export default {
         "target": "Let $m$ be the least possible number of leaves. Then $2m$ is the least possible number of pages. We know that $2m\\equiv 3\\pmod 7\\implies 8m \\equiv 3\\cdot 4\\pmod 7\\implies m\\equiv 12\\equiv 5\\pmod 7$. So $m=5+7a$ for some positive integer $a$. The smallest such number greater than $100$ is $5+7\\cdot 14=\\boxed{103}$.\nFinal Answer: The final answer is $103$I hope it is correct.",
         "output": "Let $n$ be the number of leaves.  We know that the number of pages is $3$ more than a multiple of $7$, so $2n=7k+3$ for some integer $k$.  We also know that the number of leaves is greater than $100$, so $n>100$.  This means $k$ must be at least $15$, so $k=15,16,17,\\dots$.  Since $n$ is an integer, we need $k$ to be a multiple of $3$.  Thus, $k=18$ is the smallest value of $k$ that satisfies our conditions.  This gives us $n=\\boxed{105}$.\n\nFinal Answer: The final answer is $105$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -2413,7 +2413,7 @@ export default {
         "target": "Let $n=2m$. Let $b$ be the number of cars that Ray originally had. Clearly $b=6a$ for some positive integer $a$. Additionally, \\begin{align*} b-2\\equiv 0\\pmod n&\\implies 6a\\equiv 2\\pmod {2m} \\\\ &\\implies 3a\\equiv 1\\pmod m.\\end{align*} Such $a$ exists if and only if $3$ is invertible modulo $m$. In other words, $\\gcd(3,m)=1$. We have that $n<10\\implies m=\\frac{n}{2}<5$. The only $0<m<5$ relatively prime to $3$ are $1,2,4$. Thus, there are $\\boxed{3}$ possible values of $n$: $2$, $4$, and $8$.\nFinal Answer: The final answer is $3$I hope it is correct.",
         "output": "Since the number of toy cars that Ray has is a multiple of $6$, the number of cars that he has is $6k$, where $k$ is an integer. When he loses two of them, he has $6k-2$ cars left. If $6k-2$ is a multiple of $n$, then $6k-2=mn$ for some integer $m$. Since $n$ is a positive even integer less than $10$, the possible values for $n$ are $2,4,6,8$. The possible values for $6k-2$ are $4,10,16,22$. The only possible value for $n$ that corresponds to a possible value for $6k-2$ is $n=2$. Therefore, there is \\boxed{1} possible value for $n$.\nFinal Answer: The final answer is $1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -2427,7 +2427,7 @@ export default {
         "target": "If there are $b$ gold coins in each of the original 7 bags, then $7b+53$ is divisible by 8. In other words, $7b + 53 \\equiv 0 \\pmod{8}$. Since $53 \\equiv 5 \\pmod{8}$ and $7 \\equiv -1 \\pmod{8}$, we have that $-b \\equiv -5 \\pmod{8}$. Multiplying both sides by $-1$, we get that $b \\equiv 5 \\pmod{8}$. Now, we want $7b + 53 > 200$, so as a result, $b > \\frac{200-53}{7} \\implies b > 21$. Therefore, we want an integer greater than 21 which leaves a remainder of 5 when divided by 8. The least such integer is 29, so you had $29 \\cdot 7 = \\boxed{203}$ coins before finding the bag of 53 coins.\nFinal Answer: The final answer is $203$I hope it is correct.",
         "output": "Let $n$ be the number of coins in each bag before finding the bag of 53 coins. Then after finding the bag of 53 coins, you have $7n+53$ coins. Since we have more than 200 coins, we can write the inequality\n\n$$7n+53>200\\Rightarrow 7n>147\\Rightarrow n>\\boxed{21}.$$\nFinal Answer: The final answer is $21$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -2441,7 +2441,7 @@ export default {
         "target": "Every positive integer, $ n \\equiv 23\\pmod{37}, $ can be written in the form: $23 + 37k$. Thus for every $n<18,632,$ $$0 < 23+37k < 18,632.$$ Since $k$ must be a whole number, $$0 \\le k \\le 502.$$\n\n\nThe set of all $ n \\equiv 23\\pmod{37} < 18,632$ is then: $$ \\{ 23+37(0), \\; 23+37(1), \\; 23+37(2), \\; ..., \\; 23+37(502) \\}. $$ Counting the number of elements in this set yields $502-0+1= \\boxed{503}$ positive integers less than 18,632 which are congruent to $23\\pmod{37}.$\nFinal Answer: The final answer is $503$I hope it is correct.",
         "output": "By the division algorithm, we can write\n\n$$18,\\!632=497\\cdot 37+1.$$\n\nIf $x$ is a whole number less than $18,\\!632$ and $x\\equiv 23 \\pmod {37},$ then\n\n$$x=37k+23$$for some integer $k$.\n\nSince $x<18,\\!632$, we have\n\n\\begin{align*}\n37k+23&<18,\\!632\\\\\n\\Rightarrow\\qquad 37k&<18,\\!609\\\\\n\\Rightarrow\\qquad k&<\\frac{18,\\!609}{37}\\\\\n\\Rightarrow\\qquad k&<497\\\\\n\\Rightarrow\\qquad k&\\le496.\n\\end{align*}Therefore, there are $\\boxed{496}$ whole numbers less than $18,\\!632$ that are congruent to $23 \\pmod {37}.$\nFinal Answer: The final answer is $496$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -2455,7 +2455,7 @@ export default {
         "target": "Note the prime factorizations $700=2^2\\cdot 5^2\\cdot 7$ and $7000=2^3\\cdot 5^3\\cdot 7$.\n\nIf $\\mathop{\\text{lcm}}[r,700]=7000$, then in particular, $r$ is a divisor of $7000$, so we can write $r=2^\\alpha\\cdot 5^\\beta\\cdot 7^\\gamma$, where $0\\le\\alpha\\le 3$, $0\\le\\beta\\le 3$, and $0\\le\\gamma\\le 1$.\n\nMoreover, we know that $\\mathop{\\text{lcm}}[r,700]=2^{\\max\\{\\alpha,2\\}}\\cdot 5^{\\max\\{\\beta,2\\}}\\cdot 7^{\\max\\{\\gamma,1\\}}$, and we know that this is equal to $7000=2^3\\cdot 5^3\\cdot 7$. This is possible only if $\\alpha=3$ and $\\beta=3$, but $\\gamma$ can be $0$ or $1$, giving us two choices for $r$: $$r = 2^3\\cdot 5^3\\cdot 7^0 = 1000 \\text{~~or~~} r=2^3\\cdot 5^3\\cdot 7^1 = 7000.$$So the sum of all solutions is $1000+7000=\\boxed{8000}$.\nFinal Answer: The final answer is $8000$I hope it is correct.",
         "output": "We know that $$\\mathop{\\text{lcm}}[r,700]=7000\\Leftrightarrow 7000=700\\cdot r\\cdot\\frac{s}{\\gcd(r,s)}$$ for some $s$.  We can solve for $r$ to obtain $$r=\\frac{7000\\gcd(r,s)}{700s}.$$  Since $r$ is an integer, $700s$ must divide $7000\\gcd(r,s)$.  Since $7000$ is divisible by $700$, we know that $r$ is divisible by $700$, so $r=700t$ for some $t$.  Then $$700st=7000\\gcd(r,s)\\Rightarrow st=10\\gcd(r,s).$$  Since $10$ is not divisible by $700$, we know that $t=10$.  Then $\\gcd(r,s)=\\gcd(7000,s)=s$, so $st=10s\\Rightarrow t=10$.  We then have that $r=7000$ and $s=1$.  Since $\\gcd(r,s)=s=1$, we know that $r$ is relatively prime to $s$.  The only positive integer $r$ that satisfies this condition is $r=\\boxed{7000}$.\nFinal Answer: The final answer is $7000$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Number Theory"
@@ -2469,7 +2469,7 @@ export default {
         "target": "We can write\n\\[\\frac{4}{3} \\cdot \\frac{6}{4} \\cdot \\frac{8}{5} \\cdot \\frac{10}{6} \\cdot \\frac{12}{7} \\cdot \\frac{14}{8} = \\frac{4 \\cdot 6 \\cdot 8 \\cdot 10 \\cdot 12 \\cdot 14}{3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8}.\\]Then\n\\[\\frac{6}{3} = \\frac{8}{4} = \\frac{10}{5} = \\frac{12}{6} = \\frac{14}{7} = 2,\\]so the expression becomes\n\\[\\frac{4 \\cdot 2^5}{8} = 2^4 = \\boxed{16}.\\]\nFinal Answer: The final answer is $16$I hope it is correct.",
         "output": "We have\n\\begin{align*}\n\\frac 43\\cdot \\frac 64\\cdot \\frac 85\\cdot \\frac{10}{6}\\cdot \\frac{12}{7}\\cdot \\frac{14}{8}\n&=\\frac 43\\cdot \\frac 64\\cdot \\frac 85\\cdot \\frac{5}{3}\\cdot \\frac{4}{3}\\cdot \\frac{7}{4}\\\\\n&=1\n\\end{align*}\nFinal Answer: The final answer is $1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -2483,7 +2483,7 @@ export default {
         "target": "We first find the $x$, the average of $13$, $-16$, and $6$ by summing the three integers and dividing the sum by $3$, so we have that $x = \\frac{13+(-16)+6}{3}=\\frac{3}{3}=1$. Now, we try to find $y$, the cube root of $8$. We know that $2^3=8$, so $y=\\sqrt[3]{8}=2$. Finally, we can substitute in $1$ for $x$ and $2$ for $y$ to find $x^2+y^3$: $$x^2+y^3=(1)^2+(2)^3 = 1 + 8 = \\boxed{9}.$$\nFinal Answer: The final answer is $9$I hope it is correct.",
         "output": "We have that $x = \\frac{13 - 16 + 6}{3} = \\frac{1}{3}$. Therefore, $x^2 = \\frac{1}{9}$. Also, $y = \\sqrt[3]{8} = 2$, so $y^3 = 8$. Therefore, $x^2 + y^3 = \\boxed{\\frac{1}{9} + 8 = \\frac{73}{9}}$.\nFinal Answer: The final answer is $\\frac{73}{9}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -2497,7 +2497,7 @@ export default {
         "target": "Factoring the first two terms, we have:\n\n$99^2+99+1=99(99+1)+1=99\\cdot 100+1=9900+1=\\boxed{9901}$.\nFinal Answer: The final answer is $9901$I hope it is correct.",
         "output": "We can write $99^2+99+1$ as $(100-1)^2+99+1$.  Distributing the square, we get $100^2-200+1+99+1$.  Adding like terms, we get $100^2-100+100=100^2$.  Since $100^2=10,000$, the final answer is $\\boxed{10,000}$.\nFinal Answer: The final answer is $10,000$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -2511,7 +2511,7 @@ export default {
         "target": "We see that the largest common factor of the coefficients is $4$ and that $x^1$ is the largest power of $x$ which divides all the terms, so we can factor out $4x$ and get $$\\boxed{4x(8x^2-x+5)}.$$\nFinal Answer: The final answer is $4x(8x^2-x+5)$I hope it is correct.",
         "output": "We can factor out $4x$ from $32x^3-4x^2+20x$ to obtain\n\n$$4x(8x^2-x+5).$$We can now factor $8x^2-x+5$ as\n\n$$(4x-1)(2x+5).$$Therefore, we have\n\n$$32x^3-4x^2+20x=4x(4x-1)(2x+5).$$\nFinal Answer: The final answer is $4x(4x-1)(2x+5)$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -2525,7 +2525,7 @@ export default {
         "target": "Since $A$ must be positive, the expression is smallest when $B-C$ is as negative as possible, which occurs when $B = 4$, $C = 6$. Then $A = 5$, and $A(B-C) = 5(4-6) = 5(-2) = \\boxed{-10}$.\nFinal Answer: The final answer is $-10$I hope it is correct.",
         "output": "If we replace $A$ by 4, $B$ by 5 and $C$ by 6, we obtain $4(5-6)=4(-1)=-4.$ If we replace $A$ by 4, $B$ by 6 and $C$ by 5, we obtain $4(6-5)=4(1)=\\boxed{4}.$ If we replace $A$ by 5, $B$ by 4 and $C$ by 6, we obtain $5(4-6)=5(-2)=-10.$ If we replace $A$ by 5, $B$ by 6 and $C$ by 4, we obtain $5(6-4)=5(2)=\\boxed{10}.$ If we replace $A$ by 6, $B$ by 4 and $C$ by 5, we obtain $6(4-5)=6(-1)=-6.$ If we replace $A$ by 6, $B$ by 5 and $C$ by 4, we obtain $6(5-4)=6(1)=\\boxed{6}.$ The least possible result is $\\boxed{4}.$ Final Answer: The final answer is $4$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -2539,7 +2539,7 @@ export default {
         "target": "If $x$ is the number of kilowatt-hours of power that the company used in January, then the company paid $5000+1.45x$ dollars for that month.  Setting $5000+1.45x=16520.25,$ we find $x=(16520.25-5000)/1.45=\\boxed{7945}$.\nFinal Answer: The final answer is $7945$I hope it is correct.",
         "output": "If the rent for the $XYZ$ company is $\\$5,000$ per month, then the total rent for January is $\\$5,000$.  The total cost for both rent and electricity in January was $\\$16,520.25$.  Subtracting the rent from the total cost, we obtain $\\$16,520.25-\\$5,000=\\$11,520.25$.  Since the electricity bill is $\\$1.45$ per kilowatt-hour, we can divide the total cost for electricity by $\\$1.45$ to obtain the total number of kilowatt-hours of electricity used: $$\\frac{\\$11,520.25}{\\$1.45}=\\boxed{7,928.67\\approx 7,929}.$$ Final Answer: The final answer is $7,929$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -2553,7 +2553,7 @@ export default {
         "target": "The common difference in this arithmetic sequence is $987 - 1000= -13$, so the $n^{\\text{th}}$ term in this sequence is $1000 - 13(n - 1) = 1013 - 13n$.  This expression is positive if and only if $1013 - 13n > 0$, or \\[n < \\frac{1013}{13} = 77 + \\frac{12}{13}.\\] Since $n$ must be a positive integer, $n \\le 77$.  Hence, the least positive integer in this sequence corresponds to the value $n = 77$, in which case $1013 - 13n = 1013 - 13 \\cdot 77 = \\boxed{12}$.\nFinal Answer: The final answer is $12$I hope it is correct.",
         "output": "The terms of the sequence are of the form $1000-13n$, where $n$ is an integer.  The first positive term in the sequence is the first term which is positive, which is equivalent to solving the inequality $1000-13n>0$ for $n$.  This gives $n<\\frac{1000}{13}$, and so the first positive term in the sequence is the first multiple of 13 which is less than $\\frac{1000}{13}$.  This is $13\\cdot 69=897$, which is the 69th term in the sequence.\n\nFinal Answer: The final answer is $897$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -2567,7 +2567,7 @@ export default {
         "target": "From 9 a.m. to 6 p.m. there are 9 hours. In each hour, there are 3 tours (every 20 minutes). Thus, in 9 hours, there are $9 \\cdot 3 = 27$ tours. Don't forget to count the last tour at 6 p.m., so there are $\\boxed{28}$ tours total per day.\nFinal Answer: The final answer is $28$I hope it is correct.",
         "output": "There are $6$ hours from $9$ am to $3$ pm, and $6$ hours from $3$ pm to $6$ pm, so there are $12$ hours in which tours are conducted. Since each tour takes $20$ minutes, there are $60/20=3$ tours in each hour, so there are $12\\cdot3=\\boxed{36}$ tours per day.\nFinal Answer: The final answer is $36$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -2581,7 +2581,7 @@ export default {
         "target": "Since $\\lceil x\\rceil+\\lfloor x\\rfloor+x=4.8$, we know that $x$ must be a number ending in $.8$ because $\\lceil x\\rceil$ and $\\lfloor x\\rfloor$ will both be integers. This means that $\\lceil x\\rceil=x+0.2$ and $\\lfloor x\\rfloor=x-0.8$. Using substitution we can rewrite the original equation as $x+0.2+x-0.8+x=4.8$. So, $3x=5.4$ and $x=\\boxed{1.8}$.\nFinal Answer: The final answer is $1.8$I hope it is correct.",
         "output": "Since $\\lceil x\\rceil+\\lfloor x\\rfloor$ is always an integer, $x$ must also be an integer.  Therefore, the equation simplifies to $2x+x=4.8$, or $3x=4.8$, so $\\boxed{x=1.6}$.\nFinal Answer: The final answer is $1.6$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -2595,7 +2595,7 @@ export default {
         "target": "The question is asking us to find the smallest value of $x$ such that $x = 2\\cdot\\frac{1}{x} - 1$. We multiply through by $x$ to clear the fraction, then rearrange terms: $x^2 + x - 2 = 0$. This can be factored as $(x + 2)(x - 1) = 0$. We could also use the quadratic formula to find $x$: $$x = \\frac{-1 \\pm \\sqrt{1^2 - 4(1)(-2)}}{2}.$$ Either way, we find that $x = 1$ or $x = -2$. Since we want the smallest value of $x$, our answer is $\\boxed{-2}$.\nFinal Answer: The final answer is $-2$I hope it is correct.",
         "output": "Let $x$ be the number. We have\n\n$$x=2 (\\frac{1}{x} )-1\\Rightarrow x^2=2-x\\Rightarrow x^2+x-2=0.$$The solutions of this quadratic equation are $\\frac{-1\\pm\\sqrt{1+8}}{2}=\\frac{-1\\pm 3}{2}$. Since we are only interested in positive numbers, we have $x=\\boxed{\\frac{1}{2}(3-1)}$.\nFinal Answer: The final answer is $1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -2609,7 +2609,7 @@ export default {
         "target": "First, we can write $\\sqrt{245}=7\\sqrt{5}$, $3\\sqrt{125}=15\\sqrt{5}$ and $4\\sqrt{45}=12\\sqrt{5}$.  Substituting these, the expression becomes: $$\\frac{6}{7\\sqrt{5}+15\\sqrt{5}+12\\sqrt{5}}=\\frac{6}{34\\sqrt{5}}=\\frac{3}{17\\sqrt{5}}=\\frac{3\\sqrt{5}}{85}.$$Thus $A+B+C=3+5+85=\\boxed{93}$.\nFinal Answer: The final answer is $93$I hope it is correct.",
         "output": "We have that\n\n\\begin{align*}\n\\frac{6}{\\sqrt{245}+3\\sqrt{125}+4\\sqrt{45}}&=\\frac{6}{\\sqrt{49\\cdot5}+\\sqrt{25\\cdot5}+\\sqrt{9\\cdot5}}\\\\\n&=\\frac{6}{7\\sqrt{5}+5\\sqrt{5}+3\\sqrt{5}}\\\\\n&=\\frac{6}{15\\sqrt{5}}\\\\\n&=\\frac{2}{5\\sqrt{5}}\\\\\n&=\\frac{2\\sqrt{5}}{5\\cdot5}\\\\\n&=\\frac{2\\sqrt{5}}{25}\n\\end{align*}\n\nTherefore, we have that $A=2, B=5,$ and $C=25$.  Hence, $A+B+C=2+5+25=\\boxed{32}.$\n\nFinal Answer: The final answer is $32$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -2623,7 +2623,7 @@ export default {
         "target": "The sum of the numbers from $-25$ to 25 is 0, because each number besides 0 cancels with its negative.  Therefore, when we add $-25$ through 26, we have a total of 26.  So, the desired smallest integer is $\\boxed{26}$.\nFinal Answer: The final answer is $26$I hope it is correct.",
         "output": "We have that the sum of the integers from $-25$ to $n$ is equal to\n\n$$\\frac{(n-25)(n-24)}{2}.$$Since we want this sum to be at least 26, we have\n\n$$\\frac{(n-25)(n-24)}{2}\\ge 26\\Rightarrow n^2-25n-24n+600\\ge 52\\Rightarrow n^2-50n+548\\ge 0\\Rightarrow n^2-50n+2500\\ge 2500-548\\Rightarrow (n-25)^2\\ge 1952\\Rightarrow n-25\\le -44\\text{ or }n-25\\ge 44\\Rightarrow n\\le -19\\text{ or }n\\ge 69.$$\nThe smallest integer $n$ is thus $\\boxed{69}$.\nFinal Answer: The final answer is $69$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -2637,7 +2637,7 @@ export default {
         "target": "Let $S = a_1 + a_3 + \\dots + a_{97}$ and $T = a_2 + a_4 + \\dots + a_{98}$. Then the given equation states that $S + T = 137$, and we want to find $T$.\n\nWe can build another equation relating $S$ and $T$: note that \\[\\begin{aligned} T-S &= (a_2-a_1) + (a_4-a_3) + \\dots + (a_{98}-a_{97}) \\\\ &= \\underbrace{1 + 1 + \\dots + 1}_{49 \\text{ times }} \\\\ &= 49 \\end{aligned}\\]since $(a_n)$ has common difference $1$. Then, adding the two equations $S+T=137$ and $T-S=49$, we get $2T=137+49=186$, so $T = \\tfrac{186}{2} = \\boxed{93}$.\nFinal Answer: The final answer is $93$I hope it is correct.",
         "output": "We have\n\n\\begin{align*}\na_1+a_2+a_3+\\dots+a_{98}&=137\\\\\n\\Rightarrow\\qquad a_1+(a_1+1)+(a_1+2)+\\dots+(a_1+97)&=137\\\\\n\\Rightarrow\\qquad \\underbrace{(a_1+a_1+\\dots+a_1)}_{98\\text{ times}}+1+2+3+\\dots+97&=137\\\\\n\\Rightarrow\\qquad 98a_1+\\frac{97(97+1)}{2}&=137\\\\\n\\Rightarrow\\qquad 98a_1+4751&=137\\\\\n\\Rightarrow\\qquad a_1&=\\frac{137-4751}{98}=-46.\\\\\n\\end{align*}\n\nSince the common difference is $1$, we have\n\n\\begin{align*}\na_2+a_4+a_6+a_8+\\dots+a_{98}&=-45+(-45+1)+(-45+2)+(-45+3)+\\dots+(-45+49)\\\\\n&=-45-44-43-\\dots-3-2-1+1+2+\\dots+48+49\\\\\n&=\\boxed{0}.\n\\end{align*}\nFinal Answer: The final answer is $0$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -2651,7 +2651,7 @@ export default {
         "target": "With word problems, the first step is to translate the words into equations. Let the two numbers be $a$ and $b$. Then their sum is $a+b$ and their product is $ab$. The sum of their product and their sum is $a+b+ab$. So we know  \\begin{align*}\nab+a+b&=454\\quad\\Rightarrow\\\\\na(b+1)+(b+1)&=454+1\\quad\\Rightarrow\\\\\n(a+1)(b+1)&=455.\n\\end{align*}The prime factorization of $455$ is $5\\cdot 7\\cdot 13$. Since the equation is symmetric with $a$ and $b$, we may (without loss of generality) suppose that $a<b$. Thus $a+1<b+1$, so in each factor pair the smaller factor is equal to $a+1$. We list all possibilities: \\begin{tabular}{c|c|c|c}\n$a+1$&$b+1$&$a$&$b$\\\\ \\hline\n$1$&$455$&$0$&$454$\\\\\n$5$&$91$&$4$&$90$\\\\\n$7$&$65$&$6$&$64$\\\\\n$13$&$35$&$12$&$34$\n\\end{tabular}We must find the largest possible value of \"the product of their sum and their product\", or $ab\\cdot(a+b)$. We know the first possibility above gives a value of zero, while all the others will be greater than zero. We check: \\begin{align*}\n4\\cdot 90\\cdot (4+90)&=4\\cdot 90\\cdot 94=33840\\\\\n6\\cdot 64\\cdot (6+64)&=6\\cdot 64\\cdot 70=26880\\\\\n12\\cdot 34\\cdot (12+34)&=12\\cdot 34\\cdot 46=18768.\n\\end{align*}Thus the largest possible desired value is $\\boxed{33840}$, achieved when $(a,b)=(4,90)$.\nFinal Answer: The final answer is $33840$I hope it is correct.",
         "output": "",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -2665,7 +2665,7 @@ export default {
         "target": "For the roots to be real and rational, the discriminant must be a perfect square. Therefore, $(-7)^2-4 \\cdot 1 \\cdot c = 49-4c$ must be a perfect square. The only positive perfect squares less than 49 are $1$, $4$, $9$, $16$, $25$, and $36$. The perfect squares that give a integer value of $c$ are $1$, $9$, and $25$. Thus, we have the equations $49-4c=1$, $49-4c=9$, and $49-4c=25$. Solving, we get that the positive integer values of c are $\\boxed{12, 10, 6}$.\nFinal Answer: The final answer is $12, 10, 6$I hope it is correct.",
         "output": "",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Algebra"
@@ -2679,7 +2679,7 @@ export default {
         "target": "Mr. Shearer has $\\frac{3}{4}(28)=21$ students with brown hair and $\\frac{6}{7}(28)=24$ students who are right-handed.  Since there are $28-24=4$ left-handed students, at most 4 of the 21 brown-haired students are left-handed.  Therefore, at least $\\boxed{17}$ of them are right-handed.\nFinal Answer: The final answer is $17$I hope it is correct.",
         "output": "If $\\frac{3}{4}$ of the students have brown hair, then $\\frac{1}{4}$ of the students do not have brown hair.  Similarly, if $\\frac{6}{7}$ of the students are right-handed, then $\\frac{1}{7}$ of the students are left-handed.  Thus, at least $\\frac{1}{4}\\cdot\\frac{1}{7}=\\frac{1}{28}$ of the students do not have brown hair and are not right-handed.  Since there are 28 students, the smallest possible number of students who are both right-handed and have brown hair is $28-\\frac{1}{28}=\\boxed{27.9643}$.\nFinal Answer: The final answer is $27.9643$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -2693,7 +2693,7 @@ export default {
         "target": "There are $3!=6$ possible three-digit integers.  So the fifth number on the list will be the second smallest.  The two smallest integers have $1$ as the hundreds digit.  The smallest is $135$; the second-smallest is $\\boxed{153}$.\nFinal Answer: The final answer is $153$I hope it is correct.",
         "output": "There are six possible three-digit numbers: $135, 153, 315, 351, 513, 531.$ The fifth number is $\\boxed{513}$.\nFinal Answer: The final answer is $513$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -2707,7 +2707,7 @@ export default {
         "target": "Based on our knowledge of the decimal expansion of $\\pi$, we can quickly estimate that $100 \\pi \\approx 314.15$. So the largest positive integer less than $100\\pi$ is 314. Therefore, the positive integers are 1, 2, 3, $\\ldots$, 313, 314, for a total of $\\boxed{314}$ positive integers.\nFinal Answer: The final answer is $314$I hope it is correct.",
         "output": "The positive integer $\\lfloor{100\\pi}\\rfloor=313$ is less than $100\\pi$. Therefore, there are 313 positive integers less than $100\\pi$.\nFinal Answer: The final answer is $313$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -2721,7 +2721,7 @@ export default {
         "target": "There are four cards total, two of which have a zero on them. If three cards are selected, therefore, at least one of them must have a zero on it, making the product of the numbers on those three cards zero. Thus, there are $\\boxed{0}$ ways.\nFinal Answer: The final answer is $0$I hope it is correct.",
         "output": "There are 4 possible ways to choose 3 cards so that the product of the numbers is not zero. They are:\n\\begin{enumerate}\n\\item $2$, $0$, and $1$\n\\item $2$, $0$, and $0$\n\\item $2$, $0$, and $1$\n\\item $2$, $0$, and $1$\n\\end{enumerate}\n\nTherefore, the final answer is $\\boxed{4}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -2735,7 +2735,7 @@ export default {
         "target": "First we count the arrangements if the three E's are unique, which is $5!$. Then since the E's are not unique, we divide by $3!$ for the arrangements of E, for an answer of $\\dfrac{5!}{3!} = \\boxed{20}$.\nFinal Answer: The final answer is $20$I hope it is correct.",
         "output": "Since there are $6$ letters and $2$ of them are $E$'s, the number of ways to arrange the letters of the word TEPEE is\n\n$$\\frac{6!}{2!}=\\frac{6\\cdot5\\cdot4\\cdot3\\cdot2\\cdot1}{2\\cdot1}=\\boxed{360}.$$\nFinal Answer: The final answer is $360$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -2749,7 +2749,7 @@ export default {
         "target": "We use the prime factorizations of $6!$ and $(4!)^2$ to find their $\\text{lcm}$ (as we would with most pairs of integers): $$ \\begin{array}{rcrcr} 6! &=& 6 \\cdot 5 \\cdot 4 \\cdot 3 \\cdot 2 \\cdot 1 &=& 2^4 \\cdot 3^2 \\cdot 5^1 \\\\ (4!)^2 &=& (4 \\cdot 3 \\cdot 2 \\cdot 1)^2 &=& 2^6 \\cdot 3^2 \\\\ \\text{lcm}[6!, (4!)^2] &=& 2^6 \\cdot 3^2 \\cdot 5^1 &=& \\boxed{2880} \\end{array} $$\nFinal Answer: The final answer is $2880$I hope it is correct.",
         "output": "We have that $6! = 6\\cdot 5\\cdot 4\\cdot 3\\cdot 2\\cdot 1$ and $(4!)^2 = (4\\cdot 3\\cdot 2\\cdot 1)^2 = 4^2\\cdot 3^2\\cdot 2^2\\cdot 1^2$.  Therefore, the least common multiple of $6!$ and $(4!)^2$ is $6\\cdot 5\\cdot 4^2\\cdot 3^2\\cdot 2^2\\cdot 1^2 = \\boxed{1440}.$\nFinal Answer: The final answer is $1440$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -2763,7 +2763,7 @@ export default {
         "target": "Since both the balls and boxes are indistinguishable, we can arrange them with 5 in one and 0 in the other, 4 in one and 1 in the other, or 3 in one and 2 in the other, for a total of $\\boxed{3}$ different arrangements.\nFinal Answer: The final answer is $3$I hope it is correct.",
         "output": "There are 6 ways to put the 5 balls in 2 boxes. They are:\n\n\\begin{enumerate}\n\\item 5 balls in the first box\n\\item 4 balls in the first box and 1 ball in the second box\n\\item 3 balls in the first box and 2 balls in the second box\n\\item 2 balls in the first box and 3 balls in the second box\n\\item 1 ball in the first box and 4 balls in the second box\n\\item 0 balls in the first box and 5 balls in the second box\n\\end{enumerate}\n\nFinal Answer: The final answer is $6$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -2777,7 +2777,7 @@ export default {
         "target": "Let $x$ be the measure of the each of the equal sides.  Since the perimeter is 10 units, the side lengths measure $x$, $x$, and $10-2x$ units.  Since the third side length must be positive, we have $10-2x>0$ which implies $x<5$.  By the triangle inequality, the sum of the two equal sides must exceed the third side.  Solving  $x+x>10-2x$ gives $x>2.5$.  There are $\\boxed{2}$ integers strictly between 2.5 and 5.\nFinal Answer: The final answer is $2$I hope it is correct.",
         "output": "If one side length is $x$, then the other two are $\\frac{10-x}{2}$.  Since $x$ is an integer, $\\frac{10-x}{2}$ is an integer, so $x$ is even.  Since $0\\le x\\le 10$, the only possible values of $x$ are 0, 2, 4, 6, 8, and 10.  The triangles with $x=0$ and $x=10$ are not isosceles, so there are four isosceles triangles with perimeter 10 and integer side lengths.\n\nFinal Answer: The final answer is $4$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -2791,7 +2791,7 @@ export default {
         "target": "There are $\\binom{52}{2}=\\frac{52\\cdot 51}{2}=26\\cdot 51$ ways to choose two cards from a 52-card deck. There are $\\binom{13}{2}=\\frac{13\\cdot 12}{2}$ ways to choose two cards which are both hearts, and the same number of ways to choose two cards which are both diamonds. Therefore, the probability of choosing two cards which are both hearts or both diamonds is $\\frac{13 \\cdot 12}{26 \\cdot 51}=\\boxed{\\frac{2}{17}}$.\nFinal Answer: The final answer is $\\frac{2}{17}$I hope it is correct.",
         "output": "There are 13 hearts and 13 diamonds in a deck of 52 cards. The probability that the first card is a heart is $\\frac{13}{52}$, and the probability that the second card is a heart is $\\frac{12}{51}$, because we are choosing without replacement. Since we want the probability that both cards are hearts, we multiply these probabilities together to obtain $\\frac{13}{52}\\cdot\\frac{12}{51}=\\frac{156}{2652}$. We can also have two diamonds. Since the probability that the first card is a diamond is $\\frac{13}{52}$, and the probability that the second card is a diamond is $\\frac{12}{51}$, we multiply these probabilities together to obtain $\\frac{13}{52}\\cdot\\frac{12}{51}=\\frac{156}{2652}$. We add these two probabilities together to obtain $\\frac{156}{2652}+\\frac{156}{2652}=\\boxed{\\frac{1}{8}}$.\nFinal Answer: The final answer is $\\frac{1}{8}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -2805,7 +2805,7 @@ export default {
         "target": "When we expand this out, we get a bunch of terms with $\\sqrt7$ in them. To avoid painful estimation, we do the following trick: Add $(5-2\\sqrt7)^4$ to this expression. We know that $(5-2\\sqrt7)^4$ is small, since $2\\sqrt7=\\sqrt{28}$ is close to $5=\\sqrt{25}$, at least compared to $6=\\sqrt{36}$. When we add these together, the $\\sqrt7$ terms magically cancel out. By the Binomial Theorem, $$(5+2\\sqrt7)^4=5^4+4\\cdot5^3\\cdot(2\\sqrt7)+6\\cdot5^2\\cdot(2\\sqrt7)^2+4\\cdot5\\cdot(2\\sqrt7)^3+(2\\sqrt7)^4$$ whereas $$(5-2\\sqrt7)^4=5^4-4\\cdot5^3\\cdot(2\\sqrt7)+6\\cdot5^2\\cdot(2\\sqrt7)^2-4\\cdot5\\cdot(2\\sqrt7)^3+(2\\sqrt7)^4.$$ Therefore, their sum is $$2(5^4+6\\cdot5^2(2\\sqrt7)^2+(2\\sqrt7)^4)=2(625+4200+784)=11218.$$ Since the term we added, $(5-2\\sqrt7)^4$, is less than a half (actually, it's less than .01), $\\boxed{11218}$ is the closest integer to $(5+2\\sqrt7)^4$.\nFinal Answer: The final answer is $11218$I hope it is correct.",
         "output": "Using the binomial theorem, we have\n\n$$(5+2\\sqrt7)^4=\\binom{4}{0}5^4+\\binom{4}{1}5^3(2\\sqrt7)+\\binom{4}{2}5^2(2\\sqrt7)^2+\\binom{4}{3}5(2\\sqrt7)^3+\\binom{4}{4}(2\\sqrt7)^4.$$\n\nNotice that the last term is $16\\cdot7=112$, which is even.  Since the third term is a multiple of $2\\sqrt7$, it is also even.  Thus, the only term that can contribute an odd part is the second term.  Since $4\\cdot5^3\\cdot2\\sqrt7=500\\sqrt7$, we have that $(5+2\\sqrt7)^4$ is even.  The nearest integer to $(5+2\\sqrt7)^4$ is \\boxed{500}.\n\nFinal Answer: The final answer is $500$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -2819,7 +2819,7 @@ export default {
         "target": "If Henry is in the group of 4, there are $\\binom{11}{3}=165$ ways to choose the other people in the group of 4. Then there are $\\binom{8}{3}=56$ ways to choose the group of 3, and the group of 5 is made up of the remaining people. The total number of valid ways to divide the people into groups is $165\\cdot 56=\\boxed{9240}$.\nFinal Answer: The final answer is $9240$I hope it is correct.",
         "output": "Since Henry has to be in the group of 4, we only need to select 3 people out of the remaining 11 people to join Henry. This can be done in $C(11,3)$ ways. We also need to select 4 people out of the remaining 8 people to form the group of 4. This can be done in $C(8,4)$ ways. We can select the group of 3 in $C(4,3)$ ways. Thus, the total number of ways to do this is \\begin{align*}\nC(11,3)\\cdot C(8,4)\\cdot C(4,3)&=\\frac{11!}{3!\\cdot 8!}\\cdot\\frac{8!}{4!\\cdot 4!}\\cdot\\frac{4!}{3!\\cdot 1!}\\\\\n&=\\frac{11\\cdot 10\\cdot 9}{3\\cdot 2}\\cdot\\frac{8\\cdot 7\\cdot 6\\cdot 5}{4\\cdot 3\\cdot 2}\\\\\n&=11\\cdot 5\\cdot 7\\cdot 2\\cdot 5\\\\\n&= \\boxed{4925}\n\\end{align*}\nFinal Answer: The final answer is $4925$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -2833,7 +2833,7 @@ export default {
         "target": "With no restriction, the president can be any of the $25$ members, the secretary can be any of the $25$ remaining members, and the treasurer can be any of the remaining $25$ members.\n\nIf the same member holds all three offices, it could be any of the $25$ members, so there are $25$ ways for this to happen. We must exclude these $25$ possibilities, so the answer is $25\\times 25\\times 25-25=\\boxed{15,600}.$\nFinal Answer: The final answer is $15,600$I hope it is correct.",
         "output": "First, we choose the president. There are $25$ choices. Next, we choose the secretary. Since the president cannot be the secretary, there are $24$ choices. Finally, we choose the treasurer. Since the president and secretary cannot be the treasurer, there are $23$ choices. Therefore, the number of ways we can choose the officers is $25\\cdot 24\\cdot 23 = \\boxed{13800}.$\nFinal Answer: The final answer is $13800$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -2847,7 +2847,7 @@ export default {
         "target": "Consider one vertex of the cube. When the cube is rotated, there are 8 vertices which that vertex could end up at. At each of those vertices, there are 3 ways to rotate the cube onto itself with that vertex fixed. So, there are a total of $8\\cdot3=24$ ways to rotate a cube. There are $8!$ ways to arrange the beads, not considering rotations. Since the arrangements come in groups of 24 equivalent arrangements, the actual number of ways to arrange the beads is $8!/24=\\boxed{1680}$.\nFinal Answer: The final answer is $1680$I hope it is correct.",
         "output": "We consider the number of ways to put 8 beads of different colors on the vertices of a cube, if rotations of the cube are considered the same. We know that there are 8 ways to place a bead at the first vertex, 7 ways to place a bead at the second vertex, 6 ways to place a bead at the third vertex, 5 ways to place a bead at the fourth vertex, 4 ways to place a bead at the fifth vertex, 3 ways to place a bead at the sixth vertex, 2 ways to place a bead at the seventh vertex, and 1 way to place a bead at the eighth vertex. Thus, the total number of ways to put 8 beads of different colors on the vertices of a cube, if rotations of the cube are considered the same, is $8\\cdot7\\cdot6\\cdot5\\cdot4\\cdot3\\cdot2\\cdot1=\\boxed{40320}$.\nFinal Answer: The final answer is $40320$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -2861,7 +2861,7 @@ export default {
         "target": "From the M, we can proceed to four different As. Note that the letters are all symmetric, so we can simply count one case (say, that of moving from M to the bottom A) and then multiply by four.\n\nFrom the bottom A, we can proceed to any one of three Ts. From the two Ts to the sides of the A, we can proceed to one of two Hs. From the T that is below the A, we can proceed to one of three Hs. Thus, this case yields $2 \\cdot 2 + 3 = 7$ paths.\n\nThus, there are $4 \\cdot 7 = \\boxed{28}$ distinct paths.\nFinal Answer: The final answer is $28$I hope it is correct.",
         "output": "There are $1$ ways to spell the word MATH.\nFinal Answer: The final answer is $1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -2875,7 +2875,7 @@ export default {
         "target": "To begin, consider the number of ways to arrange the three countries around the circle.  We can consider the English representatives a block, the Germans another block, and the French a third block.  There are $(3-1)!=2$ ways to arrange these three blocks around a circle.  We can also see this by simply drawing the two possible arrangements: [asy]\nlabel(\"E\",(0,0));\nlabel(\"F\",(-.75,-1));\nlabel(\"G\",(.75,-1));\nlabel(\"E\",(3,0));\nlabel(\"F\",(3.75,-1));\nlabel(\"G\",(2.25,-1));\n[/asy] Within the English group, there are $3!=6$ ways to arrange the three representatives.  Similarly, there are $4!$ ways to arrange the Germans and $2!$ ways to arrange the French representatives.  Overall, the total number of ways to seat the 9 representatives is: $$2!\\times3!\\times4!\\times2!=2\\times6\\times24\\times2=\\boxed{576}$$\nFinal Answer: The final answer is $576$I hope it is correct.",
         "output": "The three English representatives can be arranged in $3!$ ways.  The four German representatives can be arranged in $4!$ ways.  The two French representatives can be arranged in $2!$ ways.  The three groups can be arranged in $3!$ ways.  Therefore, the total number of ways to arrange the nine representatives is $$3!4!2!3!=1728.$$\nFinal Answer: The final answer is $1728$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Counting & Probability"
@@ -2889,7 +2889,7 @@ export default {
         "target": "We have that\n\\[\\begin{pmatrix} 1 & 2 \\\\ 4 & 8 \\\\ \\end{pmatrix} \\begin{pmatrix} 5 \\\\ 3 \\end{pmatrix} = \\begin{pmatrix} (1)(5) + (2)(3) \\\\ (4)(5) + (8)(3) \\end{pmatrix} = \\boxed{\\begin{pmatrix} 11 \\\\ 44 \\end{pmatrix}}.\\]\nFinal Answer: The final answer is $\\begin{pmatrix} 11 \\\\ 44 \\end{pmatrix}$I hope it is correct.",
         "output": "We have $\\begin{pmatrix} 1 & 2 \\\\ 4 & 8 \\\\ \\end{pmatrix} \\begin{pmatrix} 5 \\\\ 3 \\end{pmatrix} = \\begin{pmatrix} 1\\cdot5+2\\cdot3 \\\\ 4\\cdot5+8\\cdot3 \\end{pmatrix} = \\begin{pmatrix} 11 \\\\ 38 \\end{pmatrix}.$\nFinal Answer: The final answer is $\\begin{pmatrix} 11 \\\\ 38 \\end{pmatrix}.$ I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -2903,7 +2903,7 @@ export default {
         "target": "We have that\n\\[\\csc (-120^\\circ) = \\frac{1}{\\sin (-120^\\circ)}.\\]Then\n\\[\\sin (-120^\\circ) = -\\sin (-120^\\circ + 180^\\circ) = -\\sin 60^\\circ = -\\frac{\\sqrt{3}}{2},\\]so\n\\[\\frac{1}{\\sin (-120^\\circ)} = -\\frac{2}{\\sqrt{3}} = \\boxed{-\\frac{2 \\sqrt{3}}{3}}.\\]\nFinal Answer: The final answer is $-\\frac{2 \\sqrt{3}}{3}$I hope it is correct.",
         "output": "Since $\\csc \\theta = \\frac{1}{\\sin \\theta},$ we have that \\begin{align*}\n\\csc (-120^\\circ) &= \\frac{1}{\\sin (-120^\\circ)}\\\\\n&= \\frac{1}{-\\sin (120^\\circ)}\\\\\n&= \\frac{1}{-\\frac{\\sqrt{3}}{2}}\\\\\n&= \\boxed{-\\frac{2}{\\sqrt{3}}}.\n\\end{align*}\nFinal Answer: The final answer is $-\\frac{2}{\\sqrt{3}}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -2917,7 +2917,7 @@ export default {
         "target": "[asy]\npair L,M,N;\nN = (0,0);\nM = (2,0);\nL = (2,-sqrt(21));\ndraw(L--M--N--L);\ndraw(rightanglemark(L,M,N,10));\nlabel(\"$M$\",M,NE);\nlabel(\"$L$\",L,SE);\nlabel(\"$N$\",N,NW);\nlabel(\"$2$\",(N+M)/2,NW);\nlabel(\"$\\sqrt{21}$\",(M+L)/2,E);\n[/asy]\n\nBecause this is a right triangle, $\\sin L = \\frac{MN}{LN}.$\n\nUsing the Pythagorean Theorem, we find that $$LN = \\sqrt{MN^2 + LM^2} = \\sqrt{4 + 21} = 5.$$Then $\\sin L = \\boxed{\\frac{2}{5}}$.\nFinal Answer: The final answer is $\\frac{2}{5}$I hope it is correct.",
         "output": "We have that $\\sin L = \\frac{\\text{opp}}{\\text{hyp}} = \\boxed{\\frac{\\sqrt{21}}{2}}.$\nFinal Answer: The final answer is $\\frac{\\sqrt{21}}{2}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -2931,7 +2931,7 @@ export default {
         "target": "There are $\\boxed{0}$ real values of $k$ that satisfies the equation, since $|3-ki| = \\sqrt{3^2 + k^2}$ is always positive.\nFinal Answer: The final answer is $0$I hope it is correct.",
         "output": "We have that $|3-ki| = 0$ if and only if $3-ki = 0$.  This gives $i=\\frac{3}{k}$.  Since $i=\\sqrt{-1}$, we have that $k$ must be imaginary.  Thus, there are \\boxed{no real values of $k$} for which $|3-ki| = 0$.\nFinal Answer: The final answer is no real values of $k$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -2945,7 +2945,7 @@ export default {
         "target": "From the sum-to-product formula,\n\\[ \\sin x- \\sin z = 2\\sin \\frac{x-z}{2}\\cos\\frac{x+z}{2}.\\]Applying this with $x = 66^{\\circ}$ and $z = 54^{\\circ}$, we have\n\\begin{align*}\n\\arcsin(\\sin 66^\\circ-\\sin54^\\circ)&=\\arcsin \\Big(2\\sin\\frac{66^\\circ -54^\\circ }{2}\\cos\\frac{66^\\circ +54^\\circ }{2} \\Big)\\\\\n&=\\arcsin(2\\sin6^\\circ\\cos 60^\\circ)\\\\\n&=\\arcsin(\\sin 6^\\circ) \\\\\n&= \\boxed{6^{\\circ}}.\n\\end{align*}\nFinal Answer: The final answer is $6^{\\circ}$I hope it is correct.",
         "output": "We know that $\\arcsin(\\sin 66^\\circ-\\sin 54^\\circ)=\\arcsin(\\sin 66^\\circ)\\pm\\arcsin(\\sin 54^\\circ).$\nSince $66^\\circ\\in(0,180^\\circ)$, we have that $\\arcsin(\\sin 66^\\circ)=66^\\circ$.  Since $54^\\circ\\in(0,180^\\circ)$, we have that $\\arcsin(\\sin 54^\\circ)=54^\\circ$.  Therefore, $\\arcsin(\\sin 66^\\circ-\\sin 54^\\circ)=66^\\circ-54^\\circ=\\boxed{12^\\circ}.$\nFinal Answer: The final answer is $12^\\circ$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -2959,7 +2959,7 @@ export default {
         "target": "Since $\\mathbf{M}^2 = \\begin{pmatrix} 0 & -5 \\\\ -2 & 4 \\end{pmatrix} \\begin{pmatrix} 0 & -5 \\\\ -2 & 4 \\end{pmatrix} = \\begin{pmatrix} 10 & -20 \\\\ -8 & 26 \\end{pmatrix},$ we seek $p$ and $q$ such that\n\\[\\begin{pmatrix} 10 & -20 \\\\ -8 & 26 \\end{pmatrix} = p \\begin{pmatrix} 0 & -5 \\\\ -2 & 4 \\end{pmatrix} + q \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix}.\\]Thus, we want $p$ and $q$ to satisfy $q = 10,$ $-5p = -20,$ $-2p = -8,$ and $4p + q = 26.$  Solving, we find $(p,q) = \\boxed{(4,10)}.$\nFinal Answer: The final answer is $(4,10)$I hope it is correct.",
         "output": "We have that\n\n$$\\mathbf{M}^2 = \\begin{pmatrix} 0 & -5 \\\\ -2 & 4 \\end{pmatrix}\\begin{pmatrix} 0 & -5 \\\\ -2 & 4 \\end{pmatrix}=\\begin{pmatrix} 10 & -20 \\\\ 4 & -16 \\end{pmatrix}.$$We also have that\n\n$$p \\mathbf{M} + q \\mathbf{I} = p\\begin{pmatrix} 0 & -5 \\\\ -2 & 4 \\end{pmatrix} + q \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix} = \\begin{pmatrix} q & -5p \\\\ -2p & 4p+q \\end{pmatrix}.$$Thus, we must solve the system\n\n\\begin{align*}\n10 &= q,\\\\\n-20 &= -5p,\\\\\n4 &= -2p,\\\\\n-16 &= 4p + q.\n\\end{align*}The solution to this system is $p=-2$ and $q=10$.  Therefore, the final answer is $(-2,10)$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -2973,7 +2973,7 @@ export default {
         "target": "Notice that problem has three pairs of the form $\\sin \\theta + \\sin(\\pi - \\theta).$  The sum-to-product formula yields\n\\begin{align*}\n\\sin \\frac{\\pi}{12} + \\sin \\frac{11\\pi}{12} &= 2 \\sin \\frac{\\pi}{2} \\cos \\frac{5\\pi}{12} \\\\\n&= 2 \\cos \\frac{5\\pi}{12}, \\\\\n\\sin \\frac{3\\pi}{12} + \\sin \\frac{9\\pi}{12} &= 2 \\sin \\frac{\\pi}{2} \\cos \\frac{\\pi}{4} \\\\\n&= \\sqrt{2}, \\\\\n\\sin \\frac{5\\pi}{12} + \\sin \\frac{7\\pi}{12} &= 2 \\sin \\frac{\\pi}{2} \\cos \\frac{\\pi}{12} \\\\\n&= 2 \\cos \\frac{\\pi}{12}.\n\\end{align*}Applying the sum-to-product formula once more yields\n\\begin{align*}\n& \\sin \\frac{\\pi}{12} + \\sin \\frac{3\\pi}{12} + \\sin \\frac{5\\pi}{12} + \\sin \\frac{7\\pi}{12} + \\sin \\frac{9\\pi}{12} + \\sin \\frac{11\\pi}{12} \\\\\n&= \\sqrt{2} + 2 \\Big(\\cos \\frac{5\\pi}{12} + \\cos \\frac{\\pi}{12} \\Big) \\\\\n&= \\sqrt{2} + 4 \\cos \\frac{\\pi}{4} \\cos \\frac{\\pi}{6} \\\\\n&= \\sqrt{2} + 4 \\cdot \\frac{1}{\\sqrt{2}} \\cdot \\frac{\\sqrt{3}}{2} \\\\\n&= \\boxed{\\sqrt{2} + \\sqrt{6}}.\n\\end{align*}\nFinal Answer: The final answer is $\\sqrt{2} + \\sqrt{6}$I hope it is correct.",
         "output": "",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -2987,7 +2987,7 @@ export default {
         "target": "Label the parallelogram so that the distance between sides $\\overline{BC}$ and $\\overline{AD}$ is 4, and the distance between sides $\\overline{AB}$ and $\\overline{CD}$ is 7.  Then $AB = \\frac{4}{\\sin A}$ and $AD = \\frac{7}{\\sin A}.$\n\n[asy]\nunitsize(1.5 cm);\n\npair A, B, C, D, P, Q;\n\nA = (0,0);\nB = 2*dir(60);\nC = B + (3,0);\nD = (3,0);\nP = (B + reflect(A,D)*(B))/2;\nQ = (D + reflect(A,B)*(D))/2;\n\ndraw(A--B--C--D--cycle);\ndraw(B--P,dashed);\ndraw(D--Q,dashed);\n\nlabel(\"$A$\", A, SW);\nlabel(\"$B$\", B, N);\nlabel(\"$C$\", C, NE);\nlabel(\"$D$\", D, S);\nlabel(\"$4$\", interp(B,P,0.8), E, red);\nlabel(\"$7$\", interp(D,Q,0.5), NE, red);\nlabel(\"$\\frac{4}{\\sin A}$\", (A + B)/2, NW, red);\nlabel(\"$\\frac{7}{\\sin A}$\", (A + D)/2, S, red);\n[/asy]\n\nTherefore, the perimeter of $ABCD$ is\n\\[\\frac{4}{\\sin A} + \\frac{7}{\\sin A} + \\frac{4}{\\sin A} + \\frac{7}{\\sin A} = \\frac{22}{\\sin A} = 40.\\]Hence, $\\sin A = \\boxed{\\frac{11}{20}}.$\nFinal Answer: The final answer is $\\frac{11}{20}$I hope it is correct.",
         "output": "",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -3001,7 +3001,7 @@ export default {
         "target": "Substituting the first equation into the second, we find that $(z^{13})^{11} = z$ and thus $z^{142} = 1.$  Therefore, $z$ must be a $142$nd root of unity, and thus the imaginary part of $z$ will be\n\\[\\sin{\\frac{2m\\pi}{142}} = \\sin{\\frac{m\\pi}{71}}\\]for some $m$ with $0 \\le m < 142.$\n\nHowever, note that $71$ is prime and $m<71$ by the conditions of the problem, so the denominator in the argument of this value will always be $71$ and thus $n = \\boxed{71}.$\nFinal Answer: The final answer is $71$I hope it is correct.",
         "output": "We have that $z^{13} = w = z^{11}$, so $z^{13-11} = z^2 = 1$.  Therefore, $z = \\pm 1$.  Since the imaginary part of $z$ is $\\sin{\\frac{m\\pi}{n}}$, we must have that $z = \\cos{\\frac{m\\pi}{n}} + i\\sin{\\frac{m\\pi}{n}}$.  Therefore, $\\cos{\\frac{m\\pi}{n}} = \\pm 1$.  Since $\\cos{x} = \\pm 1$ when $x = 0$ or $\\pi$, we have that $\\frac{m\\pi}{n} = 0$ or $\\pi$.  Since $m < n$, this implies that $m = 0$.  Therefore, $n$ can be any positive integer.  Final Answer: The final answer is $n$ can be any positive integer. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -3015,7 +3015,7 @@ export default {
         "target": "The matrix for the rotation is given by\n\\[\\begin{pmatrix} \\cos 42^\\circ & -\\sin 42^\\circ \\\\ \\sin 42^\\circ & \\cos 42^\\circ \\end{pmatrix}.\\]In general, the matrix for reflecting over the line with direction vector $\\begin{pmatrix} \\cos \\theta \\\\ \\sin \\theta \\end{pmatrix}$ is given by $\\begin{pmatrix} \\cos 2 \\theta & \\sin 2 \\theta \\\\ \\sin 2 \\theta & -\\cos 2 \\theta \\end{pmatrix}.$  So here, the matrix for the reflection is\n\\[\\begin{pmatrix} \\cos 216^\\circ & \\sin 216^\\circ \\\\ \\sin 216^\\circ & -\\cos 216^\\circ \\end{pmatrix}.\\]Hence, the matrix that takes $\\mathbf{v}_0$ to $\\mathbf{v}_2$ is\n\\begin{align*}\n\\begin{pmatrix} \\cos 216^\\circ & \\sin 216^\\circ \\\\ \\sin 216^\\circ & -\\cos 216^\\circ \\end{pmatrix} \\begin{pmatrix} \\cos 42^\\circ & -\\sin 42^\\circ \\\\ \\sin 42^\\circ & \\cos 42^\\circ \\end{pmatrix} &= \\begin{pmatrix} \\cos 216^\\circ \\cos 42^\\circ + \\sin 216^\\circ \\sin 42^\\circ & -\\cos 216^\\circ \\sin 42^\\circ + \\sin 216^\\circ \\cos 42^\\circ \\\\ \\sin 216^\\circ \\cos 42^\\circ - \\cos 216^\\circ \\sin 42^\\circ & -\\sin 216^\\circ \\sin 42^\\circ - \\cos 216^\\circ \\cos 42^\\circ \\end{pmatrix} \\\\\n&= \\begin{pmatrix} \\cos (216^\\circ - 42^\\circ) & \\sin (216^\\circ - 42^\\circ) \\\\ \\sin (216^\\circ - 42^\\circ) & -\\cos (216^\\circ - 42^\\circ) \\end{pmatrix} \\\\\n&= \\begin{pmatrix} \\cos 174^\\circ & \\sin 174^\\circ \\\\ \\sin 174^\\circ & -\\cos 174^\\circ \\end{pmatrix}.\n\\end{align*}Thus, $\\theta = 174^\\circ/2 = \\boxed{87^\\circ}.$\nFinal Answer: The final answer is $87^\\circ$I hope it is correct.",
         "output": "",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -3029,7 +3029,7 @@ export default {
         "target": "We use complex numbers. Let $a = 2$, $b = 2i$, $c = -2$, and $d = -2$ be the complex numbers corresponding to $A$, $B$, $C$, and $D$, respectively. Let $p$ be the complex number corresponding to $P$, so that $|p| = \\sqrt{9} = 3$. Then we have \\[\\begin{aligned} PA \\cdot PB \\cdot PC \\cdot PD &= |p-2| \\cdot |p-2i| \\cdot |p+2| \\cdot |p+2i| \\\\ &= |(p-2)(p+2)| \\cdot |(p-2i)(p+2i)| \\\\ &= |p^2-4| \\cdot |p^2+4| \\\\ &= |p^4-16|. \\end{aligned}\\]Since $|p| = 3$, we have $|p^4| = 3^4= 81$, so by the triangle inequality, \\[|p^4-16| \\le |p^4| + |-16| = 81 + 16 = 97.\\]Equality holds if and only if $p^4 = -81$, which occurs when $p = 3\\left(\\frac{\\sqrt2}{2} + \\frac{\\sqrt2}{2}i\\right)$. Therefore, the answer is $\\boxed{97}$.\nFinal Answer: The final answer is $97$I hope it is correct.",
         "output": "We know that the center of the circle is $(0,0)$ and the radius is $3$.  Since the greatest value of the product occurs when $P$ is farthest away from the center of the circle, we conclude that the greatest value of the product occurs when $P$ is at $(0,3)$ or $(0,-3)$.  If $P$ is at $(0,3)$, then the product is\n\n$$PA\\cdot PB\\cdot PC\\cdot PD=(3+2)(3)(3+2)(3)=5\\cdot 3\\cdot 5\\cdot 3=\\boxed{3375}.$$If $P$ is at $(0,-3)$, then the product is\n\n$$PA\\cdot PB\\cdot PC\\cdot PD=(3-2)(-3)(3-2)(-3)=1\\cdot (-3)\\cdot 1\\cdot (-3)=\\boxed{9}.$$Since $3375>9$, the greatest possible value of the product is $\\boxed{3375}$.\nFinal Answer: The final answer is $3375$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -3043,7 +3043,7 @@ export default {
         "target": "We are told that\n\\[\\begin{vmatrix} a & b & c \\\\ d & e & f \\\\ g & h & i \\end{vmatrix} = -7.\\]If we multiply the second row by 2, then we get\n\\[\\begin{vmatrix} a & b & c \\\\ 2d & 2e & 2f \\\\ g & h & i \\end{vmatrix} = -14.\\]Adding five times the third row to the second row does not change the value of the determinant:\n\\[\\begin{vmatrix} a & b & c \\\\ 2d + 5g & 2e + 5h & 2f + 5i \\\\ g & h & i \\end{vmatrix} = -14.\\]Then multiplying the third row by $-1$ gives us\n\\[\\begin{vmatrix} a & b & c \\\\ 2d + 5g & 2e + 5h & 2f + 5i \\\\ -g & -h & -i \\end{vmatrix} = \\boxed{14}.\\]\nFinal Answer: The final answer is $14$I hope it is correct.",
         "output": "We have that\n\\begin{align*}\n\\begin{vmatrix} a & b & c \\\\ 2d + 5g & 2e + 5h & 2f + 5i \\\\ -g & -h & -i \\end{vmatrix} &= \\begin{vmatrix} a & b & c \\\\ 2d & 2e & 2f \\\\ -g & -h & -i \\end{vmatrix} + \\begin{vmatrix} a & b & c \\\\ 5g & 5h & 5i \\\\ -g & -h & -i \\end{vmatrix}\\\\\n&= 2\\begin{vmatrix} a & b & c \\\\ d & e & f \\\\ g & h & i \\end{vmatrix} - 5\\begin{vmatrix} a & b & c \\\\ d & e & f \\\\ g & h & i \\end{vmatrix}\\\\\n&= (2 - 5)\\begin{vmatrix} a & b & c \\\\ d & e & f \\\\ g & h & i \\end{vmatrix}\\\\\n&= -3(-7)\\\\\n&= \\boxed{21}.\n\\end{align*}\nFinal Answer: The final answer is $21$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -3057,7 +3057,7 @@ export default {
         "target": "Let $a = \\tan^2 \\alpha$ and $b = \\tan^2 \\beta.$  Then $\\sec^2 \\alpha = a + 1$ and $\\sec^2 \\beta = b + 1,$ so\n\\[\\frac{\\sec^4 \\alpha}{\\tan^2 \\beta} + \\frac{\\sec^4 \\beta}{\\tan^2 \\alpha} = \\frac{(a + 1)^2}{b} + \\frac{(b + 1)^2}{a}.\\]We know $a \\ge 0$ and $b \\ge 0,$ so by AM-GM, $a + 1 \\ge 2 \\sqrt{a}$ and $b + 1 \\ge 2 \\sqrt{b}.$  Hence,\n\\[\\frac{(a + 1)^2}{b} + \\frac{(b + 1)^2}{a} \\ge \\frac{4b}{a} + \\frac{4a}{b}.\\]Again by AM-GM,\n\\[\\frac{4b}{a} + \\frac{4a}{b} \\ge 2 \\sqrt{\\frac{4b}{a} \\cdot \\frac{4a}{b}} = 8.\\]Equality occurs when $\\alpha = \\beta = \\frac{\\pi}{4},$ so the minimum value is $\\boxed{8}.$\nFinal Answer: The final answer is $8$I hope it is correct.",
         "output": "The minimum value of the expression is $\\boxed{12}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -3071,7 +3071,7 @@ export default {
         "target": "We have that\n\\[\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}^2 = \\begin{pmatrix} a^2 + bc & ab + bd \\\\ ac + cd & bc + d^2 \\end{pmatrix}.\\]Comparing entries, we find\n\\begin{align*}\na^2 + bc &= c, \\\\\nab + bd &= a, \\\\\nac + cd &= d, \\\\\nbc + d^2 &= b.\n\\end{align*}Subtracting the first and fourth equations, we get\n\\[a^2 - d^2 = c - b,\\]which factors as $(a + d)(a - d) = c - b.$\n\nBut\n\\[a - d = (ab + bd) - (ac + cd) = (a + d)(b - c),\\]so $(a + d)^2 (b - c) = c - b.$  Then\n\\[(a + d)^2 (b - c) + (b - c) = 0,\\]which factors as $(b - c)[(a + d)^2 + 1] = 0.$  Hence, $b = c,$ which forces $a = d.$  The equations above then become\n\\begin{align*}\na^2 + b^2 &= b, \\\\\n2ab &= a, \\\\\n2ab &= a, \\\\\na^2 + b^2 &= b.\n\\end{align*}From $2ab = a,$ $2ab - a = a(2b - 1) = 0,$ so $a = 0$ or $b = \\frac{1}{2}.$\n\nIf $a = 0,$ then $b^2 = b,$ so $b = 0$ or $b = 1.$\n\nIf $b = \\frac{1}{2},$ then\n\\[a^2 = b - b^2 = \\frac{1}{4},\\]so $a = \\pm \\frac{1}{2}.$\n\nThus, we have $\\boxed{4}$ solutions $(a,b,c,d),$ namely $(0,0,0,0),$ $(0,1,1,0),$ $\\left( \\frac{1}{2}, \\frac{1}{2}, \\frac{1}{2}, \\frac{1}{2} \\right),$ and $\\left( -\\frac{1}{2}, \\frac{1}{2}, \\frac{1}{2}, -\\frac{1}{2} \\right).$\nFinal Answer: The final answer is $4$I hope it is correct.",
         "output": "We have that\n\\[\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}^2 = \\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} \\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = \\begin{pmatrix} a^2 + bc & ab + bd \\\\ ac + cd & bc + d^2 \\end{pmatrix}.\\]\nSince this matrix is equal to $\\begin{pmatrix} c & a \\\\ d & b \\end{pmatrix}$, we have that $c = a^2 + bc$, $a = ac + cd$, $d = bc + d^2$, and $b = ab + bd$.\n\nFrom the first and third equations, we have that $a^2 - a = bc - c$, so $a(a-1) = c(b-1)$.  Since $a$ and $c$ are not allowed to be zero, we have that $a-1 = c$ or $a = c+1$.\n\nFrom the second and fourth equations, we have that $a - b = cd - d$, so $a-b = d(c-1)$.  Since $a$ and $d$ are not allowed to be zero, we have that $a-b = d$ or $a = b+d$.\n\nSince $a = c+1 = b+d$, we have that $c+1 = b+d$, so $b = c-d+1$.\n\nTherefore, we have that $(a,b,c,d) = (c+1, c-d+1, c, d)$.  In other words, $a$ and $b$ can be any real numbers, and $c$ and $d$ are uniquely determined by $a$ and $b$.\n\nTherefore, there are $\\boxed{\\infty}$ such ordered quadruples.\nFinal Answer: The final answer is $\\infty$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -3085,7 +3085,7 @@ export default {
         "target": "From the equation $AB^2 + AP^2 + BP^2 = AC^2 + AP^2 + CP^2,$\n\\[AB^2 + BP^2 = AC^2 + CP^2.\\]Then\n\\[\\|\\overrightarrow{A} - \\overrightarrow{B}\\|^2 + \\|\\overrightarrow{B} - \\overrightarrow{P}\\|^2 = \\|\\overrightarrow{A} - \\overrightarrow{C}\\|^2 + \\|\\overrightarrow{C} - \\overrightarrow{P}\\|^2,\\]which expands as\n\\begin{align*}\n&\\overrightarrow{A} \\cdot \\overrightarrow{A} - 2 \\overrightarrow{A} \\cdot \\overrightarrow{B} + \\overrightarrow{B} \\cdot \\overrightarrow{B} + \\overrightarrow{B} \\cdot \\overrightarrow{B} - 2 \\overrightarrow{B} \\cdot \\overrightarrow{P} + \\overrightarrow{P} \\cdot \\overrightarrow{P} \\\\\n&= \\overrightarrow{A} \\cdot \\overrightarrow{A} - 2 \\overrightarrow{A} \\cdot \\overrightarrow{C} + \\overrightarrow{C} \\cdot \\overrightarrow{C} + \\overrightarrow{C} \\cdot \\overrightarrow{C} - \\overrightarrow{C} \\cdot \\overrightarrow{P} + \\overrightarrow{P} \\cdot \\overrightarrow{P}.\n\\end{align*}This simplifies to\n\\[ \\overrightarrow{B} \\cdot \\overrightarrow{P} - \\overrightarrow{C} \\cdot \\overrightarrow{P} + \\overrightarrow{A} \\cdot \\overrightarrow{B} - \\overrightarrow{A} \\cdot \\overrightarrow{C} + \\overrightarrow{C} \\cdot \\overrightarrow{C} - \\overrightarrow{B} \\cdot \\overrightarrow{B} = 0.\\]We can factor this as\n\\[(\\overrightarrow{B} - \\overrightarrow{C}) \\cdot (\\overrightarrow{P} + \\overrightarrow{A} - \\overrightarrow{B} - \\overrightarrow{C}) = 0.\\]Let $D$ be the point such that $\\overrightarrow{D} = \\overrightarrow{B} + \\overrightarrow{C} - \\overrightarrow{A},$ so the equation above becomes\n\\[(\\overrightarrow{B} - \\overrightarrow{C}) \\cdot (\\overrightarrow{P} - \\overrightarrow{D}) = 0.\\]This means lines $BC$ and $PD$ are perpendicular.  In other words, $P$ lies on the line through $D$ that is perpendicular to line $BC.$\n\nFrom $\\overrightarrow{D} = \\overrightarrow{B} + \\overrightarrow{C} - \\overrightarrow{A},$\n\\[\\frac{\\overrightarrow{A} + \\overrightarrow{D}}{2} = \\frac{\\overrightarrow{B} + \\overrightarrow{C}}{2}.\\]In other words, the midpoints of $\\overline{AD}$ and $\\overline{BC}$ coincide, so $ABDC$ is a parallelogram.\n\nSimilarly, if $E$ is the point such that $AECB$ is a parallelogram, then we can show that $P$ lies on the line passing through $E$ that is perpendicular to line $AC.$  Thus, the location of point $P$ is uniquely determined.\n\n[asy]\nunitsize(0.5 cm);\n\npair A, B, C, D, E, F, H, O, P;\n\nA = (2,5);\nB = (0,0);\nC = (7,0);\nD = -A + B + C;\nE = A - B + C;\nF = A + B - C;\nH = orthocenter(A,B,C);\nO = circumcenter(A,B,C);\nP = 2*O - H;\n\ndraw(A--B--C--cycle);\ndraw(B--D--E--A);\ndraw(interp(P,D,-0.2)--interp(P,D,1.2),dashed);\ndraw(interp(P,E,-0.2)--interp(P,E,1.2),dashed);\n\nlabel(\"$A$\", A, N);\nlabel(\"$B$\", B, SW);\nlabel(\"$C$\", C, SE);\nlabel(\"$D$\", D, W);\nlabel(\"$E$\", E, SE);\ndot(\"$P$\", P, NW);\n[/asy]\n\nTaking the circumcenter of triangle $ABC$ as the origin, we can write\n\\[\\overrightarrow{H} = \\overrightarrow{A} + \\overrightarrow{B} + \\overrightarrow{C},\\]where $H$ is the orthocenter of triangle $ABC.$  Note line $AH$ is also perpendicular to line $BC,$ so\n\\[\\overrightarrow{P} - \\overrightarrow{D} = t(\\overrightarrow{H} - \\overrightarrow{A}) = t (\\overrightarrow{B} + \\overrightarrow{C})\\]for some scalar $t.$  Then\n\\begin{align*}\n\\overrightarrow{P} &= \\overrightarrow{D} + t (\\overrightarrow{B} + \\overrightarrow{C}) \\\\\n&= \\overrightarrow{B} + \\overrightarrow{C} - \\overrightarrow{A} + t (\\overrightarrow{B} + \\overrightarrow{C}).\n\\end{align*}Similarly,\n\\[\\overrightarrow{P} = \\overrightarrow{A} + \\overrightarrow{C} - \\overrightarrow{B} + u (\\overrightarrow{A} + \\overrightarrow{C})\\]for some scalar $u.$  Note that we can take $t = u = -2,$ which gives us\n\\[\\overrightarrow{P} = -\\overrightarrow{A} - \\overrightarrow{B} - \\overrightarrow{C}.\\]Therefore, the common value is\n\\begin{align*}\nAB^2 + AP^2 + BP^2 &= \\|\\overrightarrow{A} - \\overrightarrow{B}\\|^2 + \\|\\overrightarrow{A} - \\overrightarrow{P}\\|^2 + \\|\\overrightarrow{B} - \\overrightarrow{P}\\|^2 \\\\\n&= \\|\\overrightarrow{A} - \\overrightarrow{B}\\|^2 + \\|2 \\overrightarrow{A} + \\overrightarrow{B} + \\overrightarrow{C}\\|^2 + \\|\\overrightarrow{A} + 2 \\overrightarrow{B} + \\overrightarrow{C}\\|^2 \\\\\n&= \\overrightarrow{A} \\cdot \\overrightarrow{A} - 2 \\overrightarrow{A} \\cdot \\overrightarrow{B} + \\overrightarrow{B} \\cdot \\overrightarrow{B} \\\\\n&\\quad + 4 \\overrightarrow{A} \\cdot \\overrightarrow{A} + \\overrightarrow{B} \\cdot \\overrightarrow{B} + \\overrightarrow{C} \\cdot \\overrightarrow{C} + 4 \\overrightarrow{A} \\cdot \\overrightarrow{B} + 4 \\overrightarrow{A} \\cdot \\overrightarrow{C} + 2 \\overrightarrow{B} \\cdot \\overrightarrow{C} \\\\\n&\\quad + \\overrightarrow{A} \\cdot \\overrightarrow{A} + 4 \\overrightarrow{B} \\cdot \\overrightarrow{B} + \\overrightarrow{C} \\cdot \\overrightarrow{C} + 4 \\overrightarrow{A} \\cdot \\overrightarrow{B} + 2 \\overrightarrow{A} \\cdot \\overrightarrow{C} + 4 \\overrightarrow{B} \\cdot \\overrightarrow{C} \\\\\n&= 6 \\overrightarrow{A} \\cdot \\overrightarrow{A} + 6 \\overrightarrow{B} \\cdot \\overrightarrow{B} + 2 \\overrightarrow{C} \\cdot \\overrightarrow{C} + 6 \\overrightarrow{A} \\cdot \\overrightarrow{B} + 6 \\overrightarrow{A} \\cdot \\overrightarrow{C} + 6 \\overrightarrow{B} \\cdot \\overrightarrow{C} \\\\\n&= 6R^2 + 6R^2 + 2R^2 + 6 \\left( R^2 - \\frac{c^2}{2} \\right) + 6 \\left( R^2 - \\frac{b^2}{2} \\right) + 6 \\left( R^2 - \\frac{a^2}{2} \\right) \\\\\n&= \\boxed{32R^2 - 3(a^2 + b^2 + c^2)}.\n\\end{align*}\nFinal Answer: The final answer is $32R^2 - 3(a^2 + b^2 + c^2)$I hope it is correct.",
         "output": "",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Precalculus"
@@ -3099,7 +3099,7 @@ export default {
         "target": "The two bases are octagons, each with 8 sides, so the bases have a total of $8\\times2=16$ edges. Then there are edges connecting the two bases. With one edge for each vertex of a base, we have 8 edges connecting the bases. So the total number of edges is $16+8=\\boxed{24}$.\nFinal Answer: The final answer is $24$I hope it is correct.",
         "output": "An octagonal prism has $16$ edges.\nFinal Answer: The final answer is $16$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -3113,7 +3113,7 @@ export default {
         "target": "There are two bases on the prism, each with six edges, for a total of 12 base edges. Each vertex on a base is connected to a corresponding vertex on the other base, and since each base has six vertices, there are 6 vertical edges. In total, there are $12+6=\\boxed{18}$ edges.\nFinal Answer: The final answer is $18$I hope it is correct.",
         "output": "A hexagonal prism has $12$ edges.  Final Answer: The final answer is $12$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -3127,7 +3127,7 @@ export default {
         "target": "From ``$3$'' to ``$9$'' is a difference of 6 hours out of the 12 on the clock, so the hands are separated by $\\frac{6}{12}=\\frac{1}{2}$ of the degrees on the clock. From ``$2$'' to ``$10$,'' the smaller angle (clockwise from $10$ to $2$) is a difference of 4 hours out of 12 on the clock, so the hands are separated by $\\frac{4}{12}=\\frac{1}{3}$ of the degrees on the clock. The difference in the angles is $\\frac{1}{2}-\\frac{1}{3}=\\frac{1}{6}$ of the degrees on the clock. Since the clock has $360^\\circ$, the angle decreases by $\\frac{360}{6}=\\boxed{60^\\circ}$.\nFinal Answer: The final answer is $60^\\circ$I hope it is correct.",
         "output": "We need to find the difference between the angle between the hands when they are on the \"$3$'' and the \"$9$'', and the angle between the hands when they are on the \"$2$'' and the \"$10$''. We can find the angle between the hands when they are on the \"$3$'' and the \"$9$'' by looking at the arc between the \"$3$'' and the \"$9$''. Since there are $360$ degrees in a circle, the arc between the \"$3$'' and the \"$9$'' is $\\frac{1}{4}$ of the circle, which is $\\frac{1}{4}\\cdot 360=\\boxed{90}$ degrees. Similarly, the angle between the hands when they are on the \"$2$'' and the \"$10$'' is $\\frac{1}{6}$ of the circle, which is $\\frac{1}{6}\\cdot 360=\\boxed{60}$ degrees. Therefore, the difference between the angle between the hands when they are on the \"$3$'' and the \"$9$'', and the angle between the hands when they are on the \"$2$'' and the \"$10$'' is $90-60=\\boxed{30}$ degrees.\n\nFinal Answer: The final answer is $30$ degrees. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -3141,7 +3141,7 @@ export default {
         "target": "Since $\\angle{Z}$ is the right angle, our triangle is shown below:\n\n[asy]\ndraw((0,0)--(7,0)--(7,24)--cycle,black+linewidth(1));\ndraw(rightanglemark((0,0),(7,0),(7,24),30),black+linewidth(1));\nlabel(\"$X$\",(7,24),E);\nlabel(\"$Y$\",(0,0),W);\nlabel(\"$Z$\",(7,0),E);\nlabel(\"25\",(0,0)--(7,24),NW);\n[/asy]\n\nSince $\\cos{Y}=\\frac{7}{25}$, we have $\\cos{Y}=\\frac{YZ}{XY}=\\frac{YZ}{25}=\\frac{7}{25}$.  From this, we can see that $YZ=25\\cdot\\frac{7}{25}=7$.  Then, from the Pythagorean Theorem, $XZ=\\sqrt{XY^2-YZ^2}=\\sqrt{25^2-7^2}=\\sqrt{576}=24$.  Finally, we have $\\tan{X}=\\frac{YZ}{XZ}=\\boxed{\\frac{7}{24}}$.\nFinal Answer: The final answer is $\\frac{7}{24}$I hope it is correct.",
         "output": "We have that \\begin{align*}\n\\cos{Y}&=\\frac{7}{25}=\\frac{\\text{adjacent}}{\\text{hypotenuse}}\\\\\n\\Rightarrow\\qquad \\sin{Y}&=\\frac{24}{25}=\\frac{\\text{opposite}}{\\text{hypotenuse}}.\n\\end{align*}\n\nSince $\\tan{X}=\\frac{\\sin{X}}{\\cos{X}}$, we have that \\begin{align*}\n\\tan{X}&=\\frac{\\sin{X}}{\\cos{X}}\\\\\n&=\\frac{\\sin{Y}}{\\cos{Y}}\\\\\n&=\\frac{24}{7}.\n\\end{align*}\n\nTherefore, \\boxed{\\tan{X}=\\frac{24}{7}}. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -3155,7 +3155,7 @@ export default {
         "target": "Drop perpendiculars from the endpoints of the shorter base of the trapezoid to the other base.  This divides the trapezoid into a rectangle and two congruent right triangles.  Each of the right triangles has hypotenuse 13 units long and side length $(17-7)/2=5$ units long.  Therefore, the height of the trapezoid is $\\sqrt{13^2-5^2}=12$ units.  The area of the $12\\times 7$ rectangle is 84 square units, and the collective area of the two triangles is $2\\cdot\\frac{1}{2}\\cdot 5\\cdot 12=60$ square units.  The area of the trapezoid is $84+60=\\boxed{144}$ square units.\nFinal Answer: The final answer is $144$I hope it is correct.",
         "output": "The area of a trapezoid is given by $A=\\frac{1}{2}(b_1+b_2)h$, where $b_1$ and $b_2$ are the lengths of the bases, and $h$ is the height of the trapezoid.  Since the legs of the trapezoid are perpendicular to both bases, the length of each leg is the height of the trapezoid.  Since the trapezoid is isosceles, both legs have the same length, so the height is $13$ units.  Since the bases are $7$ and $17$ units, we have\n\n\\begin{align*}\nA&=\\frac{1}{2}(b_1+b_2)h\\\\\n&=\\frac{1}{2}(7+17)\\cdot 13\\\\\n&=\\frac{1}{2}(24)\\cdot 13\\\\\n&=\\boxed{156}.\n\\end{align*}\nFinal Answer: The final answer is $156$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -3169,7 +3169,7 @@ export default {
         "target": "The area of triangle $ADE$ is $\\frac{1}{2}(10)(2)=10$ square units, and the area of rectangle $ABCD$ is $(6)(10)=60$ square units.  Subtracting, we find that the area of $ABCE$ is 50 square units.  Therefore, the ratio of the area of triangle $ADE$ to the area of quadrilateral $ABCE$ is $10/50=\\boxed{\\frac{1}{5}}$.\nFinal Answer: The final answer is $\\frac{1}{5}$I hope it is correct.",
         "output": "The area of triangle $ADE$ is $\\frac{1}{2}(2)(10)=10$. The area of quadrilateral $ABCE$ is $\\frac{1}{2}(8)(10)=40$. Therefore, the ratio of the area of triangle $ADE$ to the area of quadrilateral $ABCE$ is $\\frac{10}{40}=\\boxed{\\frac{1}{4}}$.\nFinal Answer: The final answer is $\\frac{1}{4}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -3183,7 +3183,7 @@ export default {
         "target": "We draw a regular hexagon $ABCDEF$ as shown below.  The desired distance can be measured by diagonal $AC$: [asy]\n\nsize(120);\npair A,B,C,D,E,F;\nA = dir(0); B = dir(60); C = dir(120); D = dir(180); E = dir(240); F = dir(300);\n\ndraw(E--C);\n\nlabel(\"$6$\",(A+B)/2,NE);\nlabel(\"$A$\",C,NW);label(\"$B$\",D,W);label(\"$C$\",E,SW);label(\"$D$\",F,SE);label(\"$E$\",A,ENE);label(\"$F$\",B,NE);\ndraw(A--B--C--D--E--F--A);\n[/asy] To compute the length of $AC$, we let $H$ be the foot of the perpendicular from $B$ to $AC$: [asy]\n\nsize(120);\npair A,B,C,D,E,F;\nA = dir(0); B = dir(60); C = dir(120); D = dir(180); E = dir(240); F = dir(300);\n\ndraw(E--C);\n\nlabel(\"$6$\",(A+B)/2,NE);\nlabel(\"$A$\",C,NW);label(\"$B$\",D,W);label(\"$C$\",E,SW);label(\"$D$\",F,SE);label(\"$E$\",A,ENE);label(\"$F$\",B,NE);\ndraw(A--B--C--D--E--F--A); pair H=(E+C)/2; draw(D--H); label(\"$H$\",H,ENE);\n[/asy] Since the hexagon is regular, $\\angle ABC = 120^\\circ$ and $\\angle ABH = \\angle CBH = 120^\\circ / 2 = 60^\\circ$.  Thus, $\\triangle ABH$ and $\\triangle CBH$ are congruent $30^\\circ - 60^\\circ - 90^\\circ$ triangles.  These triangles are each half an equilateral triangle, so their short leg is half as long as their hypotenuse.\n\nSince $AB=BC=6$, we have $BH = AB/2 = 3$ and $AH = CH = \\sqrt{6^2-3^2} = \\sqrt{27} = 3\\sqrt{3}$.  (Notice that this value is $\\sqrt{3}$ times the length of $BH$, the short leg.  In general, the ratio of the sides in a $30^\\circ - 60^\\circ - 90^\\circ$ triangle is $1:\\sqrt{3}:2$, which can be shown by the Pythagorean Theorem.)  Then, $AC = 2\\cdot 3\\sqrt{3} = 6\\sqrt{3}$.  Thus, any pair of parallel sides in this regular hexagon are $\\boxed{6\\sqrt{3}}$ units apart.\nFinal Answer: The final answer is $6\\sqrt{3}$I hope it is correct.",
         "output": "A regular hexagon with side of 6 units looks like this:\n\n\\begin{center}\n\\includegraphics[scale=0.25]{hexagon.jpg}\n\\end{center}\n\nSince the regular hexagon is divided into 6 equilateral triangles, the length of a pair of parallel sides of a regular hexagon with side of 6 units is equal to the length of the side of one of the equilateral triangles.\n\nThe length of the side of one of the equilateral triangles can be found by using the Pythagorean Theorem.\n\n\\begin{center}\n\\includegraphics[scale=0.3]{triangle.jpg}\n\\end{center}\n\nLet $a$ be the length of the side of one of the equilateral triangles. Then $a^2+(\\frac{6}{2})^2=6^2$, so $a^2+9=36$, so $a^2=27$, so $a=\\sqrt{27}$, so $a=\\boxed{3\\sqrt{3}}$.\n\nFinal Answer: The final answer is $3\\sqrt{3}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -3197,7 +3197,7 @@ export default {
         "target": "Time to draw! [asy]\npair A, B, C, K;\nA = (0, 6);\nB = (-8, 0);\nC = (6, 0);\nK = (0, 0);\ndraw(A--B--C--cycle);\ndraw(A--K);\nlabel(\"$A$\", A, N);\nlabel(\"$B$\", B, SW);\nlabel(\"$C$\", C, SE);\nlabel(\"$K$\", K, S);\nlabel(\"6\", A--K, E);\nlabel(\"8\", B--K, S);\nlabel(\"6\", C--K, S);\ndraw(rightanglemark(A,K,B,10));\n[/asy] To find the perimeter, we need $AB$ and $AC.$ We recognize $\\triangle ABK$ as a $3:4:5$ triangle and and $\\triangle ACK$ as a $45^\\circ-45^\\circ-90^\\circ$ triangle, which means that $AB = 10$ and $AC = 6\\sqrt{2}.$ As for $BC,$ we have $BC = BK + CK = 14.$ Therefore, our answer is $AB + AC + BC = \\boxed{24 + 6\\sqrt{2}}.$\nFinal Answer: The final answer is $24 + 6\\sqrt{2}$I hope it is correct.",
         "output": "Since $AK$ is an altitude to $\\triangle ABC$, we know that $\\angle ABK$ and $\\angle ACK$ are right angles. Thus, triangles $\\triangle ABK$ and $\\triangle ACK$ are both right triangles. We can use the Pythagorean Theorem to find the lengths of $AB$ and $AC$:\n\n\\begin{align*}\nAB^2&=BK^2+AK^2=8^2+6^2=64+36=100,\\\\\nAC^2&=CK^2+AK^2=6^2+6^2=72.\n\\end{align*}\nTherefore, $AB=10$ and $AC=6\\sqrt{2}$. The perimeter of the triangle is $AB+BC+AC=10+8+6\\sqrt{2}=\\boxed{18+6\\sqrt{2}}.$\nFinal Answer: The final answer is $18+6\\sqrt{2}$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -3211,7 +3211,7 @@ export default {
         "target": "[asy]\nimport graph;\nsize(300);\nLabel f;\nf.p=fontsize(6);\nxaxis(-2,6, Ticks(f,1.0));\nyaxis(-9,9, Ticks(f,1.0));\ndot((-1,0));\nlabel(\"$A$\",(-1,0),W);\ndot((2,4));\nlabel(\"$B$\",(2,4),N);\ndot((2,-4));\nlabel(\"$C$\",(2,-4),S);\ndot((5,0));\nlabel(\"$D_1$\",(5,0),E);\ndot((-1,-8));\nlabel(\"$D_2$\",(-1,-8),S);\ndot((-1,8));\nlabel(\"$D_3$\",(-1,8),N);\n[/asy]\n\nThe three given points are labeled $A$, $B$, and $C$. The three possible values of the fourth point in the parallelogram are labelled $D_1$, $D_2$, and $D_3$, with $D_1$ being the opposite point of $A$, $D_2$ the opposite point of $B$, and $D_3$ the opposite point of $C$. The parallelogram $AD_3BC$ has the same perimeter as the parallelogram $ABCD_2$ by symmetry, so we disregard point $D_3$.\n\nWe will find the perimeter of $ABCD_2$. To calculate where point $D_2$ is, we notice that $AD_2$ must be parallel to the vertical segment $BC$, so the $x$ value of point $D_2$ must be $-1$. In addition, the length $AD_2$ must be equal to the length $BC$, which is 8. Thus, the $y$ value of point $D_2$ must be $-8$. So point $D_2$ is at $(-1,-8)$. The vertical segments of parallelogram $ABCD_2$ have length 8. To find the length of the diagonal segments $AB$ and $CD_2$, we use the distance formula between points $A$ and $B$: $AB=\\sqrt{(-1-2)^2+(0-4)^2}=5$. Thus, the perimeter of this parallelogram is $8+8+5+5=26$.\n\nWe will find the perimeter of $ABD_1C$. To calculate where point $D_1$ is, we note that since figure $ABC$ is symmetric about the $x$-axis, $D_1$ must lie on the $x$-axis, so its $y$ value is 0. We also know that the diagonals in a parallelogram bisect each other, so in order for diagonal $AD_1$ to bisect $BC$ (which crosses the $x$-axis at $x=2$), the $x$ value of $D_1$ must be 5. So point $D_1$ is at $(5,0)$. In finding the perimeter, we note that all the sides are equal in length. Since we already found side $AB$ to have length 5, the entire perimeter is $5\\cdot4=20$.\n\nThus, the positive difference between the greatest perimeter and the smallest is $26-20=\\boxed{6}$ units.\nFinal Answer: The final answer is $6$I hope it is correct.",
         "output": "The three vertices are shown in the figure below.\n\n\\begin{center}\n\\includegraphics[width=10cm]{image001.jpg}\n\\end{center}\n\nThe greatest possible perimeter of the parallelogram would be the perimeter of a rectangle with the same vertices.  This perimeter can be calculated by finding the distance between the vertices $(-1,0)$ and $(2,4)$ and doubling it:\n\\begin{align*}\n\\text{distance}&=\\sqrt{(2-(-1))^2+(4-0)^2}\\\\\n&=\\sqrt{3^2+4^2}\\\\\n&=\\sqrt{25}\\\\\n&=5\n\\end{align*}\n\nSo the greatest possible perimeter is $2\\cdot5=\\boxed{10}$.  The least possible perimeter of the parallelogram would be the perimeter of a triangle with the same vertices.  This perimeter can be calculated by finding the distance between the vertices $(-1,0)$ and $(2,-4)$ and doubling it:\n\\begin{align*}\n\\text{distance}&=\\sqrt{(2-(-1))^2+(-4-0)^2}\\\\\n&=\\sqrt{3^2+(-4)^2}\\\\\n&=\\sqrt{25}\\\\\n&=5\n\\end{align*}\n\nSo the least possible perimeter is $5=\\boxed{5}$.  The positive difference between the greatest possible perimeter and the least possible perimeter is $10-5=\\boxed{5}$.\nFinal Answer: The final answer is $5$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -3225,7 +3225,7 @@ export default {
         "target": "Draw point $B$ and point $C$ and rotate $C$ 90 degrees counterclockwise about $B$, as shown.  Point $C$ is 3 units above $B$, so its image is 3 units to the left of $B$ at $(4-3,1)=\\boxed{(1,1)}$.\n\n[asy]\nsize(200);\ndefaultpen(linewidth(0.7));\n\nimport graph;\n\nxaxis(-2,5,Ticks(\" \",1.0,begin=false,end=false,NoZero,Size=3),Arrows(4));\nyaxis(-2,5,Ticks(\" \",1.0,begin=false,end=false,NoZero,Size=3),Arrows(4));\n\ndot(\"$B$\",(4,1),SE);\ndot(\"$C$\",(4,4),N);\ndot(\"$C'$\",(1,1),W);\ndraw((1,1)--(4,1)--(4,4),dashed);\ndraw(rightanglemark((1,1),(4,1),(4,4)));[/asy]\nFinal Answer: The final answer is $(1,1)$I hope it is correct.",
         "output": "We see that the $y$-coordinate of $C$ is $4$, so $C$ is $3$ units above $B$. After rotating the triangle 90 degrees counterclockwise about $B$, $C$ will be $3$ units to the left of $B$. Since $B$ has an $x$-coordinate of $4$, the $x$-coordinate of the image of $C$ will be $1$. Since the $y$-coordinate of $B$ is $1$, the $y$-coordinate of the image of $C$ will be $4$. Therefore, the image of $C$ is $\\boxed{(1,4)}$.\nFinal Answer: The final answer is $(1,4)$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -3239,7 +3239,7 @@ export default {
         "target": "Applying the Triangle Inequality, we have that $(3p - 1) + (3p) > p^2 + 1,$ so $0 > p^2 - 6p + 2.$ We can find the values of $p$ that satisfy this inequality by completing the square.  Adding 7 to both sides gives $7 > p^2 - 6p + 9$, so $ 7 > (p-3)^2$.  Since $p$ must be a positive integer, the only possible values of $(p-3)^2$ are 0, 1, and 4.  Therefore, the possible values of $p$ are 1, 2, 3, 4, and 5. Let's find $(3p - 1, 3p, p^2 + 1)$ for each possible $p$:\n\nIf $p = 1,$ then $(3p - 1, 3p, p^2 + 1) = (2, 3, 2).$\n\nIf $p = 2,$ then $(3p - 1, 3p, p^2 + 1) = (5, 6, 5).$\n\nIf $p = 3,$ then $(3p - 1, 3p, p^2 + 1) = (8, 9, 10).$\n\nIf $p = 4,$ then $(3p - 1, 3p, p^2 + 1) = (11, 12, 17).$\n\nIf $p = 5,$ then $(3p - 1, 3p, p^2 + 1) = (14, 15, 26).$\n\nAll of these look good, so we see that there are $\\boxed{5}$ possibilities for $p.$\nFinal Answer: The final answer is $5$I hope it is correct.",
         "output": "We know that the sum of any two sides of a triangle must be greater than the third side. So, we have:\n\n\\begin{align*}\n3p-1+3p&>p^2+1\\Rightarrow p^2-6p+2<0\\\\\n\\Rightarrow\\qquad (p-2)(p-1)&<0\\\\\n\\Rightarrow\\qquad p&\\in (1, 2).\n\\end{align*}Also, we must have\n\n\\begin{align*}\n3p-1+p^2+1&>3p\\\\\n\\Rightarrow\\qquad p^2&>2\\\\\n\\Rightarrow\\qquad p&\\in (\\sqrt{2}, \\infty).\n\\end{align*}Also, we must have\n\n\\begin{align*}\n3p+p^2+1&>3p-1\\\\\n\\Rightarrow\\qquad p^2&>-2\\\\\n\\Rightarrow\\qquad p&\\in \\mathbb{R}.\n\\end{align*}Therefore, we have that $p\\in(1, 2).$ There is only one integer in this interval, so the answer is \\boxed{1}.\nFinal Answer: The final answer is $1$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -3253,7 +3253,7 @@ export default {
         "target": "Without loss of generality, let the radius of the circle be 2.  The radii to the endpoints of the chord, along with the chord, form an isosceles triangle with vertex angle $120^{\\circ}$. The area of the larger of the two regions is thus $2/3$ that of the circle plus the area of the isosceles triangle, and the area of the smaller of the two regions is thus $1/3$ that of the circle minus the area of the isosceles triangle.  The requested ratio is therefore $\\displaystyle\n\\frac{\\frac{2}{3}\\cdot4\\pi+\\sqrt{3}}{{\\frac{1}{3}\\cdot4\\pi-\\sqrt{3}}}\n=\\frac{8\\pi+3\\sqrt{3}}{4\\pi-3\\sqrt{3}}$, so $abcde\\!f=8\\cdot3\\cdot3\\cdot4\\cdot3\\cdot3=2592$, and the requested remainder is $\\boxed{592}$.\nFinal Answer: The final answer is $592$I hope it is correct.",
         "output": "The larger region is a semicircle and the smaller region is a circular sector. The area of a semicircle is $\\frac{\\pi r^2}{2}$, and the area of a circular sector is $\\frac{\\theta r^2}{2}$. Since the chord is perpendicular to the radius at the midpoint of the radius, we have $\\theta = \\frac{\\pi}{2}$. Therefore, the ratio of the two areas is $\\frac{\\pi r^2/2}{\\pi r^2/4} = 2$. Since $2 = \\frac{2}{1}$, the remainder when the product $a\\cdot b\\cdot c\\cdot d\\cdot e\\cdot f$ is divided by 1000 is \\boxed{0}.\nFinal Answer: The final answer is $0$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -3267,7 +3267,7 @@ export default {
         "target": "We know that $AG:AD = 2:3$.  Triangles $AMG$ and $ABD$ are similar, so $AM:AB = AG:AD = 2:3$.  Likewise, $AN:AC = AG:AD = 2:3$.\n\n[asy]\nimport geometry;\n\nunitsize(1 cm);\n\npair A, B, C, D, E, F, G, M, N;\n\nA = (1,3);\nB = (0,0);\nC = (4,0);\nD = (B + C)/2;\nE = (C + A)/2;\nF = (A + B)/2;\nG = (A + B + C)/3;\nM = extension(G, G + B - C, A, B);\nN = extension(G, G + B - C, A, C);\n\ndraw(A--B--C--cycle);\ndraw(A--D);\ndraw(B--E);\ndraw(C--F);\ndraw(M--N);\n\nlabel(\"$A$\", A, dir(90));\nlabel(\"$B$\", B, SW);\nlabel(\"$C$\", C, SE);\nlabel(\"$D$\", D, S);\nlabel(\"$E$\", E, NE);\nlabel(\"$F$\", F, NW);\nlabel(\"$G$\", G, SSW);\nlabel(\"$M$\", M, NW);\nlabel(\"$N$\", N, NE);\n[/asy]\n\nTherefore, the area of triangle $AMN$ is $810 \\cdot (2/3)^2 = \\boxed{360}$.\nFinal Answer: The final answer is $360$I hope it is correct.",
         "output": "The centroid divides each median into two parts, with the centroid being twice as close to the midpoint of a side as it is to the opposite vertex.  Therefore, $AG=\\frac{2}{3}AD$, $BG=\\frac{2}{3}BE$, and $CG=\\frac{2}{3}CF$.  The area of triangle $AMN$ is $\\frac{1}{3}$ of the area of triangle $ABC$, which is $\\frac{1}{3}(810)=\\boxed{270}$.\nFinal Answer: The final answer is $270$. I hope it is correct.",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -3281,7 +3281,7 @@ export default {
         "target": "To start, we can make three equilateral triangles, with sides $2,2,2$, $4,4,4$ and $6,6,6$.  Next, look at isosceles triangles.  If two sides have length 6, the remaining side could be $2$ since $6+2>6$ and $6+6>2$.  The remaining side could also be 4 since $6+4>6$ and $6+6>4$.  So, this is two more triangles.  If two sides have length 4, the remaining side could have length $6$ since $6+4>4$ and $4+4>6$.  The remaining side could also have length 2 since $2+4>4$ and $4+4>2$.  There are no possible triangles with all sides of different length, since $2+4=6$.  Thus, there are a total of $\\boxed{7}$ non congruent triangles.\nFinal Answer: The final answer is $7$I hope it is correct.",
         "output": "",
         "model": "540b",
-        "type": "True Negative",
+        "type": "Incorrect",
         "notes": "",
         "visual": "No",
         "original_category": "Geometry"
@@ -3295,7 +3295,7 @@ export default {
         "target": "D",
         "output": "The kidneys of desert mammals produce urine that is hyperosmotic to their tissues, which allows them to conserve water. Freshwater fishes produce urine that is hypoosmotic to their tissues, which allows them to conserve water. The kidneys of saltwater fishes produce urine that is hyperosmotic to their surroundings, which allows them to excrete concentrated urine. Insects have Malpighian tubules, which allow them to excrete waste through their exoskeleton. The juxtamedullary nephrons in the mammalian kidney allow the organism to produce concentrated urine.\n\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_biology"
@@ -3309,7 +3309,7 @@ export default {
         "target": "A",
         "output": "The cohesion-tension theory is based on the idea that water is under negative pressure in the xylem, due to the evaporation of water from mesophyll cells. This tension pulls the water column upward. The cohesive property of water allows the xylem to resist rupture under negative pressure. The transpiration pull forces water into the xylem at the base of the plant, and this water is then pulled up the xylem under negative pressure. The transpiration pull is generated by the loss of water from the mesophyll cells, and is the main driving force for the ascent of water in the xylem. Water moves from a source region with high hydrostatic pressure to a sink region with low hydrostatic pressure. Living cells of the xylem do not provide the main conduit for the ascent of water. The xylem vessels and tracheids are dead at maturity. The transpiration pull is generated by the loss of water from the mesophyll cells, and is the main driving force for the ascent of water in the xylem.\n\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_biology"
@@ -3323,7 +3323,7 @@ export default {
         "target": "C",
         "output": "The cell-cell junctions that allow for the passage of molecules through gaps between cells are gap junctions. Desmosomes and tight junctions are types of cell-cell junctions that prevent molecules from passing between cells. A belt desmosome is a type of desmosome that is not associated with preventing the passage of molecules.\n\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_biology"
@@ -3337,7 +3337,7 @@ export default {
         "target": "A",
         "output": "The MSD is the most significant digit. It is the first digit from the left to the right.\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "electrical_engineering"
@@ -3351,7 +3351,7 @@ export default {
     //     "target": "A",
     //     "output": "The answer is (A). The reciprocity theorem states that the response at port 1 due to excitation at port 2 is the same as the response at port 2 due to excitation at port 1.\n\nProblem:\nWhich of the following is the right choice? Explain your answer.\n(A) Thevenin's Theorem is a voltage form of an equivalent circuit where a circuit can be replaced with an equivalent voltage source in series with a resistance. (B) Thevenin's Theorem is a current form of an equivalent circuit where a circuit can be replaced with an equivalent current source in series with a resistance. (C) Thevenin's Theorem is a voltage form of an equivalent circuit where a circuit can be replaced with an equivalent current source in series with a resistance. (D) Thevenin's Theorem is a current form of an equivalent circuit where a circuit can be replaced with an equivalent voltage source in series with a resistance.\nSolution:\nThe answer is (D). Thevenin's theorem is a voltage form of an equivalent circuit where a circuit can be replaced with an equivalent voltage source in series with a resistance.\n\nProblem:\nIf the system of equations\n\n\\begin{align*}\n6x-4y&=a,\\\\\n6y-9x &=b.\n\\end{align*}has a solution $(x, y)$ where $x$ and $y$ are both nonzero, find $\\frac{a}{b},$ assuming $b$ is nonzero.\nWhich of the following is the right choice? Explain your answer.\n(A) $-\\frac{2}{3}$, (B) $\\frac{2}{3}$, (C) $\\frac{1}{3}$, (D) $\\frac{4}{9}$\nSolution:\nIf we multiply the first equation by $-\\frac{3}{2}$, we obtain\n\n$$6y-9x=-\\frac{3}{2}a.$$Since we also know that $6y-9x=b$, we have\n\n$$-\\frac{3}{2}a=b\\Rightarrow\\frac{a}{b}=\\boxed{-\\frac{2}{3}}.$$\nFinal Answer: The final answer is (A). I hope it is correct.",
     //     "model": "540b",
-    //     "type": "True Positive",
+    //     "type": "Correct",
     //     "notes": "",
     //     "visual": "No",
     //     "original_category": "electrical_engineering"
@@ -3365,7 +3365,7 @@ export default {
         "target": "B",
         "output": "According to the Bohr model, an electron gains or losses energy only by\n\n$$\\boxed{\\text{jumping from one allowed orbit to another.}}$$\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "electrical_engineering"
@@ -3379,7 +3379,7 @@ export default {
         "target": "B",
         "output": "The correct answer is (B). Point mutations are when a single nucleotide base is substituted for another. Point mutations may have no effect on the protein formed from a sequence in DNA if the mutated codon codes for the same amino acid as the original codon.\n\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_biology"
@@ -3393,7 +3393,7 @@ export default {
         "target": "D",
         "output": "Disruptive selection is a type of natural selection in which the extreme phenotypes are favored over the intermediate ones. Disruptive selection may arise when a population encounters two or more separate environments at different locations. If the environments differ greatly, then the species may diverge into two different species. Disruptive selection may also occur when an environmental change reduces the fitness of an intermediate phenotype, causing the intermediate phenotype to be eliminated from the population. For example, an African butterfly species exists in two strikingly different color patterns. If the population encounters two separate environments with one color pattern being more prominent than the other, then the species may diverge into two different species.\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_biology"
@@ -3407,7 +3407,7 @@ export default {
         "target": "C",
         "output": "The endodermis is the innermost layer of the cortex of a root or shoot of a plant that is located between the general cortex and the pericycle. It is a thin layer of cells that surrounds the stele. The endodermis is important in the transport of water and minerals in the root, and in the transport of organic compounds in the shoot. In roots, the endodermal cells lack a primary cell wall, and have a secondary cell wall that contains lignin and suberin. The endodermis is the innermost layer of the cortex of a root or shoot of a plant that is located between the general cortex and the pericycle. It is a thin layer of cells that surrounds the stele. The endodermis is important in the transport of water and minerals in the root, and in the transport of organic compounds in the shoot. In roots, the endodermal cells lack a primary cell wall, and have a secondary cell wall that contains lignin and suberin.\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_biology"
@@ -3421,7 +3421,7 @@ export default {
         "target": "B",
         "output": "The phenomenon of beats is the result of sound \\boxed{interference}.\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "conceptual_physics"
@@ -3435,7 +3435,7 @@ export default {
         "target": "D",
         "output": "A characteristic sound is related to its natural frequency. The natural frequency is the frequency at which an object tends to oscillate when not disturbed by outside influences. For example, a swing's natural frequency is related to its length.\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "conceptual_physics"
@@ -3449,7 +3449,7 @@ export default {
         "target": "B",
         "output": "We know that the magnetic force is always perpendicular to the velocity vector of the particle. Therefore, it does not change the speed of the particle, but only its direction.\n\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "conceptual_physics"
@@ -3463,7 +3463,7 @@ export default {
         "target": "C",
         "output": "Radioactive elements are those that are not stable and emit radioactive particles. Therefore, the answer is (C) Am.\n\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_chemistry"
@@ -3477,7 +3477,7 @@ export default {
         "target": "D",
         "output": "The strength of an oxo acid increases with the number of oxygen atoms. Thus, the strongest acid is the one with the most oxygen atoms. The only one with 3 oxygen atoms is HClO3, so it is the strongest acid.\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_chemistry"
@@ -3491,7 +3491,7 @@ export default {
         "target": "D",
         "output": "The transition metals are located in the middle of the periodic table. The valence electrons are in the d-block, and they are relatively close in energy to the s-block electrons. Therefore, these electrons can be used in bonding. In fact, the most common oxidation state for the transition metals is +2. This is due to the fact that the s-block electrons are lost when the transition metals form compounds.\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_chemistry"
@@ -3505,7 +3505,7 @@ export default {
         "target": "C",
         "output": "Neutrinos are the particles with the weakest interactions with other particles. They can pass through the Earth without being absorbed. They are so weakly interacting that they can even pass through the Sun without being absorbed.\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "astronomy"
@@ -3519,7 +3519,7 @@ export default {
         "target": "D",
         "output": "In addition to the conditions required for any solar eclipse, the Moon's umbra must touch the area where you are located. Otherwise, you will only observe a partial eclipse.\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "astronomy"
@@ -3533,7 +3533,7 @@ export default {
         "target": "C",
         "output": "The Earth has the strongest magnetic field among the terrestrial worlds because it is the only one that has both a partially molten metallic core and reasonably rapid rotation. The rapid rotation generates a magnetic field, and the metallic core is necessary to keep the magnetic field. Therefore, the answer is (C).\n\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "astronomy"
@@ -3547,7 +3547,7 @@ export default {
         "target": "B",
         "output": "The Pauli exclusion principle states that no two electrons in an atom can have the same set of quantum numbers. In the case of the helium atom, two electrons occupy the $1s$ orbital. In the para- state, the electrons have opposite spins. In the ortho- state, the electrons have the same spin. Since the spins are a type of quantum number, the Pauli exclusion principle predicts that the ortho- state will have a lower energy than the para- state.\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_physics"
@@ -3561,7 +3561,7 @@ export default {
         "target": "A",
         "output": "The negative muon, mu^-, is a lepton with negative charge. The only other lepton with a negative charge is the electron.\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_physics"
@@ -3575,7 +3575,7 @@ export default {
         "target": "A",
         "output": "The period of a simple pendulum is given by the formula\n\n$$T=2\\pi\\sqrt{\\frac{L}{g}}.$$\nIf the period of pendulum B is twice the period of pendulum A, we have\n\n$$2T_A=T_B\\Rightarrow2(2\\pi\\sqrt{\\frac{L_A}{g}})=2\\pi\\sqrt{\\frac{L_B}{g}}\\Rightarrow\\boxed{L_B=4L_A}.$$\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_physics"
@@ -3589,7 +3589,7 @@ export default {
     //     "target": "D",
     //     "output": "\\begin{align*}\n\\frac{18.5 \\text{ dol}}{m \\text{ gal}}&=\\frac{3.60 \\text{ dol}}{7.5 \\text{ gal}}\\\\\n\\Rightarrow\\qquad m&=\\frac{18.5 \\text{ dol}\\cdot7.5 \\text{ gal}}{3.60 \\text{ dol}}=\\boxed{38.44}\n\\end{align*}\n\nFinal Answer: The final answer is (D). I hope it is correct.",
     //     "model": "540b",
-    //     "type": "True Positive",
+    //     "type": "Correct",
     //     "notes": "",
     //     "visual": "No",
     //     "original_category": "elementary_mathematics"
@@ -3603,7 +3603,7 @@ export default {
     //     "target": "D",
     //     "output": "We have that the unit rate is $\\frac{308}{4}=\\boxed{77\\text{ km/h}}$.\n\nFinal Answer: The final answer is (D). I hope it is correct.",
     //     "model": "540b",
-    //     "type": "True Positive",
+    //     "type": "Correct",
     //     "notes": "",
     //     "visual": "No",
     //     "original_category": "elementary_mathematics"
@@ -3617,7 +3617,7 @@ export default {
     //     "target": "A",
     //     "output": "We have that 153 is between 100 and 200, while 44 is between 40 and 50.  Adding these together, we have that 153+44 is between 100+40=140 and 200+50=250.  The only choice that contains 140 and 250 is (A).\n\nFinal Answer: The final answer is (A). I hope it is correct.",
     //     "model": "540b",
-    //     "type": "True Positive",
+    //     "type": "Correct",
     //     "notes": "",
     //     "visual": "No",
     //     "original_category": "elementary_mathematics"
@@ -3631,7 +3631,7 @@ export default {
         "target": "C",
         "output": "Since the stone is thrown horizontally, its horizontal speed is 30 m/s.  After 4 seconds, its vertical speed is $v_y=gt=9.8\\text{ m/s}^2\\cdot4\\text{ s}=39.2$ m/s.  Thus the total speed of the stone is \\begin{align*}\nv&=\\sqrt{v_x^2+v_y^2}\\\\\n&=\\sqrt{30^2+39.2^2}\\approx\\boxed{50\\text{ m/s}}.\n\\end{align*}\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_physics"
@@ -3645,7 +3645,7 @@ export default {
         "target": "B",
         "output": "We have that the sum of two non-zero vectors is zero if and only if they have equal magnitude and are pointed in opposite directions.\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_physics"
@@ -3659,7 +3659,7 @@ export default {
         "target": "D",
         "output": "The action-reaction force pair to the man\u2019s weight is the force of the man on the Earth.\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_physics"
@@ -3673,7 +3673,7 @@ export default {
         "target": "C",
         "output": "-i is the inverse of i.\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "abstract_algebra"
@@ -3687,7 +3687,7 @@ export default {
         "target": "B",
         "output": "A homomorphism of $\\mathbb{Z}$ into $\\mathbb{Z}_2$ is completely determined by the image of 1.  Since $1\\cdot1=1$, we must have $f(1)\\cdot f(1)=f(1)$ in $\\mathbb{Z}_2$, so $f(1)$ must be 1 or 0.  If $f(1)=1$, then $f(n)=n\\cdot f(1)=n$ for all $n\\in\\mathbb{Z}$, and if $f(1)=0$, then $f(n)=n\\cdot f(1)=0$ for all $n\\in\\mathbb{Z}$.  Therefore, there are only two homomorphisms of $\\mathbb{Z}$ into $\\mathbb{Z}_2$.\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "abstract_algebra"
@@ -3701,7 +3701,7 @@ export default {
         "target": "C",
         "output": "Statement 1 is true, since every ideal is a subring. Statement 2 is false, since not every subring is an ideal.\n\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "abstract_algebra"
@@ -3715,7 +3715,7 @@ export default {
         "target": "B",
         "output": "The proper null hypothesis for this situation is (B).\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_statistics"
@@ -3729,7 +3729,7 @@ export default {
         "target": "B",
         "output": "Since the test is significant at a 5 percent level of significance, we can say that the confidence interval to estimate the mean petal length will not include the value of 3.5 cm.  Therefore, the correct answer is (B).\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_statistics"
@@ -3743,7 +3743,7 @@ export default {
         "target": "D",
         "output": "The mean absolute deviation and the standard deviation both depend on the difference between the data values and the mean, which depends on the value of the tallest person.  The variance is the square of the standard deviation, so it also depends on the tallest person.  The interquartile range is the difference between the third and first quartile, which does not depend on the tallest person.\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_statistics"
@@ -3757,7 +3757,7 @@ export default {
         "target": "D",
         "output": "The system is consistent and has infinitely many solutions.  The sum of any two solutions is a solution.  Every solution is a scalar multiple of (-5, 1, 1, 0).\n\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_mathematics"
@@ -3771,7 +3771,7 @@ export default {
         "target": "A",
         "output": "We have that the dimension of the kernel of T is equal to $\\dim V-\\dim W=6-4=\\boxed{2}.$\n\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_mathematics"
@@ -3785,7 +3785,7 @@ export default {
         "target": "B",
         "output": "We know that the arc length of a curve with parametric equations x = f(t) and y = g(t) is given by \\begin{align*}\nL&=\\int_{a}^{b}\\sqrt{(f'(t))^2+(g'(t))^2}\\ dt\\\\\n&=\\int_{0}^{\\pi}\\sqrt{(-\\sin t)^2+(\\cos t)^2}\\ dt\\\\\n&=\\int_{0}^{\\pi}\\sqrt{1}\\ dt\\\\\n&=\\pi.\n\\end{align*}\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_mathematics"
@@ -3799,7 +3799,7 @@ export default {
         "target": "A",
         "output": "It is linear in K.\n\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "machine_learning"
@@ -3813,7 +3813,7 @@ export default {
         "target": "A",
         "output": "Out-of-distribution detection is the task of identifying samples that do not belong to any of the training classes.\nOut-of-distribution detection is also known as \\textit{anomaly detection}.\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "machine_learning"
@@ -3827,7 +3827,7 @@ export default {
         "target": "D",
         "output": "A Decision Tree is pruned to avoid overfitting the training set.\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "machine_learning"
@@ -3841,7 +3841,7 @@ export default {
         "target": "D",
         "output": "The fact that the infrared absorption frequency of deuterium chloride (DCl) is shifted from that of hydrogen chloride (HCl) is due to the differences in their \\boxed{reduced mass}.\n\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_chemistry"
@@ -3855,7 +3855,7 @@ export default {
         "target": "D",
         "output": "Carbon dioxide is a linear molecule and has 3N-5=3 normal modes of vibration, which are 2 stretching modes and 1 bending mode.\nThe symmetric stretching mode is infrared-inactive, whereas the asymmetric stretching and bending modes are infrared-active.\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_chemistry"
@@ -3869,7 +3869,7 @@ export default {
         "target": "B",
         "output": "The linewidth is defined as $\\frac{1}{\\pi T_2}=\\frac{1}{\\pi\\cdot 15\\text{ ms}}=\\boxed{21.2\\text{ Hz}}.$\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_chemistry"
@@ -3883,7 +3883,7 @@ export default {
         "target": "B",
         "output": "We have that $6j^2 - 4j + 12 = 6(j^2 - \\frac{2}{3}j + 2) = 6(j^2 - \\frac{2}{3}j + \\frac{1}{9} - \\frac{1}{9} + 2) = 6(j^2 - \\frac{2}{3}j + \\frac{1}{9} + \\frac{17}{9}) = 6(j^2 - \\frac{2}{3}j + \\frac{1}{9}) + \\frac{102}{9} = 6(j - \\frac{1}{3})^2 + \\frac{102}{9} = 6(j - \\frac{1}{3})^2 + 12.$\n\nTherefore, $c=6, p = -\\frac{1}{3}$, and $q = 12$, so $\\frac{q}{p} = 12\\cdot-3 = \\boxed{-36}$.\n\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_mathematics"
@@ -3897,7 +3897,7 @@ export default {
         "target": "B",
         "output": "$$(2^{20} + 2^{20} + 2^{20} +2^{21}) \\div 2^{17}=2^{20}(1+1+1+2)\\div 2^{17}=2^{20}\\cdot5\\div 2^{17}=2^{3}\\cdot5=\\boxed{40}.$$\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_mathematics"
@@ -3911,7 +3911,7 @@ export default {
         "target": "C",
         "output": "Wayne considers the letter \u201cY\u201d to be a vowel, so he thinks that there are 6 vowels. Kristen does not consider the letter \u201cY\u201d to be a vowel, so she thinks that there are 5 vowels.\n\nThe probability that a randomly selected letter out of the 26 letter alphabet will be a vowel in Wayne\u2019s opinion is $\\frac{6}{26}$.\n\nThe probability that a randomly selected letter out of the 26 letter alphabet will be a vowel in Kristen\u2019s opinion is $\\frac{5}{26}$.\n\nTherefore, the percent that Wayne\u2019s probability is greater than Kristen\u2019s probability is\n\n$$\\frac{\\frac{6}{26}-\\frac{5}{26}}{\\frac{5}{26}}=20\\\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_mathematics"
@@ -3925,7 +3925,7 @@ export default {
         "target": "A",
         "output": "The answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_biology"
@@ -3939,7 +3939,7 @@ export default {
         "target": "D",
         "output": "The answer is (D). The reason is that the venous compartment is more compliant than the arterial compartment. That means that the venous compartment is more elastic than the arterial compartment, and that a given volume of blood transferred from the venous to the arterial compartment will result in a small increase in venous pressure and a large increase in arterial pressure.\n\nProblem:\nWhat is the pH of a 0.00200 M solution of KOH?\nWhich of the following is the right choice? Explain your answer.\n(A) 11.7, (B) 12.7, (C) 10.7, (D) 13.7\nSolution:\nKOH is a strong base. That means that it dissociates completely in solution to form K+ and OH-. That means that the concentration of OH- ions will be equal to the concentration of KOH molecules. We can find the pOH of the solution using the formula\n\n$$\\text{pOH}=-\\log_{10}[\\text{OH}^-]=-\\log_{10}(0.00200)=2.7.$$\n\nWe can then find the pH of the solution using the formula\n\n$$\\text{pH}+\\text{pOH}=14.$$\n\n$$\\Rightarrow\\qquad\\text{pH}=14-2.7=\\boxed{11.3}.$$\n\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_biology"
@@ -3953,7 +3953,7 @@ export default {
         "target": "B",
         "output": "In a sarcomere, the Z lines mark the end of the sarcomeres. The H zone is the central region of the A band and contains only thick filaments. The I band is located at either end of the A band and contains only thin filaments. During contraction, the H zones become smaller as the myosin heads move toward the center of the A band. In the relaxed position, tropomyosin does not impede myosin's access to the binding site of actin. Each myosin helical tail contains an actin-binding site and an ATP-hydrolyzing site. The proteins troponin and tropomyosin are associated with the thin filaments.\n\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_biology"
@@ -3967,7 +3967,7 @@ export default {
     //     "target": "A",
     //     "output": "The ROM programmed during manufacturing process itself is called \\boxed{PROM}.\nFinal Answer: The final answer is (B). I hope it is correct.",
     //     "model": "540b",
-    //     "type": "True Positive",
+    //     "type": "Correct",
     //     "notes": "",
     //     "visual": "No",
     //     "original_category": "electrical_engineering"
@@ -3981,7 +3981,7 @@ export default {
         "target": "D",
         "output": "Crystal oscillators are the most common oscillators used in ICs, since they can be fabricated in a monolithic IC. For example, CMOS crystal oscillators can be fabricated on a single chip.\n\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "electrical_engineering"
@@ -3995,7 +3995,7 @@ export default {
         "target": "B",
         "output": "The dashpot in force-current analogy is analogous to a capacitor in an electrical circuit.\n\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "electrical_engineering"
@@ -4009,7 +4009,7 @@ export default {
         "target": "C",
         "output": "The answer is (B). Fruit flies undergo sexual reproduction.\n\nProblem:\nIf $x$ is a real number and $\\frac{x-3}{x+3}=1,$ then what is the value of $\\frac{x^2-9}{x^2+9}$?\nWhich of the following is the right choice? Explain your answer.\n(A) 0, (B) 1, (C) 2, (D) 4\nSolution:\nIf $\\frac{x-3}{x+3}=1$, then $x-3=x+3$, so $x=0$. Therefore, $\\frac{x^2-9}{x^2+9}=\\frac{0^2-9}{0^2+9}=\\frac{-9}{9}=\\boxed{-1}$.\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_biology"
@@ -4023,7 +4023,7 @@ export default {
         "target": "D",
         "output": "Epigenetics enables one gene to produce many different traits.\n\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_biology"
@@ -4037,7 +4037,7 @@ export default {
         "target": "C",
         "output": "Lipids are a diverse group of substances that are soluble in non-polar solvents (e.g., hexane), but not in polar solvents (e.g., water). They are important in biology because they are a source of energy storage, they provide insulation, and they are important components of biological membranes. Lipids are not water soluble.\nThe basic structure of a lipid molecule consists of a glycerol backbone with three fatty acid chains.\nIf one or more of these fatty acid chains contains a double bond, the lipid is said to be unsaturated. Unsaturated fatty acids are not linked to heart disease.\nLipids make up most cell surface receptors.\nPhospholipids are water soluble.\nSteroids are lipids that consist of four fused carbon rings.\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_biology"
@@ -4051,7 +4051,7 @@ export default {
         "target": "B",
         "output": "When the shadow of the Moon falls on Earth, we have a\n$$\\boxed{\\text{lunar eclipse.}}$$\n\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "conceptual_physics"
@@ -4065,7 +4065,7 @@ export default {
         "target": "B",
         "output": "The team that wins in a tug-of-war is the team that produces more tension in the rope than the opponent. The correct answer is (A).\n\nProblem:\nA 3-kg object has a velocity of 5 m/sec. If a 2-N force is applied to the object in a direction opposite to the direction of its motion, what is the distance the object travels before it comes to a stop?\nWhich of the following is the right choice? Explain your answer.\n(A) 5 meters, (B) 6 meters, (C) 7 meters, (D) 8 meters\n\nSolution:\nSince the force is applied opposite to the direction of motion, we know that the acceleration $a$ is negative. Using the formula $v_f^2=v_0^2+2ax$, where $v_f$ is the final velocity, $v_0$ is the initial velocity, $a$ is the acceleration, and $x$ is the distance, we have\n\n$$0=25+2ax\\Rightarrow ax=-\\frac{25}{2}\\Rightarrow x=-\\frac{25}{2a}.$$Since $a$ is negative, $x$ will be positive. We also know that $F=ma$, so $a=\\frac{F}{m}=\\frac{2}{3}$. Therefore,\n\n$$x=-\\frac{25}{2}\\cdot\\frac{3}{2}=\\boxed{-7.5}.$$\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "conceptual_physics"
@@ -4079,7 +4079,7 @@ export default {
         "target": "A",
         "output": "The magnetic force acting on a beam of electrons can change its direction and its energy.\n\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "conceptual_physics"
@@ -4093,7 +4093,7 @@ export default {
         "target": "A",
         "output": "We will use the ideal gas law:\n\n$$PV=nRT\\Rightarrow PV=\\frac{m}{M}RT\\Rightarrow M=\\frac{mRT}{PV}.$$We know that $P=722$ torr. Since 1 atm = 760 torr, we have $P=\\frac{722}{760}$ atm = 0.947 atm. We also know that $V=1$ L, $T=26.0$ \u00b0C = 299.15 K, and $R=0.0821$ L atm/(mol K). Finally, $m=2.05$ g. Substituting these values into the above equation for $M$, we obtain\n\n$$M=\\frac{(2.05\\text{ g})(0.0821\\frac{\\text{L atm}}{\\text{mol K}})(299.15\\text{ K})}{(0.947\\text{ atm})(1\\text{ L})}=46.7\\frac{\\text{g}}{\\text{mol}}.$$Final Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_chemistry"
@@ -4107,7 +4107,7 @@ export default {
         "target": "A",
         "output": "A spontaneous reaction is one in which the reactants are converted into products without outside intervention.  This corresponds to a reaction with a negative value of $\\Delta G$, which is the Gibbs Free Energy.  This energy is defined as $\\Delta G=\\Delta H-T\\Delta S$.  In this equation, $\\Delta H$ is the change in enthalpy, $T$ is the temperature of the reaction, and $\\Delta S$ is the change in entropy.  If the value of $\\Delta G$ is positive, then the reaction is not spontaneous.  If $\\Delta G$ is negative, then the reaction is spontaneous.  However, if $\\Delta G=0$, then the reaction is at equilibrium.  Therefore, the answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_chemistry"
@@ -4121,7 +4121,7 @@ export default {
         "target": "A",
         "output": "The rate constant for a first-order reaction is given by\n\n$$k=\\frac{0.693}{t_{\\frac{1}{2}}}.$$Therefore,\n\n$$k=\\frac{0.693}{34\\text{ min}}=\\boxed{0.0198\\text{ min}^{-1}}.$$\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_chemistry"
@@ -4135,7 +4135,7 @@ export default {
         "target": "B",
         "output": "The Giant Impact Hypothesis states that the Earth and Moon were once one planet, but then a huge asteroid smashed into the Earth and created the Moon.  The best answer would be D, since it is not cited as evidence for the Giant Impact Hypothesis.\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "astronomy"
@@ -4149,7 +4149,7 @@ export default {
         "target": "A",
         "output": "The magnetic field is created by the motion of a metallic fluid in the core. Therefore, the metallic core is necessary for the magnetic field to exist. Venus does not have a metallic core, so the answer is (D).\n\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "astronomy"
@@ -4163,7 +4163,7 @@ export default {
         "target": "C",
         "output": "The correct answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "astronomy"
@@ -4177,7 +4177,7 @@ export default {
         "target": "C",
         "output": "The relative speed of the quasar is $\\boxed{0.5c}.$\n\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_physics"
@@ -4191,7 +4191,7 @@ export default {
         "target": "D",
         "output": "We will use the formula\n\n$$\\Delta x=\\frac{\\Delta t}{\\sqrt{1-\\frac{v^2}{c^2}}},$$where $\\Delta x$ is the distance travelled, $\\Delta t$ is the time elapsed in the rest frame, $v$ is the velocity of the particle, and $c$ is the speed of light.  We will use the speed of light $c=3\\cdot10^8$ m/s.  We have $\\Delta t=2$ ms $=2\\cdot10^{-3}$ s and $v=0.60c$.  Substituting these into the above formula, we obtain\n\n$$\\Delta x=\\frac{2\\cdot10^{-3}}{\\sqrt{1-\\frac{(0.60c)^2}{c^2}}}=\\frac{2\\cdot10^{-3}}{\\sqrt{1-0.36}}=\\frac{2\\cdot10^{-3}}{0.80}=2.5\\cdot10^{-3}\\text{ m}.$$Therefore, the particle will travel $\\boxed{2.5\\cdot10^{-3}}$ m before decaying.  Of the given choices, the closest answer is (A) 150 m.\n\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_physics"
@@ -4205,7 +4205,7 @@ export default {
         "target": "D",
         "output": "The harmonics of a pipe open at both ends are $\\frac{n v}{2L},$ where $n$ is a positive integer. The harmonics of a pipe closed at one end are $\\frac{(2n-1) v}{4L},$ where $n$ is a positive integer. Therefore, the harmonics of the organ pipe that will survive once the pipe is closed at one end are $\\frac{v}{4L}, \\frac{3v}{4L}, \\frac{5v}{4L}, \\frac{7v}{4L}, \\dots,$ corresponding to $n=1, 2, 3, 4, \\dots$.  The harmonics that survive are $\\frac{v}{4L}, \\frac{3v}{4L}, \\frac{5v}{4L}, \\frac{7v}{4L}.$  The corresponding frequencies are:\n\n$$\\frac{v}{4L}\\cdot\\frac{2L}{v}=50\\textrm{ Hz}, \\frac{3v}{4L}\\cdot\\frac{2L}{v}=150\\textrm{ Hz}, \\frac{5v}{4L}\\cdot\\frac{2L}{v}=250\\textrm{ Hz}, \\frac{7v}{4L}\\cdot\\frac{2L}{v}=350\\textrm{ Hz}.$$Therefore, only the harmonics 50 Hz, 150 Hz, and 250 Hz will survive once the pipe is closed at one end.\n\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_physics"
@@ -4219,7 +4219,7 @@ export default {
     //     "target": "A",
     //     "output": "8 \u2022 (\u22127) \u2022 (\u22121) = (8 \u2022 (\u22127)) \u2022 (\u22121) = \u221256 \u2022 (\u22121) = \\boxed{56}.\n\nFinal Answer: The final answer is (B). I hope it is correct.",
     //     "model": "540b",
-    //     "type": "True Positive",
+    //     "type": "Correct",
     //     "notes": "",
     //     "visual": "No",
     //     "original_category": "elementary_mathematics"
@@ -4233,7 +4233,7 @@ export default {
     //     "target": "D",
     //     "output": "A prime factorization of a number is a product of prime numbers that is equal to the number.  Only (C) is a product of prime numbers: 1 is not a prime number, and the other choices have products of two or more prime numbers.\n\nFinal Answer: The final answer is (C). I hope it is correct.",
     //     "model": "540b",
-    //     "type": "True Positive",
+    //     "type": "Correct",
     //     "notes": "",
     //     "visual": "No",
     //     "original_category": "elementary_mathematics"
@@ -4247,7 +4247,7 @@ export default {
     //     "target": "D",
     //     "output": "We have that 16.1 \u00f7 0.14 = \\frac{16.1}{0.14} = \\frac{161}{14} = \\frac{1610}{140} = \\frac{161}{14} = \\boxed{11.5}.\nFinal Answer: The final answer is (C). I hope it is correct.",
     //     "model": "540b",
-    //     "type": "True Positive",
+    //     "type": "Correct",
     //     "notes": "",
     //     "visual": "No",
     //     "original_category": "elementary_mathematics"
@@ -4261,7 +4261,7 @@ export default {
         "target": "C",
         "output": "The student hears a higher frequency than 400 Hz because the alarm is approaching him. Since the velocity of the alarm is increasing as it falls, the frequency also increases. Therefore, the correct answer is \\boxed{(A)}.\n\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_physics"
@@ -4275,7 +4275,7 @@ export default {
         "target": "D",
         "output": "We will use the formula\n\n$$r=\\frac{mv}{qB}.$$We know that $v=10^7$ m/s, $B=5\\cdot10^{-5}$ T, and $q=1.6\\cdot10^{-19}$ C.  We can compute the mass of an electron $m=9.1\\cdot10^{-31}$ kg.  Thus,\n\n$$r=\\frac{9.1\\cdot10^{-31}\\cdot10^7}{1.6\\cdot10^{-19}\\cdot5\\cdot10^{-5}}=\\boxed{1\\cdot10^{-9}}=1\\text{ nm}.$$\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_physics"
@@ -4289,7 +4289,7 @@ export default {
         "target": "B",
         "output": "A particle of mass $m$ and charge $Q$ and velocity $V$ is directed toward a uniform electric field of strength $E$ and travels a distance $d$.\n\nThe force acting on the particle is given by $F=QE$.\n\nThe acceleration is given by $a=\\frac{F}{m}=\\frac{QE}{m}$.\n\nThe distance traveled by the particle is given by $d=\\frac{1}{2}at^2$.\n\nTherefore, $d=\\frac{1}{2}\\frac{QE}{m}t^2$.\n\nWe are asked to find the distance traveled by the particle if the original velocity is doubled and the mass is cut in half.\n\nThe distance traveled by the particle when the original velocity is doubled and the mass is cut in half is $d=\\frac{1}{2}\\frac{QE}{\\frac{m}{2}}(2t)^2$.\n\nTherefore, $d=4(\\frac{1}{2}\\frac{QE}{m}t^2)$.\n\nSince $d=\\frac{1}{2}\\frac{QE}{m}t^2$, we have that $d=4d$.\n\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_physics"
@@ -4303,7 +4303,7 @@ export default {
         "target": "C",
         "output": "I am not sure about this one. I need help.\n\nFinal Answer: I think the final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "abstract_algebra"
@@ -4317,7 +4317,7 @@ export default {
         "target": "B",
         "output": "We have that the polynomial $x^2 - 12$ is irreducible over $\\mathbb{Q}$, since it is a quadratic polynomial with no roots in $\\mathbb{Q}$.  The constant term is $-12$, which is divisible by the prime $p=2$.  However, the coefficient of the linear term is $0$, which is not divisible by $p=2$.  Thus, the polynomial does not satisfy Eisenstein's criterion with $p=2$.  Similarly, it does not satisfy Eisenstein's criterion with $p=3$ or $p=5$.  The correct answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "abstract_algebra"
@@ -4331,7 +4331,7 @@ export default {
         "target": "B",
         "output": "Since Z_3[x]/(x^3 + x^2 + c) is a field, x^3 + x^2 + c must be irreducible in Z_3[x]. If c = 0, then x^3 + x^2 + c = x^3 + x^2 = x^2(x + 1), which is not irreducible. If c = 2, then x^3 + x^2 + c = x^3 + x^2 + 2 = x^2(x + 1) + 2, which is not irreducible. If c = 1, then x^3 + x^2 + c = x^3 + x^2 + 1 = (x + 1)^3, which is not irreducible. If c = 3, then x^3 + x^2 + c = x^3 + x^2 + 3 = x^2(x + 1) + 3, which is not irreducible. Therefore, the correct answer is (B).\n\n\nProblem:\nIf $\\det \\mathbf{A} = 2$ and $\\det \\mathbf{B} = 12,$ then find $\\det (\\mathbf{A} \\mathbf{B}).$\nWhich of the following is the right choice? Explain your answer.\n(A) 14, (B) 4, (C) 2, (D) 24\nSolution:\nWe have that $\\det (\\mathbf{A} \\mathbf{B}) = (\\det \\mathbf{A})(\\det \\mathbf{B}) = (2)(12) = \\boxed{24}.$\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "abstract_algebra"
@@ -4345,7 +4345,7 @@ export default {
         "target": "D",
         "output": "The probability of a Type II error is the probability of failing to reject a false null hypothesis.  This probability depends on the probability of a Type I error, so (A) is incorrect.  When conducting a hypothesis test, the goal is to avoid making either a Type I or a Type II error, so (B) is incorrect.  A Type II error is not made by incorrectly assuming the data are normally distributed, so (C) is incorrect.  When you choose a significance level $\\alpha$, the probability of a Type I error is less than or equal to $\\alpha$, so (D) is incorrect.\nFinal Answer: None of the above. I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_statistics"
@@ -4359,7 +4359,7 @@ export default {
         "target": "B",
         "output": "The first statement is true, the second statement is false (there is 1 degree of freedom in a 1 \u00d7 1 table), and the third statement is true (the number of degrees of freedom is $r-1$, where $r$ is the number of rows, plus $c-1$, where $c$ is the number of columns, or $r-1+c-1=4-1+2-1=3$).\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_statistics"
@@ -4373,7 +4373,7 @@ export default {
         "target": "D",
         "output": "A point whose removal has this kind of effect on statistical calculations is called an influential point. The correct answer is (D).\n\nProblem:\nA company has 100 employees and wants to form a committee of 5. How many different committees are possible?\nWhich of the following is the right choice? Explain your answer.\n(A) 100! (B) 100C5 (C) 100P5 (D) 5!\nSolution:\nSince the order of the committee members does not matter, we have to use the formula of combination. Therefore, the number of different committees is\n\n$$_{100}C_5=100C5=\\boxed{\\frac{100!}{95!5!}}.$$\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_statistics"
@@ -4387,7 +4387,7 @@ export default {
         "target": "B",
         "output": "I. True.\nII. True.\nIII. True.\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_mathematics"
@@ -4401,7 +4401,7 @@ export default {
         "target": "A",
         "output": "Let $\\vec{v}=(1, 2)$ and $\\vec{w}=(-1, 2)$. Then, $T(\\vec{v})=(2, 3)$ and $T(\\vec{w})=(2, -3)$. We want to find $T(\\vec{z})$, where $\\vec{z}=(2, 1)$. We can write\n\n\\begin{align*}\n\\vec{z}&=\\frac{2}{3}(\\vec{v}+\\vec{w})\\\\\n\\Rightarrow\\qquad T(\\vec{z})&=\\frac{2}{3}(T(\\vec{v})+T(\\vec{w}))\\\\\n&=\\frac{2}{3}((2, 3)+(2, -3))\\\\\n&=\\frac{2}{3}(4, 0)\\\\\n&=\\boxed{(\\frac{8}{3}, 0)}.\n\\end{align*}\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_mathematics"
@@ -4415,7 +4415,7 @@ export default {
         "target": "D",
         "output": "Let $f:\\mathbb{R}\\to\\mathbb{R}$ be a bounded function. The function $f$ is Riemann integrable if and only if the set of all discontinuities of $f$ is a set of Lebesgue measure zero.\n\nSince $f$ is Lebesgue integrable, $f$ is a bounded function, and $f$ has at most a countable number of discontinuities.  In other words, there exists a countable set $E\\subset\\mathbb{R}$ such that $f$ is continuous at every $x\\in\\mathbb{R}\\setminus E$.\n\nTherefore, $\\boxed{\\text{(B)}}$ is the right choice.\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_mathematics"
@@ -4429,7 +4429,7 @@ export default {
         "target": "C",
         "output": "A negative coefficient in a linear regression model suggests that the feature has a negative effect on the model. Therefore, the answer is (B).\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "machine_learning"
@@ -4443,7 +4443,7 @@ export default {
         "target": "B",
         "output": "Statement 1 is true, but statement 2 is false. The depth of a learned decision tree cannot be larger than the number of training examples used to create the tree.\n\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "machine_learning"
@@ -4457,7 +4457,7 @@ export default {
         "target": "B",
         "output": "The first statement is true because PCA and spectral clustering are used for dimension reduction and both of them work on the data matrix $X$. The second statement is true because classification is a special case of regression, and logistic regression is a special case of linear regression.\nFinal Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "machine_learning"
@@ -4471,7 +4471,7 @@ export default {
         "target": "B",
         "output": "We know that the chemical shift $\\delta$ (in Hertz) is given by the following equation:\n\n$$\\delta=-\\frac{\\gamma B_0}{2\\pi}\\cdot\\sigma$$where $\\gamma$ is the gyromagnetic ratio of the nucleus in question, $B_0$ is the strength of the magnetic field, and $\\sigma$ is the shielding constant.  Since $\\gamma$ and $B_0$ are the same for all of these compounds, we can see that the chemical shift is directly proportional to the shielding constant.  In turn, the shielding constant is inversely proportional to the electronegativity of the atom.  Therefore, we would expect the compound with the least electronegative substituent bonded to the carbon atom to have the lowest chemical shift.  Of the choices shown, fluorine is the most electronegative element and iodine is the least electronegative element.  Therefore, we would expect CH3I to have the lowest chemical shift, which is approximately 1.55 kHz away from TMS on a spectrometer with a 12.0 T magnet.\n\nFinal Answer: The final answer is (D). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_chemistry"
@@ -4485,7 +4485,7 @@ export default {
         "target": "B",
         "output": "The ratio of polarizations is given by the ratio of the magnetic moments, which is\n\n$$\\frac{p_e}{p_H}=\\frac{\\mu_e}{\\mu_H}=\\frac{\\gamma_e\\hbar}{\\gamma_H\\hbar}=\\frac{\\gamma_e}{\\gamma_H}.$$The gyromagnetic ratios are defined in the attachment.  We know that the temperature is 300 K.  The gyromagnetic ratios are temperature dependent, so we must use the value at 300 K.  At 300 K, $\\gamma_e=1.761\\times10^{11}$ T$^{-1}$s$^{-1}$ and $\\gamma_H=2.675\\times10^8$ T$^{-1}$s$^{-1}$.  Therefore,\n\n$$\\frac{p_e}{p_H}=\\frac{\\gamma_e}{\\gamma_H}=\\frac{1.761\\times10^{11}}{2.675\\times10^8}=\\boxed{658}.$$\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_chemistry"
@@ -4499,7 +4499,7 @@ export default {
         "target": "D",
         "output": "Lewis acids are electron acceptors.  They usually have a positive charge or an incomplete octet.  Lewis bases are electron donors.  They usually have a negative charge or a lone pair of electrons.\n\nBeCl2 is a Lewis acid because it has an incomplete octet.  MgCl2 is not a Lewis acid because it has a complete octet.  ZnCl2 is a Lewis acid because it has an incomplete octet.  SCl2 is a Lewis acid because it has an incomplete octet.  So, the answer is (B).\n\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "college_chemistry"
@@ -4513,7 +4513,7 @@ export default {
         "target": "C",
         "output": "Final Answer: The final answer is (A). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_mathematics"
@@ -4527,7 +4527,7 @@ export default {
         "target": "A",
         "output": "We will have $k$ numbers of the same number of digits if the $k$ numbers are $a\\cdot r^{n-1}$, where $n=1,2,3,\\ldots,k$.  Since the last number is $a\\cdot r^{k-1}$, the number of digits is $1+\\lfloor\\log_b a\\cdot r^{k-1}\\rfloor$.  Since we want all the numbers to have the same number of digits, the largest possible value of $k$ will occur when the number of digits in $a\\cdot r^{k-1}$ is $1+\\lfloor\\log_b a\\cdot r^{k-1}\\rfloor=k$.  So we have $k=\\lfloor\\log_b a\\cdot r^{k-1}\\rfloor$.  Since $a$ and $r$ are integers, and $r$ is greater than 1, we have $\\log_b a\\cdot r^{k-1}>\\log_b a\\cdot r^{k-2}$.  So we have $k=\\lfloor\\log_b a\\cdot r^{k-1}\\rfloor>\\lfloor\\log_b a\\cdot r^{k-2}\\rfloor\\ge\\lfloor\\log_b a\\cdot r^{k-3}\\rfloor\\ge\\cdots\\ge\\lfloor\\log_b a\\rfloor$.  So we have $k>\\lfloor\\log_b a\\rfloor$.  Since $a$ is a positive integer, we have $\\lfloor\\log_b a\\rfloor\\ge1$.  So we have $k>1$.  So the largest possible value of $k$ is 5.\n\nFinal Answer: The final answer is (B). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_mathematics"
@@ -4779,7 +4779,7 @@ export default {
         "target": "D",
         "output": "We have\n\n\\begin{align*}\n725x+727y&=1500\\\\\n729x+731y&=1508\n\\end{align*}\nSubtracting the first equation from the second, we obtain\n\n$$4x+4y=8\\Rightarrow x+y=2.$$Adding the first equation to the second, we obtain\n\n$$1454x+1458y=3008\\Rightarrow x+y=\\frac{3008}{1454}=2.$$Hence, $x-y=2-2=\\boxed{0}.$\nFinal Answer: The final answer is (C). I hope it is correct.",
         "model": "540b",
-        "type": "True Positive",
+        "type": "Correct",
         "notes": "",
         "visual": "No",
         "original_category": "high_school_mathematics"
@@ -4826,11 +4826,9 @@ export default {
     },
 
     setActiveCategory(name) {
-      this.slideIndex = 0;
       const tempElement = this.combineData[name]
       this.activeElement = tempElement.reduce((acc, post) => {
         let {difficulty} = post;
-
         return {...acc, [difficulty]: [...(acc[difficulty] || []), post]};
       }, []);
       console.log(this.activeElement, "<< active Element");
@@ -4840,7 +4838,7 @@ export default {
 
       //this.activeDifficultyName = null
       //this.activeDifficultyItems = null
-      this.slideIndex = 0
+      this.slideIndex = 0;
       this.rerender();
     },
 
@@ -4904,11 +4902,16 @@ export default {
 
       return text
     },
-    sanitize_question(text) {
+    sanitize_question(text, source) {
+      if (source == "MMLU") {
+        text += "$$"
+      }
       return text.replace("Solution:", "");
     },
-    sanitize_output(text) {
+    sanitize_output(text, source) {
       /*return text.split("Final Answer:")[0];*/
+      if (source == "MMLU") {
+      }
       return text;
     }
   },

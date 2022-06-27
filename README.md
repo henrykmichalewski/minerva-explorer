@@ -1,4 +1,6 @@
-# Minerva sample explorer
+# Minerva
+
+This is not an officially supported Google product.
 
 ## Environment setup
 ```
@@ -15,6 +17,8 @@ pnpm install
 ```
 pnpm run serve
 ```
+
+Navigate to localhost:8080
 
 ### Build and minify for production
 ```
