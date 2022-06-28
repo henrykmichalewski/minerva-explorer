@@ -2251,6 +2251,7 @@ export default {
         "visual": "No",
         "original_category": "Prealgebra"
     },
+    /*
     {
         "source": "MATH",
         "category": "Number theory",
@@ -2265,7 +2266,8 @@ export default {
         "visual": "No",
         "original_category": "Number Theory"
     },
-    {
+    */
+    /*{
         "source": "MATH",
         "category": "Number theory",
         "difficulty": "Level 1",
@@ -2279,6 +2281,7 @@ export default {
         "visual": "No",
         "original_category": "Number Theory"
     },
+    */
     {
         "source": "MATH",
         "category": "Number theory",
