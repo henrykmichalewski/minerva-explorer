@@ -3,8 +3,17 @@
 This is not an officially supported Google product.
 
 ## Environment setup
+
+Install NodeJS from here:
+https://nodejs.org/en/download/
+
+Alternatively, you can run
 ```
 brew install node
+```
+
+Next, run
+```
 sudo npm install -g pnpm
 ```
 

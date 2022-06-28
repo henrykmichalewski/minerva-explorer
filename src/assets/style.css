@@ -98,7 +98,7 @@ ul{
 
 .content .right-side{
     margin: auto;
-    width: 80%;
+    width: 100%;
 }
 
 
@@ -231,7 +231,7 @@ ul{
     }
 
     .content .right-side{
-        margin-left: 0;
+        margin: auto;
     }
 
     .difficulty li{
@@ -250,5 +250,11 @@ ul{
 
     .content-info .label {
         text-align: left;
+    }
+
+
+    .content .right-side{
+        margin: auto;
+        width: 100%;
     }
 }

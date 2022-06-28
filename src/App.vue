@@ -4905,7 +4905,6 @@ export default {
     },
     sanitize_question(text, source) {
       if (source == "MMLU") {
-        text += "$$"
       }
       return text.replace("Solution:", "");
     },
