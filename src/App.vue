@@ -40,7 +40,7 @@
                 </div>
                 <div class="content-item question-info">
                   <span class="label">Reference answer</span>
-                  <div :key="slideIndex">{{item1.target}}</div>
+                  <div :key="slideIndex">{{sanitize_reference_answer(item1.target, item1.source)}}</div>
                 </div>
                 <div class="content-item question-info">
                   <span class="label">Problem source</span>
@@ -326,7 +326,7 @@ export default {
         "original_difficulty": "Level 1",
         "question": "What is the least prime number greater than 25 that will have a remainder of 2 when divided by 25?",
         "target": "We must find the least prime number, $p$, such that $p=25n+2$ for some positive integer $n$. It is clear that $n$ must be odd because otherwise $p$ is divisible by 2 and hence not prime. $n=1$ gives $p=27$, which is composite. $n=3$ gives $p=77$, which is composite. But $n=5$ gives $p=127$, which is prime. Thus, $\\boxed{127}$ is the least prime number greater than 25 that has a remainder of 2 when divided by 25.\nFinal Answer: The final answer is $127$I hope it is correct.",
-        "output": "The primes greater than 25 are 27, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499. The least prime number greater than 25 that will have a remainder of 2 when divided by 25 is \\boxed{27}.\nFinal Answer: The final answer is $27$. I hope it is correct.",
+        "output": "The primes greater than 25 are 27, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499. The least prime number greater than 25 that will have a remainder of 2 when divided by 25 is $\\boxed{27}$.\nFinal Answer: The final answer is $27$. I hope it is correct.",
         "model": "540b",
         "type": "Incorrect",
         "notes": " ",
@@ -4909,7 +4909,17 @@ export default {
       return text.replace("Solution:", "");
     },
     sanitize_output(text, source) {
-      /*return text.split("Final Answer:")[0];*/
+      text = text.split("I hope it is correct")[0];
+      if (source == "MATH") {
+      }
+      if (source == "MMLU") {
+      }
+      return text;
+    },
+    sanitize_reference_answer(text, source) {
+      text = text.split("I hope it is correct")[0];
+      if (source == "MATH") {
+      }
       if (source == "MMLU") {
       }
       return text;
