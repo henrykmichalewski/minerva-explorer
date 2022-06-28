@@ -1831,20 +1831,20 @@ export default {
         "visual": "No",
         "original_category": "Geometry"
     },
-    {
-        "source": "MATH",
-        "category": "Algebra",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 1",
-        "question": "Find the product $10 \\cdot \\frac{4}{3} \\cdot \\frac{6}{4} \\cdot \\frac{8}{5} \\cdot \\frac{10}{6} \\cdot \\frac{12}{7} \\cdot \\frac{14}{8} \\cdot \\frac{16}{9} \\cdot \\frac{18}{10}$.",
-        "target": "The product of the numerators is\n\\begin{align*}\n&(2 \\cdot 2) \\cdot (2 \\cdot 3) \\cdot (2 \\cdot 4) \\cdot (2 \\cdot 5) \\cdot (2 \\cdot 6) \\cdot (2 \\cdot 7) \\cdot (2 \\cdot 8) \\cdot (2 \\cdot 9) \\\\\n&= 2^8 \\cdot 2 \\cdot 3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9.\n\\end{align*}Then the given expression is equal to\n\\[10 \\cdot \\frac{2^8 \\cdot 2 \\cdot 3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9}{3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9 \\cdot 10} = 2^9 = \\boxed{512}.\\]\nFinal Answer: The final answer is $512$I hope it is correct.",
-        "output": "We have that\n\n\\begin{align*}\n10 \\cdot \\frac{4}{3} \\cdot \\frac{6}{4} \\cdot \\frac{8}{5} \\cdot \\frac{10}{6} \\cdot \\frac{12}{7} \\cdot \\frac{14}{8} \\cdot \\frac{16}{9} \\cdot \\frac{18}{10}&=\\frac{10 \\cdot 4 \\cdot 6 \\cdot 8 \\cdot 10 \\cdot 12 \\cdot 14 \\cdot 16 \\cdot 18}{3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9 \\cdot 10}\\\\\n&=\\frac{2^9 \\cdot 3^4 \\cdot 5^2 \\cdot 7 \\cdot 11 \\cdot 13}{2^6 \\cdot 3^3 \\cdot 5 \\cdot 7 \\cdot 9}\\\\\n&=\\boxed{\\frac{2^3 \\cdot 3 \\cdot 11 \\cdot 13}{9}}.\n\\end{align*}\nFinal Answer: The final answer is $\\frac{2^3 \\cdot 3 \\cdot 11 \\cdot 13}{9}$. I hope it is correct.",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Intermediate Algebra"
-    },
+    //{
+    //    "source": "MATH",
+    //    "category": "Algebra",
+    //    "difficulty": "Level 1",
+    //    "original_difficulty": "Level 1",
+    //    "question": "Find the product $10 \\cdot \\frac{4}{3} \\cdot \\frac{6}{4} \\cdot \\frac{8}{5} \\cdot \\frac{10}{6} \\cdot \\frac{12}{7} \\cdot \\frac{14}{8} \\cdot \\frac{16}{9} \\cdot \\frac{18}{10}$.",
+    //    "target": "The product of the numerators is\n\\begin{align*}\n&(2 \\cdot 2) \\cdot (2 \\cdot 3) \\cdot (2 \\cdot 4) \\cdot (2 \\cdot 5) \\cdot (2 \\cdot 6) \\cdot (2 \\cdot 7) \\cdot (2 \\cdot 8) \\cdot (2 \\cdot 9) \\\\\n&= 2^8 \\cdot 2 \\cdot 3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9.\n\\end{align*}Then the given expression is equal to\n\\[10 \\cdot \\frac{2^8 \\cdot 2 \\cdot 3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9}{3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9 \\cdot 10} = 2^9 = \\boxed{512}.\\]\nFinal Answer: The final answer is $512$I hope it is correct.",
+    //    "output": "We have that\n\n\\begin{align*}\n10 \\cdot \\frac{4}{3} \\cdot \\frac{6}{4} \\cdot \\frac{8}{5} \\cdot \\frac{10}{6} \\cdot \\frac{12}{7} \\cdot \\frac{14}{8} \\cdot \\frac{16}{9} \\cdot \\frac{18}{10}&=\\frac{10 \\cdot 4 \\cdot 6 \\cdot 8 \\cdot 10 \\cdot 12 \\cdot 14 \\cdot 16 \\cdot 18}{3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9 \\cdot 10}\\\\\n&=\\frac{2^9 \\cdot 3^4 \\cdot 5^2 \\cdot 7 \\cdot 11 \\cdot 13}{2^6 \\cdot 3^3 \\cdot 5 \\cdot 7 \\cdot 9}\\\\\n&=\\boxed{\\frac{2^3 \\cdot 3 \\cdot 11 \\cdot 13}{9}}.\n\\end{align*}\nFinal Answer: The final answer is $\\frac{2^3 \\cdot 3 \\cdot 11 \\cdot 13}{9}$. I hope it is correct.",
+    //    "model": "540b",
+    //    "type": "Incorrect",
+    //    "notes": "",
+    //    "visual": "No",
+    //    "original_category": "Intermediate Algebra"
+    //},
     {
         "source": "MATH",
         "category": "Algebra",
@@ -1873,20 +1873,20 @@ export default {
         "visual": "No",
         "original_category": "Intermediate Algebra"
     },
-    {
-        "source": "MATH",
-        "category": "Algebra",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 2",
-        "question": "Find all real values of $x$ such that $$\\frac{2x^2-3x}{x^2-x} + 5x -11 = \\frac{3x^2+5x+2}{x^2-1}.$$Enter all the solutions, separated by commas.",
-        "target": "We can start by factoring the polynomials in the numerator and denominator, which gives us\n$$\\frac{x(2x-3)}{x(x-1)} + 5x -11 = \\frac{(x+1)(3x+2)}{(x+1)(x-1)}.$$If $x \\ne 0$ and $x \\ne -1$, we can cancel out some factors to get\n$$\\frac{2x-3}{x-1} + 5x -11 = \\frac{3x+2}{x-1}.$$Moving the fractional terms to one side gives us\n$$ 5x -11 = \\frac{x+5}{x-1}.$$Now we can eliminate the denominator by multiplying by $x-1$ on both sides (as long as $x\\ne1$) and then move all the terms to one side,\n$$5x^2- 17x + 6 = 0.$$Factoring gives us\n$$(x-3)(5x-2) = 0.$$Hence, $x$ must be $\\boxed{3}$ or $\\boxed{\\frac{2}{5}}$.\nFinal Answer: The final answer is $\\frac{2}{5}$I hope it is correct.",
-        "output": "",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Intermediate Algebra"
-    },
+    //{
+    //    "source": "MATH",
+    //    "category": "Algebra",
+    //    "difficulty": "Level 1",
+    //    "original_difficulty": "Level 2",
+    //    "question": "Find all real values of $x$ such that $$\\frac{2x^2-3x}{x^2-x} + 5x -11 = \\frac{3x^2+5x+2}{x^2-1}.$$Enter all the solutions, separated by commas.",
+    //    "target": "We can start by factoring the polynomials in the numerator and denominator, which gives us\n$$\\frac{x(2x-3)}{x(x-1)} + 5x -11 = \\frac{(x+1)(3x+2)}{(x+1)(x-1)}.$$If $x \\ne 0$ and $x \\ne -1$, we can cancel out some factors to get\n$$\\frac{2x-3}{x-1} + 5x -11 = \\frac{3x+2}{x-1}.$$Moving the fractional terms to one side gives us\n$$ 5x -11 = \\frac{x+5}{x-1}.$$Now we can eliminate the denominator by multiplying by $x-1$ on both sides (as long as $x\\ne1$) and then move all the terms to one side,\n$$5x^2- 17x + 6 = 0.$$Factoring gives us\n$$(x-3)(5x-2) = 0.$$Hence, $x$ must be $\\boxed{3}$ or $\\boxed{\\frac{2}{5}}$.\nFinal Answer: The final answer is $\\frac{2}{5}$I hope it is correct.",
+    //    "output": "",
+    //    "model": "540b",
+    //    "type": "Incorrect",
+    //    "notes": "",
+    //    "visual": "No",
+    //    "original_category": "Intermediate Algebra"
+    //},
     {
         "source": "MATH",
         "category": "Algebra",
