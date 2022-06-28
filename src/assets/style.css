@@ -24,15 +24,17 @@ body{
   font-weight: 400;
   letter-spacing: 0.2em;
   text-align: center;
-  margin-bottom: 50px;
 }
 
 .minerva h3 {
-  font-size: 0.7em;
+  font-size: 1em;
   font-weight: 400;
-  letter-spacing: 0.2em;
   text-align: center;
   margin-bottom: 50px;
+}
+
+.minerva h3 a {
+  text-decoration: none;
 }
 
 ul{
