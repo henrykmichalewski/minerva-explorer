@@ -40,7 +40,7 @@
                 </div>
                 <div class="content-item question-info">
                   <span class="label">Reference answer</span>
-                  <div :key="slideIndex">{{item1.target}}</div>
+                  <div :key="slideIndex">{{sanitize_reference_answer(item1.target, item1.source)}}</div>
                 </div>
                 <div class="content-item question-info">
                   <span class="label">Problem source</span>
@@ -326,7 +326,7 @@ export default {
         "original_difficulty": "Level 1",
         "question": "What is the least prime number greater than 25 that will have a remainder of 2 when divided by 25?",
         "target": "We must find the least prime number, $p$, such that $p=25n+2$ for some positive integer $n$. It is clear that $n$ must be odd because otherwise $p$ is divisible by 2 and hence not prime. $n=1$ gives $p=27$, which is composite. $n=3$ gives $p=77$, which is composite. But $n=5$ gives $p=127$, which is prime. Thus, $\\boxed{127}$ is the least prime number greater than 25 that has a remainder of 2 when divided by 25.\nFinal Answer: The final answer is $127$I hope it is correct.",
-        "output": "The primes greater than 25 are 27, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499. The least prime number greater than 25 that will have a remainder of 2 when divided by 25 is \\boxed{27}.\nFinal Answer: The final answer is $27$. I hope it is correct.",
+        "output": "The primes greater than 25 are 27, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499. The least prime number greater than 25 that will have a remainder of 2 when divided by 25 is $\\boxed{27}$.\nFinal Answer: The final answer is $27$. I hope it is correct.",
         "model": "540b",
         "type": "Incorrect",
         "notes": " ",
@@ -1831,20 +1831,20 @@ export default {
         "visual": "No",
         "original_category": "Geometry"
     },
-    {
-        "source": "MATH",
-        "category": "Algebra",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 1",
-        "question": "Find the product $10 \\cdot \\frac{4}{3} \\cdot \\frac{6}{4} \\cdot \\frac{8}{5} \\cdot \\frac{10}{6} \\cdot \\frac{12}{7} \\cdot \\frac{14}{8} \\cdot \\frac{16}{9} \\cdot \\frac{18}{10}$.",
-        "target": "The product of the numerators is\n\\begin{align*}\n&(2 \\cdot 2) \\cdot (2 \\cdot 3) \\cdot (2 \\cdot 4) \\cdot (2 \\cdot 5) \\cdot (2 \\cdot 6) \\cdot (2 \\cdot 7) \\cdot (2 \\cdot 8) \\cdot (2 \\cdot 9) \\\\\n&= 2^8 \\cdot 2 \\cdot 3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9.\n\\end{align*}Then the given expression is equal to\n\\[10 \\cdot \\frac{2^8 \\cdot 2 \\cdot 3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9}{3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9 \\cdot 10} = 2^9 = \\boxed{512}.\\]\nFinal Answer: The final answer is $512$I hope it is correct.",
-        "output": "We have that\n\n\\begin{align*}\n10 \\cdot \\frac{4}{3} \\cdot \\frac{6}{4} \\cdot \\frac{8}{5} \\cdot \\frac{10}{6} \\cdot \\frac{12}{7} \\cdot \\frac{14}{8} \\cdot \\frac{16}{9} \\cdot \\frac{18}{10}&=\\frac{10 \\cdot 4 \\cdot 6 \\cdot 8 \\cdot 10 \\cdot 12 \\cdot 14 \\cdot 16 \\cdot 18}{3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9 \\cdot 10}\\\\\n&=\\frac{2^9 \\cdot 3^4 \\cdot 5^2 \\cdot 7 \\cdot 11 \\cdot 13}{2^6 \\cdot 3^3 \\cdot 5 \\cdot 7 \\cdot 9}\\\\\n&=\\boxed{\\frac{2^3 \\cdot 3 \\cdot 11 \\cdot 13}{9}}.\n\\end{align*}\nFinal Answer: The final answer is $\\frac{2^3 \\cdot 3 \\cdot 11 \\cdot 13}{9}$. I hope it is correct.",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Intermediate Algebra"
-    },
+    //{
+    //    "source": "MATH",
+    //    "category": "Algebra",
+    //    "difficulty": "Level 1",
+    //    "original_difficulty": "Level 1",
+    //    "question": "Find the product $10 \\cdot \\frac{4}{3} \\cdot \\frac{6}{4} \\cdot \\frac{8}{5} \\cdot \\frac{10}{6} \\cdot \\frac{12}{7} \\cdot \\frac{14}{8} \\cdot \\frac{16}{9} \\cdot \\frac{18}{10}$.",
+    //    "target": "The product of the numerators is\n\\begin{align*}\n&(2 \\cdot 2) \\cdot (2 \\cdot 3) \\cdot (2 \\cdot 4) \\cdot (2 \\cdot 5) \\cdot (2 \\cdot 6) \\cdot (2 \\cdot 7) \\cdot (2 \\cdot 8) \\cdot (2 \\cdot 9) \\\\\n&= 2^8 \\cdot 2 \\cdot 3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9.\n\\end{align*}Then the given expression is equal to\n\\[10 \\cdot \\frac{2^8 \\cdot 2 \\cdot 3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9}{3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9 \\cdot 10} = 2^9 = \\boxed{512}.\\]\nFinal Answer: The final answer is $512$I hope it is correct.",
+    //    "output": "We have that\n\n\\begin{align*}\n10 \\cdot \\frac{4}{3} \\cdot \\frac{6}{4} \\cdot \\frac{8}{5} \\cdot \\frac{10}{6} \\cdot \\frac{12}{7} \\cdot \\frac{14}{8} \\cdot \\frac{16}{9} \\cdot \\frac{18}{10}&=\\frac{10 \\cdot 4 \\cdot 6 \\cdot 8 \\cdot 10 \\cdot 12 \\cdot 14 \\cdot 16 \\cdot 18}{3 \\cdot 4 \\cdot 5 \\cdot 6 \\cdot 7 \\cdot 8 \\cdot 9 \\cdot 10}\\\\\n&=\\frac{2^9 \\cdot 3^4 \\cdot 5^2 \\cdot 7 \\cdot 11 \\cdot 13}{2^6 \\cdot 3^3 \\cdot 5 \\cdot 7 \\cdot 9}\\\\\n&=\\boxed{\\frac{2^3 \\cdot 3 \\cdot 11 \\cdot 13}{9}}.\n\\end{align*}\nFinal Answer: The final answer is $\\frac{2^3 \\cdot 3 \\cdot 11 \\cdot 13}{9}$. I hope it is correct.",
+    //    "model": "540b",
+    //    "type": "Incorrect",
+    //    "notes": "",
+    //    "visual": "No",
+    //    "original_category": "Intermediate Algebra"
+    //},
     {
         "source": "MATH",
         "category": "Algebra",
@@ -1867,20 +1867,6 @@ export default {
         "question": "Find all the integer roots of\n\\[x^4 + 5x^3 + 9x^2 - x - 14 = 0.\\]Enter all the integer roots, separated by commas.",
         "target": "By the Integer Root Theorem, the possible integer roots are all the divisors of 14 (including negative divisors), which are $-14,$ $-7,$ $-2,$ $-1,$ $1,$ $2,$ $7,$ and $14.$  Checking, we find that the only integer roots are $\\boxed{-2,1}.$\nFinal Answer: The final answer is $-2,1$I hope it is correct.",
         "output": "We can factor the polynomial as\n\\begin{align*}\nx^4 + 5x^3 + 9x^2 - x - 14 &= x^4 + 5x^3 + 6x^2 + 3x^2 - 6x + 5x - 14\\\\\n&=x^2(x^2 + 5x + 6) + 3x(x - 2) + 5(x - 2)\\\\\n&=(x^2 + 3x + 5)(x^2 + 2x - 2)\\\\\n&=(x + 1)(x + 2)(x + 1)(x - 1)\\\\\n&=(x + 1)^2 (x + 2)(x - 1)\n\\end{align*}\nTherefore, the roots are $x = -1, -1, -2, 1$. Final Answer: The final answer is $-1, -2, 1$. I hope it is correct.",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Intermediate Algebra"
-    },
-    {
-        "source": "MATH",
-        "category": "Algebra",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 2",
-        "question": "Find all real values of $x$ such that $$\\frac{2x^2-3x}{x^2-x} + 5x -11 = \\frac{3x^2+5x+2}{x^2-1}.$$Enter all the solutions, separated by commas.",
-        "target": "We can start by factoring the polynomials in the numerator and denominator, which gives us\n$$\\frac{x(2x-3)}{x(x-1)} + 5x -11 = \\frac{(x+1)(3x+2)}{(x+1)(x-1)}.$$If $x \\ne 0$ and $x \\ne -1$, we can cancel out some factors to get\n$$\\frac{2x-3}{x-1} + 5x -11 = \\frac{3x+2}{x-1}.$$Moving the fractional terms to one side gives us\n$$ 5x -11 = \\frac{x+5}{x-1}.$$Now we can eliminate the denominator by multiplying by $x-1$ on both sides (as long as $x\\ne1$) and then move all the terms to one side,\n$$5x^2- 17x + 6 = 0.$$Factoring gives us\n$$(x-3)(5x-2) = 0.$$Hence, $x$ must be $\\boxed{3}$ or $\\boxed{\\frac{2}{5}}$.\nFinal Answer: The final answer is $\\frac{2}{5}$I hope it is correct.",
-        "output": "",
         "model": "540b",
         "type": "Incorrect",
         "notes": "",
@@ -1976,20 +1962,6 @@ export default {
         "category": "Algebra",
         "difficulty": "Level 1",
         "original_difficulty": "Level 4",
-        "question": "Let $p(x)$ be a cubic polynomial such that $p(2) = 0,$ $p(-1) = 0,$ $p(4) = 6,$ and $p(5) = 8.$  Find $p(7).$",
-        "target": "Since $p(2) = p(-1) = 0,$ $p(x)$ is of the form\n\\[p(x) = (ax + b)(x - 2)(x + 1)\\]for some constants $a$ and $b.$  Setting $x = 4$ and $x = 5,$ we get\n\\begin{align*}\n(4a + b)(2)(5) &= p(4) = 6, \\\\\n(5a + b)(3)(6) &= p(5) = 8,\n\\end{align*}so\n\\begin{align*}\n4a + b &= \\frac{3}{5}, \\\\\n5a + b &= \\frac{4}{9}.\n\\end{align*}Solving, we find $a = -\\frac{7}{45}$ and $b = \\frac{11}{9}.$  Hence,\n\\[p(x) = \\left( -\\frac{7}{45} x + \\frac{11}{9} \\right) (x - 2)(x + 1) = -\\frac{(7x - 55)(x - 2)(x + 1)}{45}.\\]Therefore,\n\\[p(7) = -\\frac{(49 - 55)(5)(8)}{45} = \\boxed{\\frac{16}{3}}.\\]\nFinal Answer: The final answer is $\\frac{16}{3}$I hope it is correct.",
-        "output": "",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Intermediate Algebra"
-    },
-    {
-        "source": "MATH",
-        "category": "Algebra",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 4",
         "question": "Nonnegative real numbers $a$ and $b$ satisfy $\\sqrt{a} - \\sqrt{b} = 20.$  Find the maximum value of $a - 5b.$",
         "target": "Let $x = \\sqrt{a}$ and $y = \\sqrt{b},$ so $x - y = 20,$ $a = x^2,$ and $b = y^2.$  Then\n\\begin{align*}\na - 5b &= x^2 - 5y^2 \\\\\n&= (y + 20)^2 - 5y^2 \\\\\n&= -4y^2 + 40y + 400 \\\\\n&= -4(y - 5)^2 + 500.\n\\end{align*}The maximum of $\\boxed{500}$ occurs when $y = 5,$ so $x = 25,$ $a = 625,$ and $b = 25.$\nFinal Answer: The final answer is $500$I hope it is correct.",
         "output": "We have $\\sqrt{a} - \\sqrt{b} = 20$. Squaring both sides, we get\n\n$$a - 2\\sqrt{ab} + b = 400.$$\n\nWe can rewrite this as\n\n$$a - 5b = 400 + 2\\sqrt{ab} - 3b.$$\n\nNow, $a$ and $b$ are nonnegative, so $\\sqrt{ab}$ is also nonnegative. Thus, the maximum value of $a - 5b$ occurs when $b = 0$. This gives us $a - 5b = \\boxed{400}$.\n\nFinal Answer: The final answer is $400$. I hope it is correct.",
@@ -2004,37 +1976,9 @@ export default {
         "category": "Algebra",
         "difficulty": "Level 1",
         "original_difficulty": "Level 5",
-        "question": "Three distinct integers $a,$ $b,$ and $c$ have the following properties:\n\n$\\bullet$ $abc = 17955$\n\n$\\bullet$ $a,$ $b,$ $c$ are three consecutive terms of an arithmetic sequence, in that order\n\n$\\bullet$ $3a + b,$ $3b + c,$ $3c + a$ are three consecutive terms of a geometric sequence, in that order\n\nFind $a + b + c.$",
-        "target": "In the arithmetic sequence $a,$ $b,$ $c,$ let $d$ be the common difference, so $a = b - d$ and $c = b + d.$  Then\n\\begin{align*}\n3a + b &= 3(b - d) + b = 4b - 3d, \\\\\n3b + c &= 3b + b + d = 4b + d, \\\\\n3c + a &= 3(b + d) + (b - d) = 4b + 2d,\n\\end{align*}so\n\\[(4b + d)^2 = (4b - 3d)(4b + 2d).\\]This simplifies to $12bd + 7d^2 = d(12b + 7d) = 0.$  If $d = 0,$ then $a = b = c,$ so $a^3 = 17955.$  Since 17955 is not a perfect cube, $12b + 7d = 0,$ so $d = -\\frac{12}{7} b.$\n\nThen $a = b - d = \\frac{19}{7} b$ and $c = b + d = -\\frac{5}{7} b.$  Substituting into $abc = 17955,$ we get\n\\[\\frac{19}{7} b \\cdot b \\cdot \\left( -\\frac{5}{7} b \\right) = 17955.\\]Then $b^3 = -9261,$ so $b = -21.$  Hence, $a = -57$ and $c = 15,$ so $a + b + c = \\boxed{-63}.$\nFinal Answer: The final answer is $-63$I hope it is correct.",
-        "output": "",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Intermediate Algebra"
-    },
-    {
-        "source": "MATH",
-        "category": "Algebra",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 5",
         "question": "Let $a,$ $b,$ $c,$ $d$ be distinct complex numbers such that $|a| = |b| = |c| = |d| = 1$ and $a + b + c + d = 0.$  Find the maximum value of\n\\[|(a + b)(a + c)(a + d)(b + c)(b + d)(c + d)|.\\]",
         "target": "Since $|a| = 1,$ $a \\overline{a} = |a|^2,$ so $\\overline{a} = \\frac{1}{a}.$  Similarly, $\\overline{b} = \\frac{1}{b},$ $\\overline{c} = \\frac{1}{c},$ and $\\overline{d} = \\frac{1}{d}.$\n\nFrom the equation $a + b + c + d = 0,$ $\\overline{a} + \\overline{b} + \\overline{c} + \\overline{d} = 0,$ so\n\\[\\frac{1}{a} + \\frac{1}{b} + \\frac{1}{c} + \\frac{1}{d} = 0.\\]This gives us $abc + abd + acd + bcd = 0.$\n\nThen by Vieta's formulas, $a,$ $b,$ $c,$ $d$ are roots of a polynomial of the form\n\\[z^4 + p_2 z^2 + p_0 = 0.\\]If $z$ is a root of this polynomial, then so is $-z.$  This means $-a$ is equal to one of $b,$ $c,$ or $d,$ so\n\\[(a + b)(a + c)(a + d)(b + c)(b + d)(c + d) = 0.\\]Therefore, the maximum value is $\\boxed{0}.$\nFinal Answer: The final answer is $0$I hope it is correct.",
         "output": "We have\n\\begin{align*}\n|(a + b)(a + c)(a + d)(b + c)(b + d)(c + d)| &= |(a + b)(a + c)(b + c)(a + d)(b + d)(c + d)|\\\\\n&\\le |(a + b)(a + c)(b + c)| + |(a + d)(b + d)(c + d)|\\\\\n&\\le |a + b| + |a + c| + |b + c| + |a + d| + |b + d| + |c + d|\\\\\n&\\le |a| + |b| + |c| + |a| + |c| + |b + c| + |a| + |d| + |b| + |c| + |d| + |b| + |d|\\\\\n&\\le 1 + 1 + |b + c| + 1 + 1 + |b + c| + 1 + 1 + |b + c|\\\\\n&= 6 + 3|b + c|\\\\\n&\\le 6 + 3(|b| + |c|)\\\\\n&= 6 + 3(1 + 1)\\\\\n&= 6 + 3\\cdot 2\\\\\n&= 6 + 6\\\\\n&= \\boxed{12}\n\\end{align*}\nFinal Answer: The final answer is $12$. I hope it is correct.",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Intermediate Algebra"
-    },
-    {
-        "source": "MATH",
-        "category": "Algebra",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 5",
-        "question": "Define\n\\[p = \\sum_{k = 1}^\\infty \\frac{1}{k^2} \\quad \\text{and} \\quad q = \\sum_{k = 1}^\\infty \\frac{1}{k^3}.\\]Find a way to write\n\\[\\sum_{j = 1}^\\infty \\sum_{k = 1}^\\infty \\frac{1}{(j + k)^3}\\]in terms of $p$ and $q.$",
-        "target": "We count the number of times $\\frac{1}{n^3}$ appears in the sum\n\\[\\sum_{j = 1}^\\infty \\sum_{k = 1}^\\infty \\frac{1}{(j + k)^3},\\]where $n$ is a fixed positive integer.  (In other words, we are conditioning the sum on $j + k$.)  We get a term of $\\frac{1}{n^3}$ each time $j + k = n.$  The pairs $(j,k)$ that work are $(1,n - 1),$ $(2,n - 2),$ $\\dots,$ $(n - 1,1),$ for a total of $n - 1$ pairs.  Therefore,\n\\begin{align*}\n\\sum_{j = 1}^\\infty \\sum_{k = 1}^\\infty \\frac{1}{(j + k)^3} &= \\sum_{n = 1}^\\infty \\frac{n - 1}{n^3} \\\\\n&= \\sum_{n = 1}^\\infty \\left( \\frac{n}{n^3} - \\frac{1}{n^3} \\right) \\\\\n&= \\sum_{n = 1}^\\infty \\left( \\frac{1}{n^2} - \\frac{1}{n^3} \\right) \\\\\n&= \\sum_{n = 1}^\\infty \\frac{1}{n^2} - \\sum_{n = 1}^\\infty \\frac{1}{n^3} \\\\\n&= \\boxed{p - q}.\n\\end{align*}\nFinal Answer: The final answer is $p - q$I hope it is correct.",
-        "output": "",
         "model": "540b",
         "type": "Incorrect",
         "notes": "",
@@ -2091,20 +2035,6 @@ export default {
         "question": "Compute: $(3^2)(2^4)(37)(5^3)$",
         "target": "Since multiplication is commutative, we can reorder these factors as: $$(3^2)(2^4)(37)(5^3)=(3\\cdot 37)(2^3\\cdot 5^3)(3\\cdot 2)=(111)(1000)(6)$$ $$=666\\cdot 1000=\\boxed{666000}$$\nFinal Answer: The final answer is $666000$I hope it is correct.",
         "output": "$(3^2)(2^4)(37)(5^3) = 9\\cdot16\\cdot37\\cdot125 = \\boxed{607,500}$\n\nFinal Answer: The final answer is $607,500$. I hope it is correct.",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Prealgebra"
-    },
-    {
-        "source": "MATH",
-        "category": "Algebra",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 2",
-        "question": "Jon teaches a fourth grade class at an elementary school where class sizes are always at least 20 students and at most 28.  One day Jon decides that he wants to arrange the students in their desks in a rectangular grid with no gaps.  Unfortunately for Jon he discovers that doing so could only result in one straight line of desks.  How many students does Jon have in his class?",
-        "target": "Let $m$ be the number of rows in the grid of students and let $n$ be the number of columns.  The total number of students is $mn$.  If the only way to express $mn$ as a product of positive integers is for one of the integers to be 1, then 1 and $mn$ are the only divisors of $mn$, so $mn$ is prime.  The number of students in Jon's class is $\\boxed{23}$, the only prime between 20 and 28.\nFinal Answer: The final answer is $23$I hope it is correct.",
-        "output": "",
         "model": "540b",
         "type": "Incorrect",
         "notes": "",
@@ -2228,20 +2158,6 @@ export default {
         "category": "Algebra",
         "difficulty": "Level 1",
         "original_difficulty": "Level 5",
-        "question": "A $\\textit{palindrome}$ is a positive integer which reads the same forward and backward, like $12321$ or $4884$.\n\nHow many $4$-digit palindromes are divisible by $3$?",
-        "target": "Once we've picked the first two digits of a $4$-digit palindrome, the last two digits are automatically chosen by mirroring the first two. Thus, we can make exactly one $4$-digit palindrome for every $2$-digit number. For example, the $2$-digit number $57$ gives the palindrome $5775$.\n\nFor an integer to be divisible by $3$, the sum of its digits must also be divisible by $3$. A $4$-digit palindrome has two identical pairs of digits. If the total of all four digits is a multiple of $3$, then the first two digits must also add up to a multiple of $3$ (since doubling a non-multiple of $3$ can't give us a multiple of $3$). Thus, to make a $4$-digit palindrome which is a multiple of $3$, we must use a $2$-digit number that is a multiple of $3$.\n\nThis tells us that the number of $4$-digit palindromes that are divisible by $3$ is identical to the number of multiples of $3$ from $10$ through $99$. Here is a list of those multiples of $3$: $$12, 15, 18, 21, 24, \\ldots, 90, 93, 96, 99.$$ This list consists of the $30$ positive multiples of $3$ greater than $10.$ So, there are $30$ numbers in the list, and therefore $\\boxed{30}$ four-digit palindromes that are divisible by $3$.\n\nHere is a list of those palindromes: $$1221, 1551, 1881, 2112, 2442, \\ldots, 9009, 9339, 9669, 9999.$$\nFinal Answer: The final answer is $30$I hope it is correct.",
-        "output": "",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Prealgebra"
-    },
-    {
-        "source": "MATH",
-        "category": "Algebra",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 5",
         "question": "Elodie is putting on a fashion show and has five fabulous outfits for her five fabulous fashion models. However, on the day of the show, two of the outfits were ruined in an unfortunate permanent marker incident. Regardless, the show must go on and the remaining outfits will be presented. If each outfit can only be worn by one model and there is no time for any model to wear more than one dress, how many different shows can Elodie put on? (Note: Two shows are considered the same if they contain the same models wearing the same dresses.)",
         "target": "Since two of the outfits are ruined, we only have three outfits. There are five models available for the first outfit, four models available for the second outfit, and three models available for the third outfit. Therefore, there are $5 \\cdot 4 \\cdot 3 = \\boxed{60}$ ways in which the models can be matched to the outfits.\nFinal Answer: The final answer is $60$I hope it is correct.",
         "output": "There are five outfits and three models. This is a combination problem. The answer is \\begin{align*}\n\\frac{5!}{3!2!}&=\\frac{5\\cdot 4}{2}\\\\\n&=\\frac{20}{2}\\\\\n&=\\boxed{10}\n\\end{align*}\nFinal Answer: The final answer is $10$. I hope it is correct.",
@@ -2251,6 +2167,7 @@ export default {
         "visual": "No",
         "original_category": "Prealgebra"
     },
+    /*
     {
         "source": "MATH",
         "category": "Number theory",
@@ -2265,7 +2182,8 @@ export default {
         "visual": "No",
         "original_category": "Number Theory"
     },
-    {
+    */
+    /*{
         "source": "MATH",
         "category": "Number theory",
         "difficulty": "Level 1",
@@ -2279,6 +2197,7 @@ export default {
         "visual": "No",
         "original_category": "Number Theory"
     },
+    */
     {
         "source": "MATH",
         "category": "Number theory",
@@ -2343,20 +2262,6 @@ export default {
         "question": "What is the hundreds digit in the following product: $5 \\times 6 \\times 7 \\times 8 \\times 9 \\times 10$ ?",
         "target": "The hundreds digit in the given expression is the same as the tens digit in the expression $5\\times6\\times7\\times8\\times9$, which is the same as the ones digit in the expression $6\\times7\\times4\\times9$ (we divide out a 10 each time). $6\\times7=42$ has a ones digit of 2 and $4\\times9=36$ has a ones digit of 6, and $2\\times6=12$, so the entire product has a ones digit of $\\boxed{2}$.\nFinal Answer: The final answer is $2$I hope it is correct.",
         "output": "Since the units digit is zero, the tens digit is zero, and the hundreds digit is the same as the tens digit in the product of $5 \\times 6 \\times 7 \\times 8 \\times 9$. The product $5 \\times 6 \\times 7 \\times 8 \\times 9 = 15120$, so the hundreds digit is \\boxed{1}.\nFinal Answer: The final answer is $1$. I hope it is correct.",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Number Theory"
-    },
-    {
-        "source": "MATH",
-        "category": "Number theory",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 3",
-        "question": "Three consecutive primes are summed. When the sum is squared, the result is 72,361. What is the largest of the three primes?",
-        "target": "The square root of 72,361 is 269. If we divide this by 3, we will be in the ballpark of our three consecutive primes. The primes are 83, 89 and 97, so the largest is $\\boxed{97}$.\nFinal Answer: The final answer is $97$I hope it is correct.",
-        "output": "",
         "model": "540b",
         "type": "Incorrect",
         "notes": "",
@@ -2637,34 +2542,6 @@ export default {
         "question": "Find the value of $a_2+a_4+a_6+a_8+\\dots+a_{98}$ if $a_1, a_2, a_3, \\ldots$ is an arithmetic progression with common difference $1$ and \\[a_1+a_2+a_3+\\dots+a_{98}=137.\\]",
         "target": "Let $S = a_1 + a_3 + \\dots + a_{97}$ and $T = a_2 + a_4 + \\dots + a_{98}$. Then the given equation states that $S + T = 137$, and we want to find $T$.\n\nWe can build another equation relating $S$ and $T$: note that \\[\\begin{aligned} T-S &= (a_2-a_1) + (a_4-a_3) + \\dots + (a_{98}-a_{97}) \\\\ &= \\underbrace{1 + 1 + \\dots + 1}_{49 \\text{ times }} \\\\ &= 49 \\end{aligned}\\]since $(a_n)$ has common difference $1$. Then, adding the two equations $S+T=137$ and $T-S=49$, we get $2T=137+49=186$, so $T = \\tfrac{186}{2} = \\boxed{93}$.\nFinal Answer: The final answer is $93$I hope it is correct.",
         "output": "We have\n\n\\begin{align*}\na_1+a_2+a_3+\\dots+a_{98}&=137\\\\\n\\Rightarrow\\qquad a_1+(a_1+1)+(a_1+2)+\\dots+(a_1+97)&=137\\\\\n\\Rightarrow\\qquad \\underbrace{(a_1+a_1+\\dots+a_1)}_{98\\text{ times}}+1+2+3+\\dots+97&=137\\\\\n\\Rightarrow\\qquad 98a_1+\\frac{97(97+1)}{2}&=137\\\\\n\\Rightarrow\\qquad 98a_1+4751&=137\\\\\n\\Rightarrow\\qquad a_1&=\\frac{137-4751}{98}=-46.\\\\\n\\end{align*}\n\nSince the common difference is $1$, we have\n\n\\begin{align*}\na_2+a_4+a_6+a_8+\\dots+a_{98}&=-45+(-45+1)+(-45+2)+(-45+3)+\\dots+(-45+49)\\\\\n&=-45-44-43-\\dots-3-2-1+1+2+\\dots+48+49\\\\\n&=\\boxed{0}.\n\\end{align*}\nFinal Answer: The final answer is $0$. I hope it is correct.",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Algebra"
-    },
-    {
-        "source": "MATH",
-        "category": "Algebra",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 5",
-        "question": "The sum of the product and the sum of two positive integers is $454$. Find the largest possible value of the product of their sum and their product.",
-        "target": "With word problems, the first step is to translate the words into equations. Let the two numbers be $a$ and $b$. Then their sum is $a+b$ and their product is $ab$. The sum of their product and their sum is $a+b+ab$. So we know  \\begin{align*}\nab+a+b&=454\\quad\\Rightarrow\\\\\na(b+1)+(b+1)&=454+1\\quad\\Rightarrow\\\\\n(a+1)(b+1)&=455.\n\\end{align*}The prime factorization of $455$ is $5\\cdot 7\\cdot 13$. Since the equation is symmetric with $a$ and $b$, we may (without loss of generality) suppose that $a<b$. Thus $a+1<b+1$, so in each factor pair the smaller factor is equal to $a+1$. We list all possibilities: \\begin{tabular}{c|c|c|c}\n$a+1$&$b+1$&$a$&$b$\\\\ \\hline\n$1$&$455$&$0$&$454$\\\\\n$5$&$91$&$4$&$90$\\\\\n$7$&$65$&$6$&$64$\\\\\n$13$&$35$&$12$&$34$\n\\end{tabular}We must find the largest possible value of \"the product of their sum and their product\", or $ab\\cdot(a+b)$. We know the first possibility above gives a value of zero, while all the others will be greater than zero. We check: \\begin{align*}\n4\\cdot 90\\cdot (4+90)&=4\\cdot 90\\cdot 94=33840\\\\\n6\\cdot 64\\cdot (6+64)&=6\\cdot 64\\cdot 70=26880\\\\\n12\\cdot 34\\cdot (12+34)&=12\\cdot 34\\cdot 46=18768.\n\\end{align*}Thus the largest possible desired value is $\\boxed{33840}$, achieved when $(a,b)=(4,90)$.\nFinal Answer: The final answer is $33840$I hope it is correct.",
-        "output": "",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Algebra"
-    },
-    {
-        "source": "MATH",
-        "category": "Algebra",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 5",
-        "question": "Find all positive integer values of $c$ such that the equation $x^2-7x+c=0$ only has roots that are real and rational. Express them in decreasing order, separated by commas.",
-        "target": "For the roots to be real and rational, the discriminant must be a perfect square. Therefore, $(-7)^2-4 \\cdot 1 \\cdot c = 49-4c$ must be a perfect square. The only positive perfect squares less than 49 are $1$, $4$, $9$, $16$, $25$, and $36$. The perfect squares that give a integer value of $c$ are $1$, $9$, and $25$. Thus, we have the equations $49-4c=1$, $49-4c=9$, and $49-4c=25$. Solving, we get that the positive integer values of c are $\\boxed{12, 10, 6}$.\nFinal Answer: The final answer is $12, 10, 6$I hope it is correct.",
-        "output": "",
         "model": "540b",
         "type": "Incorrect",
         "notes": "",
@@ -2970,51 +2847,9 @@ export default {
         "category": "Precalculus",
         "difficulty": "Level 1",
         "original_difficulty": "Level 3",
-        "question": "Compute:\n\\[\n\\sin \\frac{\\pi}{12} + \\sin \\frac{3\\pi}{12} + \\sin \\frac{5\\pi}{12} + \\sin \\frac{7\\pi}{12} + \\sin \\frac{9\\pi}{12} + \\sin \\frac{11\\pi}{12}.\n\\]",
-        "target": "Notice that problem has three pairs of the form $\\sin \\theta + \\sin(\\pi - \\theta).$  The sum-to-product formula yields\n\\begin{align*}\n\\sin \\frac{\\pi}{12} + \\sin \\frac{11\\pi}{12} &= 2 \\sin \\frac{\\pi}{2} \\cos \\frac{5\\pi}{12} \\\\\n&= 2 \\cos \\frac{5\\pi}{12}, \\\\\n\\sin \\frac{3\\pi}{12} + \\sin \\frac{9\\pi}{12} &= 2 \\sin \\frac{\\pi}{2} \\cos \\frac{\\pi}{4} \\\\\n&= \\sqrt{2}, \\\\\n\\sin \\frac{5\\pi}{12} + \\sin \\frac{7\\pi}{12} &= 2 \\sin \\frac{\\pi}{2} \\cos \\frac{\\pi}{12} \\\\\n&= 2 \\cos \\frac{\\pi}{12}.\n\\end{align*}Applying the sum-to-product formula once more yields\n\\begin{align*}\n& \\sin \\frac{\\pi}{12} + \\sin \\frac{3\\pi}{12} + \\sin \\frac{5\\pi}{12} + \\sin \\frac{7\\pi}{12} + \\sin \\frac{9\\pi}{12} + \\sin \\frac{11\\pi}{12} \\\\\n&= \\sqrt{2} + 2 \\Big(\\cos \\frac{5\\pi}{12} + \\cos \\frac{\\pi}{12} \\Big) \\\\\n&= \\sqrt{2} + 4 \\cos \\frac{\\pi}{4} \\cos \\frac{\\pi}{6} \\\\\n&= \\sqrt{2} + 4 \\cdot \\frac{1}{\\sqrt{2}} \\cdot \\frac{\\sqrt{3}}{2} \\\\\n&= \\boxed{\\sqrt{2} + \\sqrt{6}}.\n\\end{align*}\nFinal Answer: The final answer is $\\sqrt{2} + \\sqrt{6}$I hope it is correct.",
-        "output": "",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Precalculus"
-    },
-    {
-        "source": "MATH",
-        "category": "Precalculus",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 3",
-        "question": "The perimeter of parallelogram $ABCD$ is 40, and its altitudes are 4 and 7.  Compute $\\sin A.$",
-        "target": "Label the parallelogram so that the distance between sides $\\overline{BC}$ and $\\overline{AD}$ is 4, and the distance between sides $\\overline{AB}$ and $\\overline{CD}$ is 7.  Then $AB = \\frac{4}{\\sin A}$ and $AD = \\frac{7}{\\sin A}.$\n\n[asy]\nunitsize(1.5 cm);\n\npair A, B, C, D, P, Q;\n\nA = (0,0);\nB = 2*dir(60);\nC = B + (3,0);\nD = (3,0);\nP = (B + reflect(A,D)*(B))/2;\nQ = (D + reflect(A,B)*(D))/2;\n\ndraw(A--B--C--D--cycle);\ndraw(B--P,dashed);\ndraw(D--Q,dashed);\n\nlabel(\"$A$\", A, SW);\nlabel(\"$B$\", B, N);\nlabel(\"$C$\", C, NE);\nlabel(\"$D$\", D, S);\nlabel(\"$4$\", interp(B,P,0.8), E, red);\nlabel(\"$7$\", interp(D,Q,0.5), NE, red);\nlabel(\"$\\frac{4}{\\sin A}$\", (A + B)/2, NW, red);\nlabel(\"$\\frac{7}{\\sin A}$\", (A + D)/2, S, red);\n[/asy]\n\nTherefore, the perimeter of $ABCD$ is\n\\[\\frac{4}{\\sin A} + \\frac{7}{\\sin A} + \\frac{4}{\\sin A} + \\frac{7}{\\sin A} = \\frac{22}{\\sin A} = 40.\\]Hence, $\\sin A = \\boxed{\\frac{11}{20}}.$\nFinal Answer: The final answer is $\\frac{11}{20}$I hope it is correct.",
-        "output": "",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Precalculus"
-    },
-    {
-        "source": "MATH",
-        "category": "Precalculus",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 3",
         "question": "The complex numbers $z$ and $w$ satisfy $z^{13} = w,$ $w^{11} = z,$ and the imaginary part of $z$ is $\\sin{\\frac{m\\pi}{n}}$, for relatively prime positive integers $m$ and $n$ with $m<n.$ Find $n.$",
         "target": "Substituting the first equation into the second, we find that $(z^{13})^{11} = z$ and thus $z^{142} = 1.$  Therefore, $z$ must be a $142$nd root of unity, and thus the imaginary part of $z$ will be\n\\[\\sin{\\frac{2m\\pi}{142}} = \\sin{\\frac{m\\pi}{71}}\\]for some $m$ with $0 \\le m < 142.$\n\nHowever, note that $71$ is prime and $m<71$ by the conditions of the problem, so the denominator in the argument of this value will always be $71$ and thus $n = \\boxed{71}.$\nFinal Answer: The final answer is $71$I hope it is correct.",
         "output": "We have that $z^{13} = w = z^{11}$, so $z^{13-11} = z^2 = 1$.  Therefore, $z = \\pm 1$.  Since the imaginary part of $z$ is $\\sin{\\frac{m\\pi}{n}}$, we must have that $z = \\cos{\\frac{m\\pi}{n}} + i\\sin{\\frac{m\\pi}{n}}$.  Therefore, $\\cos{\\frac{m\\pi}{n}} = \\pm 1$.  Since $\\cos{x} = \\pm 1$ when $x = 0$ or $\\pi$, we have that $\\frac{m\\pi}{n} = 0$ or $\\pi$.  Since $m < n$, this implies that $m = 0$.  Therefore, $n$ can be any positive integer.  Final Answer: The final answer is $n$ can be any positive integer. I hope it is correct.",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Precalculus"
-    },
-    {
-        "source": "MATH",
-        "category": "Precalculus",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 4",
-        "question": "Let $\\mathbf{v}_0$ be a vector.  The vector $\\mathbf{v}_0$ is rotated about the origin by an angle of $42^\\circ$ counter-clockwise, taking it to vector $\\mathbf{v}_1.$  The vector $\\mathbf{v}_1$ is then reflected over the line with direction vector $\\begin{pmatrix} \\cos 108^\\circ \\\\ \\sin 108^\\circ \\end{pmatrix},$ taking it to vector $\\mathbf{v}_2.$\n\nThe vector $\\mathbf{v}_2$ can also be produced by reflecting the vector $\\mathbf{v}_0$ over the line with direction vector $\\begin{pmatrix} \\cos \\theta \\\\ \\sin \\theta \\end{pmatrix},$ where $\\theta$ is an acute angle.  Find $\\theta.$",
-        "target": "The matrix for the rotation is given by\n\\[\\begin{pmatrix} \\cos 42^\\circ & -\\sin 42^\\circ \\\\ \\sin 42^\\circ & \\cos 42^\\circ \\end{pmatrix}.\\]In general, the matrix for reflecting over the line with direction vector $\\begin{pmatrix} \\cos \\theta \\\\ \\sin \\theta \\end{pmatrix}$ is given by $\\begin{pmatrix} \\cos 2 \\theta & \\sin 2 \\theta \\\\ \\sin 2 \\theta & -\\cos 2 \\theta \\end{pmatrix}.$  So here, the matrix for the reflection is\n\\[\\begin{pmatrix} \\cos 216^\\circ & \\sin 216^\\circ \\\\ \\sin 216^\\circ & -\\cos 216^\\circ \\end{pmatrix}.\\]Hence, the matrix that takes $\\mathbf{v}_0$ to $\\mathbf{v}_2$ is\n\\begin{align*}\n\\begin{pmatrix} \\cos 216^\\circ & \\sin 216^\\circ \\\\ \\sin 216^\\circ & -\\cos 216^\\circ \\end{pmatrix} \\begin{pmatrix} \\cos 42^\\circ & -\\sin 42^\\circ \\\\ \\sin 42^\\circ & \\cos 42^\\circ \\end{pmatrix} &= \\begin{pmatrix} \\cos 216^\\circ \\cos 42^\\circ + \\sin 216^\\circ \\sin 42^\\circ & -\\cos 216^\\circ \\sin 42^\\circ + \\sin 216^\\circ \\cos 42^\\circ \\\\ \\sin 216^\\circ \\cos 42^\\circ - \\cos 216^\\circ \\sin 42^\\circ & -\\sin 216^\\circ \\sin 42^\\circ - \\cos 216^\\circ \\cos 42^\\circ \\end{pmatrix} \\\\\n&= \\begin{pmatrix} \\cos (216^\\circ - 42^\\circ) & \\sin (216^\\circ - 42^\\circ) \\\\ \\sin (216^\\circ - 42^\\circ) & -\\cos (216^\\circ - 42^\\circ) \\end{pmatrix} \\\\\n&= \\begin{pmatrix} \\cos 174^\\circ & \\sin 174^\\circ \\\\ \\sin 174^\\circ & -\\cos 174^\\circ \\end{pmatrix}.\n\\end{align*}Thus, $\\theta = 174^\\circ/2 = \\boxed{87^\\circ}.$\nFinal Answer: The final answer is $87^\\circ$I hope it is correct.",
-        "output": "",
         "model": "540b",
         "type": "Incorrect",
         "notes": "",
@@ -3071,20 +2906,6 @@ export default {
         "question": "Find the number of ordered quadruples $(a,b,c,d)$ of real numbers such that\n\\[\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}^2 = \\begin{pmatrix} c & a \\\\ d & b \\end{pmatrix}.\\]",
         "target": "We have that\n\\[\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}^2 = \\begin{pmatrix} a^2 + bc & ab + bd \\\\ ac + cd & bc + d^2 \\end{pmatrix}.\\]Comparing entries, we find\n\\begin{align*}\na^2 + bc &= c, \\\\\nab + bd &= a, \\\\\nac + cd &= d, \\\\\nbc + d^2 &= b.\n\\end{align*}Subtracting the first and fourth equations, we get\n\\[a^2 - d^2 = c - b,\\]which factors as $(a + d)(a - d) = c - b.$\n\nBut\n\\[a - d = (ab + bd) - (ac + cd) = (a + d)(b - c),\\]so $(a + d)^2 (b - c) = c - b.$  Then\n\\[(a + d)^2 (b - c) + (b - c) = 0,\\]which factors as $(b - c)[(a + d)^2 + 1] = 0.$  Hence, $b = c,$ which forces $a = d.$  The equations above then become\n\\begin{align*}\na^2 + b^2 &= b, \\\\\n2ab &= a, \\\\\n2ab &= a, \\\\\na^2 + b^2 &= b.\n\\end{align*}From $2ab = a,$ $2ab - a = a(2b - 1) = 0,$ so $a = 0$ or $b = \\frac{1}{2}.$\n\nIf $a = 0,$ then $b^2 = b,$ so $b = 0$ or $b = 1.$\n\nIf $b = \\frac{1}{2},$ then\n\\[a^2 = b - b^2 = \\frac{1}{4},\\]so $a = \\pm \\frac{1}{2}.$\n\nThus, we have $\\boxed{4}$ solutions $(a,b,c,d),$ namely $(0,0,0,0),$ $(0,1,1,0),$ $\\left( \\frac{1}{2}, \\frac{1}{2}, \\frac{1}{2}, \\frac{1}{2} \\right),$ and $\\left( -\\frac{1}{2}, \\frac{1}{2}, \\frac{1}{2}, -\\frac{1}{2} \\right).$\nFinal Answer: The final answer is $4$I hope it is correct.",
         "output": "We have that\n\\[\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}^2 = \\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} \\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = \\begin{pmatrix} a^2 + bc & ab + bd \\\\ ac + cd & bc + d^2 \\end{pmatrix}.\\]\nSince this matrix is equal to $\\begin{pmatrix} c & a \\\\ d & b \\end{pmatrix}$, we have that $c = a^2 + bc$, $a = ac + cd$, $d = bc + d^2$, and $b = ab + bd$.\n\nFrom the first and third equations, we have that $a^2 - a = bc - c$, so $a(a-1) = c(b-1)$.  Since $a$ and $c$ are not allowed to be zero, we have that $a-1 = c$ or $a = c+1$.\n\nFrom the second and fourth equations, we have that $a - b = cd - d$, so $a-b = d(c-1)$.  Since $a$ and $d$ are not allowed to be zero, we have that $a-b = d$ or $a = b+d$.\n\nSince $a = c+1 = b+d$, we have that $c+1 = b+d$, so $b = c-d+1$.\n\nTherefore, we have that $(a,b,c,d) = (c+1, c-d+1, c, d)$.  In other words, $a$ and $b$ can be any real numbers, and $c$ and $d$ are uniquely determined by $a$ and $b$.\n\nTherefore, there are $\\boxed{\\infty}$ such ordered quadruples.\nFinal Answer: The final answer is $\\infty$. I hope it is correct.",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Precalculus"
-    },
-    {
-        "source": "MATH",
-        "category": "Precalculus",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 5",
-        "question": "Given triangle $ABC,$ there exists a unique point $P$ such that\n\\[AB^2 + AP^2 + BP^2 = AC^2 + AP^2 + CP^2 = BC^2 + BP^2 + CP^2.\\]Express the common value above in terms of the side lengths $a,$ $b,$ and $c,$ and circumradius $R$ of triangle $ABC.$",
-        "target": "From the equation $AB^2 + AP^2 + BP^2 = AC^2 + AP^2 + CP^2,$\n\\[AB^2 + BP^2 = AC^2 + CP^2.\\]Then\n\\[\\|\\overrightarrow{A} - \\overrightarrow{B}\\|^2 + \\|\\overrightarrow{B} - \\overrightarrow{P}\\|^2 = \\|\\overrightarrow{A} - \\overrightarrow{C}\\|^2 + \\|\\overrightarrow{C} - \\overrightarrow{P}\\|^2,\\]which expands as\n\\begin{align*}\n&\\overrightarrow{A} \\cdot \\overrightarrow{A} - 2 \\overrightarrow{A} \\cdot \\overrightarrow{B} + \\overrightarrow{B} \\cdot \\overrightarrow{B} + \\overrightarrow{B} \\cdot \\overrightarrow{B} - 2 \\overrightarrow{B} \\cdot \\overrightarrow{P} + \\overrightarrow{P} \\cdot \\overrightarrow{P} \\\\\n&= \\overrightarrow{A} \\cdot \\overrightarrow{A} - 2 \\overrightarrow{A} \\cdot \\overrightarrow{C} + \\overrightarrow{C} \\cdot \\overrightarrow{C} + \\overrightarrow{C} \\cdot \\overrightarrow{C} - \\overrightarrow{C} \\cdot \\overrightarrow{P} + \\overrightarrow{P} \\cdot \\overrightarrow{P}.\n\\end{align*}This simplifies to\n\\[ \\overrightarrow{B} \\cdot \\overrightarrow{P} - \\overrightarrow{C} \\cdot \\overrightarrow{P} + \\overrightarrow{A} \\cdot \\overrightarrow{B} - \\overrightarrow{A} \\cdot \\overrightarrow{C} + \\overrightarrow{C} \\cdot \\overrightarrow{C} - \\overrightarrow{B} \\cdot \\overrightarrow{B} = 0.\\]We can factor this as\n\\[(\\overrightarrow{B} - \\overrightarrow{C}) \\cdot (\\overrightarrow{P} + \\overrightarrow{A} - \\overrightarrow{B} - \\overrightarrow{C}) = 0.\\]Let $D$ be the point such that $\\overrightarrow{D} = \\overrightarrow{B} + \\overrightarrow{C} - \\overrightarrow{A},$ so the equation above becomes\n\\[(\\overrightarrow{B} - \\overrightarrow{C}) \\cdot (\\overrightarrow{P} - \\overrightarrow{D}) = 0.\\]This means lines $BC$ and $PD$ are perpendicular.  In other words, $P$ lies on the line through $D$ that is perpendicular to line $BC.$\n\nFrom $\\overrightarrow{D} = \\overrightarrow{B} + \\overrightarrow{C} - \\overrightarrow{A},$\n\\[\\frac{\\overrightarrow{A} + \\overrightarrow{D}}{2} = \\frac{\\overrightarrow{B} + \\overrightarrow{C}}{2}.\\]In other words, the midpoints of $\\overline{AD}$ and $\\overline{BC}$ coincide, so $ABDC$ is a parallelogram.\n\nSimilarly, if $E$ is the point such that $AECB$ is a parallelogram, then we can show that $P$ lies on the line passing through $E$ that is perpendicular to line $AC.$  Thus, the location of point $P$ is uniquely determined.\n\n[asy]\nunitsize(0.5 cm);\n\npair A, B, C, D, E, F, H, O, P;\n\nA = (2,5);\nB = (0,0);\nC = (7,0);\nD = -A + B + C;\nE = A - B + C;\nF = A + B - C;\nH = orthocenter(A,B,C);\nO = circumcenter(A,B,C);\nP = 2*O - H;\n\ndraw(A--B--C--cycle);\ndraw(B--D--E--A);\ndraw(interp(P,D,-0.2)--interp(P,D,1.2),dashed);\ndraw(interp(P,E,-0.2)--interp(P,E,1.2),dashed);\n\nlabel(\"$A$\", A, N);\nlabel(\"$B$\", B, SW);\nlabel(\"$C$\", C, SE);\nlabel(\"$D$\", D, W);\nlabel(\"$E$\", E, SE);\ndot(\"$P$\", P, NW);\n[/asy]\n\nTaking the circumcenter of triangle $ABC$ as the origin, we can write\n\\[\\overrightarrow{H} = \\overrightarrow{A} + \\overrightarrow{B} + \\overrightarrow{C},\\]where $H$ is the orthocenter of triangle $ABC.$  Note line $AH$ is also perpendicular to line $BC,$ so\n\\[\\overrightarrow{P} - \\overrightarrow{D} = t(\\overrightarrow{H} - \\overrightarrow{A}) = t (\\overrightarrow{B} + \\overrightarrow{C})\\]for some scalar $t.$  Then\n\\begin{align*}\n\\overrightarrow{P} &= \\overrightarrow{D} + t (\\overrightarrow{B} + \\overrightarrow{C}) \\\\\n&= \\overrightarrow{B} + \\overrightarrow{C} - \\overrightarrow{A} + t (\\overrightarrow{B} + \\overrightarrow{C}).\n\\end{align*}Similarly,\n\\[\\overrightarrow{P} = \\overrightarrow{A} + \\overrightarrow{C} - \\overrightarrow{B} + u (\\overrightarrow{A} + \\overrightarrow{C})\\]for some scalar $u.$  Note that we can take $t = u = -2,$ which gives us\n\\[\\overrightarrow{P} = -\\overrightarrow{A} - \\overrightarrow{B} - \\overrightarrow{C}.\\]Therefore, the common value is\n\\begin{align*}\nAB^2 + AP^2 + BP^2 &= \\|\\overrightarrow{A} - \\overrightarrow{B}\\|^2 + \\|\\overrightarrow{A} - \\overrightarrow{P}\\|^2 + \\|\\overrightarrow{B} - \\overrightarrow{P}\\|^2 \\\\\n&= \\|\\overrightarrow{A} - \\overrightarrow{B}\\|^2 + \\|2 \\overrightarrow{A} + \\overrightarrow{B} + \\overrightarrow{C}\\|^2 + \\|\\overrightarrow{A} + 2 \\overrightarrow{B} + \\overrightarrow{C}\\|^2 \\\\\n&= \\overrightarrow{A} \\cdot \\overrightarrow{A} - 2 \\overrightarrow{A} \\cdot \\overrightarrow{B} + \\overrightarrow{B} \\cdot \\overrightarrow{B} \\\\\n&\\quad + 4 \\overrightarrow{A} \\cdot \\overrightarrow{A} + \\overrightarrow{B} \\cdot \\overrightarrow{B} + \\overrightarrow{C} \\cdot \\overrightarrow{C} + 4 \\overrightarrow{A} \\cdot \\overrightarrow{B} + 4 \\overrightarrow{A} \\cdot \\overrightarrow{C} + 2 \\overrightarrow{B} \\cdot \\overrightarrow{C} \\\\\n&\\quad + \\overrightarrow{A} \\cdot \\overrightarrow{A} + 4 \\overrightarrow{B} \\cdot \\overrightarrow{B} + \\overrightarrow{C} \\cdot \\overrightarrow{C} + 4 \\overrightarrow{A} \\cdot \\overrightarrow{B} + 2 \\overrightarrow{A} \\cdot \\overrightarrow{C} + 4 \\overrightarrow{B} \\cdot \\overrightarrow{C} \\\\\n&= 6 \\overrightarrow{A} \\cdot \\overrightarrow{A} + 6 \\overrightarrow{B} \\cdot \\overrightarrow{B} + 2 \\overrightarrow{C} \\cdot \\overrightarrow{C} + 6 \\overrightarrow{A} \\cdot \\overrightarrow{B} + 6 \\overrightarrow{A} \\cdot \\overrightarrow{C} + 6 \\overrightarrow{B} \\cdot \\overrightarrow{C} \\\\\n&= 6R^2 + 6R^2 + 2R^2 + 6 \\left( R^2 - \\frac{c^2}{2} \\right) + 6 \\left( R^2 - \\frac{b^2}{2} \\right) + 6 \\left( R^2 - \\frac{a^2}{2} \\right) \\\\\n&= \\boxed{32R^2 - 3(a^2 + b^2 + c^2)}.\n\\end{align*}\nFinal Answer: The final answer is $32R^2 - 3(a^2 + b^2 + c^2)$I hope it is correct.",
-        "output": "",
         "model": "540b",
         "type": "Incorrect",
         "notes": "",
@@ -3267,20 +3088,6 @@ export default {
         "question": "The medians $AD$, $BE$, and $CF$ of triangle $ABC$ intersect at the centroid $G$.  The line through $G$ that is parallel to $BC$ intersects $AB$ and $AC$ at $M$ and $N$, respectively.  If the area of triangle $ABC$ is 810, then find the area of triangle $AMN$.",
         "target": "We know that $AG:AD = 2:3$.  Triangles $AMG$ and $ABD$ are similar, so $AM:AB = AG:AD = 2:3$.  Likewise, $AN:AC = AG:AD = 2:3$.\n\n[asy]\nimport geometry;\n\nunitsize(1 cm);\n\npair A, B, C, D, E, F, G, M, N;\n\nA = (1,3);\nB = (0,0);\nC = (4,0);\nD = (B + C)/2;\nE = (C + A)/2;\nF = (A + B)/2;\nG = (A + B + C)/3;\nM = extension(G, G + B - C, A, B);\nN = extension(G, G + B - C, A, C);\n\ndraw(A--B--C--cycle);\ndraw(A--D);\ndraw(B--E);\ndraw(C--F);\ndraw(M--N);\n\nlabel(\"$A$\", A, dir(90));\nlabel(\"$B$\", B, SW);\nlabel(\"$C$\", C, SE);\nlabel(\"$D$\", D, S);\nlabel(\"$E$\", E, NE);\nlabel(\"$F$\", F, NW);\nlabel(\"$G$\", G, SSW);\nlabel(\"$M$\", M, NW);\nlabel(\"$N$\", N, NE);\n[/asy]\n\nTherefore, the area of triangle $AMN$ is $810 \\cdot (2/3)^2 = \\boxed{360}$.\nFinal Answer: The final answer is $360$I hope it is correct.",
         "output": "The centroid divides each median into two parts, with the centroid being twice as close to the midpoint of a side as it is to the opposite vertex.  Therefore, $AG=\\frac{2}{3}AD$, $BG=\\frac{2}{3}BE$, and $CG=\\frac{2}{3}CF$.  The area of triangle $AMN$ is $\\frac{1}{3}$ of the area of triangle $ABC$, which is $\\frac{1}{3}(810)=\\boxed{270}$.\nFinal Answer: The final answer is $270$. I hope it is correct.",
-        "model": "540b",
-        "type": "Incorrect",
-        "notes": "",
-        "visual": "No",
-        "original_category": "Geometry"
-    },
-    {
-        "source": "MATH",
-        "category": "Geometry",
-        "difficulty": "Level 1",
-        "original_difficulty": "Level 5",
-        "question": "Kendra has an unlimited supply of unbreakable sticks of length 2, 4 and 6 inches. Using these sticks, how many non-congruent triangles can she make if each side is made with a whole stick? Two sticks can be joined only at a vertex of the triangle. (A triangle with sides of lengths 4, 6, 6 is an example of one such triangle to be included, whereas a triangle with sides of lengths 2, 2, 4 should not be included.)",
-        "target": "To start, we can make three equilateral triangles, with sides $2,2,2$, $4,4,4$ and $6,6,6$.  Next, look at isosceles triangles.  If two sides have length 6, the remaining side could be $2$ since $6+2>6$ and $6+6>2$.  The remaining side could also be 4 since $6+4>6$ and $6+6>4$.  So, this is two more triangles.  If two sides have length 4, the remaining side could have length $6$ since $6+4>4$ and $4+4>6$.  The remaining side could also have length 2 since $2+4>4$ and $4+4>2$.  There are no possible triangles with all sides of different length, since $2+4=6$.  Thus, there are a total of $\\boxed{7}$ non congruent triangles.\nFinal Answer: The final answer is $7$I hope it is correct.",
-        "output": "",
         "model": "540b",
         "type": "Incorrect",
         "notes": "",
@@ -4909,7 +4716,17 @@ export default {
       return text.replace("Solution:", "");
     },
     sanitize_output(text, source) {
-      /*return text.split("Final Answer:")[0];*/
+      text = text.split("I hope it is correct")[0];
+      if (source == "MATH") {
+      }
+      if (source == "MMLU") {
+      }
+      return text;
+    },
+    sanitize_reference_answer(text, source) {
+      text = text.split("I hope it is correct")[0];
+      if (source == "MATH") {
+      }
       if (source == "MMLU") {
       }
       return text;
