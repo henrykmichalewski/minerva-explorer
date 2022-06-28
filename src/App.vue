@@ -367,7 +367,7 @@ export default {
         "difficulty": "Level 1",
         "original_difficulty": "Level 1",
         "question": "Simplify $\\frac{15}{6}.$",
-        "target": "Since $15$ and $6$ have a common factor of $3,$ we can simplify: $$\\frac{15}{6}=\\frac{3\\cdot 5}{3\\cdot 2}=\\frac{\\cancel{3}\\cdot 5}{\\cancel{3}\\cdot 2}=\\boxed{\\frac{5}{2}}.$$\nFinal Answer: The final answer is $\\frac{5}{2}$I hope it is correct.",
+        "target": "Since $15$ and $6$ have a common factor of $3,$ we can simplify: $$\\require{cancel}\\frac{15}{6}=\\frac{3\\cdot 5}{3\\cdot 2}=\\frac{\\cancel{3}\\cdot 5}{\\cancel{3}\\cdot 2}=\\boxed{\\frac{5}{2}}.$$\nFinal Answer: The final answer is $\\frac{5}{2}$I hope it is correct.",
         "output": "Since $3$ is a common factor of both the numerator and the denominator, we can simplify the fraction by dividing both the numerator and the denominator by $3$. Therefore,\n\n$$\\frac{15}{6}=\\frac{15\\div 3}{6\\div 3}=\\boxed{\\frac{5}{2}}.$$\nFinal Answer: The final answer is $\\frac{5}{2}$. I hope it is correct.",
         "model": "540b",
         "type": "Correct",
