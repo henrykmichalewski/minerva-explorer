@@ -3,6 +3,7 @@
     <div class="minerva">
       <h1>Minerva</h1>
       <h2>sample explorer</h2>
+      <h3>Foo</h3>
       <div class="categories">
         <ul>
           <li v-for="(item, index) in Object.keys(combineData)" :key="index" @click="setActiveCategory(item)"
